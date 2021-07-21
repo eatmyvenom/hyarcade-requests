@@ -5,4 +5,8 @@ module.exports = class HyarcadeRequests {
     static mojangRequest = require("./mojangRequest");
     static optifineRequest = require("./optifineRequest");
     static webRequest = require("./webRequest");
+
+    static types = {
+        Account : require("./types/Account")
+    }
 }

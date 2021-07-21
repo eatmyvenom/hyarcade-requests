@@ -65,6 +65,11 @@ module.exports = class HypixelApi {
         }
     }
 
+    /**
+     * 
+     * @param {String} uuid 
+     * @returns {Promise<Object>}
+     */
     static async player(uuid) {
         let Api = new HypixelApi("player", { uuid: uuid });
         let data = await Api.makeRequest();
