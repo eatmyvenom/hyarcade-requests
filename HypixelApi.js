@@ -37,7 +37,7 @@ module.exports = class HypixelApi {
     }
 
     async makeRequest() {
-        let apiPoint = new hypixelReq(url);
+        let apiPoint = new hypixelReq(this.reqUrl.toString());
         let response = await apiPoint.makeRequest();
 
         // Hypixel api put the amount of time you have to wait
