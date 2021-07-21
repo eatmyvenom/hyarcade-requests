@@ -1,7 +1,8 @@
 const url = require("url");
 const hypixelReq = require("./hypixelReq");
-const config = require("../Config").fromJSON();
-const { sleep, logger } = require("./utils");
+const config = require("hyarcade-config").fromJSON();
+const logger = require("hyarcade-logger");
+const sleep = require("./utils").sleep;
 
 /**
  * Function to get the key to use

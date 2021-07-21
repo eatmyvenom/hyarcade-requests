@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/eatmyvenom/hyarcade-requests#readme",
   "dependencies": {
+    "hyarcade-config": "github:eatmyvenom/hyarcade-config",
     "hyarcade-logger": "github:eatmyvenom/hyarcade-logger"
   }
 }
