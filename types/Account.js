@@ -354,6 +354,7 @@ class Account {
                 numberify(this.simTotal);
         } else {
             Logger.err(`Data failure, clearing account data for ${this.name} - ${this.uuid}!`);
+            Logger.err(json.player);
             for (let prop in this) {
                 this[prop] = undefined;
             }
