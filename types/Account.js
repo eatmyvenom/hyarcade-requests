@@ -138,16 +138,13 @@ class ZombiesStats {
         if(player?.stats?.Arcade) {
             for (let stat in player?.stats?.Arcade) {
                 if (stat.includes("zombie")) {
-                    this[stat] = arcade[stat];
+                    this[stat] = player?.stats?.Arcade[stat];
                 }
             }
         }
     }
 }
 
-function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
-}
 class Account {
     name = "";
     name_lower = "";
