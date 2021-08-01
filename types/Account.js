@@ -89,19 +89,19 @@ class MiniWallsStats {
 class ArcadeChallenges {
 
     constructor(player) {
-        this.challenges.blockingDead = player?.stats?.challenges?.all_time?.ARCADE__blocking_dead_challenge ?? 0;
-        this.challenges.creeperAttack = player?.stats?.challenges?.all_time?.ARCADE__creeper_attack_challenge ?? 0;
-        this.challenges.dragonWars = player?.stats?.challenges?.all_time?.ARCADE__dragon_wars_challenge ?? 0;
-        this.challenges.enderSpleef = player?.stats?.challenges?.all_time?.ARCADE__ender_spleef_challenge ?? 0;
-        this.challenges.farmHunt = player?.stats?.challenges?.all_time?.ARCADE__farm_hunt_challenge ?? 0;
-        this.challenges.galaxyWars = player?.stats?.challenges?.all_time?.ARCADE__galaxy_wars_challenge ?? 0;
-        this.challenges.hitw = player?.stats?.challenges?.all_time?.ARCADE__hole_in_the_wall_challenge ?? 0;
-        this.challenges.hns = player?.stats?.challenges?.all_time?.ARCADE__hide_and_seek_challenge ?? 0;
-        this.challenges.hypixelSays = player?.stats?.challenges?.all_time?.ARCADE__hypixel_says_challenge ?? 0;
-        this.challenges.miniWalls = player?.stats?.challenges?.all_time?.ARCADE__mini_walls_challenge ?? 0;
-        this.challenges.partyGames = player?.stats?.challenges?.all_time?.ARCADE__party_games_challenge ?? 0;
-        this.challenges.throwOut = player?.stats?.challenges?.all_time?.ARCADE__throw_out_challenge ?? 0;
-        this.challenges.zombies = player?.stats?.challenges?.all_time?.ARCADE__zombies_challenge ?? 0;
+        this.blockingDead = player?.stats?.challenges?.all_time?.ARCADE__blocking_dead_challenge ?? 0;
+        this.creeperAttack = player?.stats?.challenges?.all_time?.ARCADE__creeper_attack_challenge ?? 0;
+        this.dragonWars = player?.stats?.challenges?.all_time?.ARCADE__dragon_wars_challenge ?? 0;
+        this.enderSpleef = player?.stats?.challenges?.all_time?.ARCADE__ender_spleef_challenge ?? 0;
+        this.farmHunt = player?.stats?.challenges?.all_time?.ARCADE__farm_hunt_challenge ?? 0;
+        this.galaxyWars = player?.stats?.challenges?.all_time?.ARCADE__galaxy_wars_challenge ?? 0;
+        this.hitw = player?.stats?.challenges?.all_time?.ARCADE__hole_in_the_wall_challenge ?? 0;
+        this.hns = player?.stats?.challenges?.all_time?.ARCADE__hide_and_seek_challenge ?? 0;
+        this.hypixelSays = player?.stats?.challenges?.all_time?.ARCADE__hypixel_says_challenge ?? 0;
+        this.miniWalls = player?.stats?.challenges?.all_time?.ARCADE__mini_walls_challenge ?? 0;
+        this.partyGames = player?.stats?.challenges?.all_time?.ARCADE__party_games_challenge ?? 0;
+        this.throwOut = player?.stats?.challenges?.all_time?.ARCADE__throw_out_challenge ?? 0;
+        this.zombies = player?.stats?.challenges?.all_time?.ARCADE__zombies_challenge ?? 0;
     }
 
     zombies = 0;
