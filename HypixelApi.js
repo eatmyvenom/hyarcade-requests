@@ -12,13 +12,13 @@ const sleep = require("./utils").sleep;
  */
 function getKey() {
     let key = config.key;
-    if (config.cluster) {
+    if(config.cluster) {
         key = config.clusters[config.cluster].key;
     }
-    if (process.argv[2] == "bot") {
+    if(process.argv[2] == "bot") {
         key = config.clusters["serverbot"].key;
     }
-    if (config.mode == "test") {
+    if(config.mode == "test") {
         key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
     }
     return key;
@@ -45,8 +45,8 @@ module.exports = class HypixelApi {
         // upon rate limit within the response headers. If this
         // exists, wait that amount of time in seconds then
         // make a new request.
-        while (apiPoint.headers["retry-after"]) {
-            if (config.logRateLimit) {
+        while(apiPoint.headers["retry-after"]) {
+            if(config.logRateLimit) {
                 logger.warn(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
             }
             await sleep(apiPoint.headers["retry-after"] * 1000);
@@ -73,7 +73,9 @@ module.exports = class HypixelApi {
      * @returns {Promise<object>}
      */
     static async player(uuid) {
-        let Api = new HypixelApi("player", { uuid: uuid });
+        let Api = new HypixelApi("player", {
+            uuid: uuid
+        });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -85,7 +87,9 @@ module.exports = class HypixelApi {
     }
 
     static async friends(uuid) {
-        let Api = new HypixelApi("friends", { uuid: uuid });
+        let Api = new HypixelApi("friends", {
+            uuid: uuid
+        });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -97,7 +101,9 @@ module.exports = class HypixelApi {
     }
 
     static async recentgames(uuid) {
-        let Api = new HypixelApi("recentgames", { uuid: uuid });
+        let Api = new HypixelApi("recentgames", {
+            uuid: uuid
+        });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -109,7 +115,9 @@ module.exports = class HypixelApi {
     }
 
     static async status(uuid) {
-        let Api = new HypixelApi("status", { uuid: uuid });
+        let Api = new HypixelApi("status", {
+            uuid: uuid
+        });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -122,12 +130,18 @@ module.exports = class HypixelApi {
 
     static async guild(something) {
         let Api;
-        if (something.length == 24) {
-            Api = new HypixelApi("guild", { id: something });
-        } else if (something.length == 32 || something.length == 36) {
-            Api = new HypixelApi("guild", { player: something });
+        if(something.length == 24) {
+            Api = new HypixelApi("guild", {
+                id: something
+            });
+        } else if(something.length == 32 || something.length == 36) {
+            Api = new HypixelApi("guild", {
+                player: something
+            });
         } else {
-            Api = new HypixelApi("guild", { name: something });
+            Api = new HypixelApi("guild", {
+                name: something
+            });
         }
         let data = await Api.makeRequest();
         try {

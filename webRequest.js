@@ -30,7 +30,7 @@ function sendRequest(url) {
     return new Promise((resolve, reject) => {
         let protocolObj = http;
         let method = "http:";
-        if (url.startsWith("https")) {
+        if(url.startsWith("https")) {
             protocolObj = https;
             method = "https:";
         }

@@ -28,7 +28,7 @@ async function getPlayerRaw(uuid) {
  */
 async function getPlayer(uuid) {
     let raw = await getPlayerRaw(uuid);
-    if (raw != "") {
+    if(raw != "") {
         return JSON.parse(raw);
     } else {
         // log the missing username so i can change it
@@ -47,7 +47,7 @@ async function getUUID(name) {
     let raw = await getUUIDRaw(name);
 
     // make sure the data isnt an empty response
-    if (raw != "") {
+    if(raw != "") {
         return JSON.parse(raw).id;
     } else {
         // log the missing username so i can change it

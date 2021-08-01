@@ -7,6 +7,6 @@ module.exports = class HyarcadeRequests {
     static webRequest = require("./webRequest");
 
     static types = {
-        Account : require("./types/Account")
+        Account: require("./types/Account")
     }
 };

@@ -45,22 +45,22 @@ class ExtraStats {
         this.throwOutDeaths = player?.stats?.Arcade?.deaths_throw_out ?? 0;
     }
 
-    blockingDeadKills= 0;
-    blockingDeadHeadshots= 0;
-    bountyHuntersKills= 0;
-    bountyHuntersBountyKills= 0;
-    bountyHuntersDeaths= 0;
-    dragonWarsKills= 0;
-    footballGoals= 0;
-    footballPKicks= 0;
-    footballKicks= 0;
-    galaxyWarsKills= 0;
-    galaxyWarsDeaths= 0;
-    HNSSeekerWins= 0;
-    HNSHiderWins= 0;
-    hypixelSaysRounds= 0;
-    throwOutKills= 0;
-    throwOutDeaths= 0;
+    blockingDeadKills = 0;
+    blockingDeadHeadshots = 0;
+    bountyHuntersKills = 0;
+    bountyHuntersBountyKills = 0;
+    bountyHuntersDeaths = 0;
+    dragonWarsKills = 0;
+    footballGoals = 0;
+    footballPKicks = 0;
+    footballKicks = 0;
+    galaxyWarsKills = 0;
+    galaxyWarsDeaths = 0;
+    HNSSeekerWins = 0;
+    HNSHiderWins = 0;
+    hypixelSaysRounds = 0;
+    throwOutKills = 0;
+    throwOutDeaths = 0;
 }
 
 class MiniWallsStats {
@@ -136,8 +136,8 @@ class ArcadeQuests {
 class ZombiesStats {
     constructor(player) {
         if(player?.stats?.Arcade) {
-            for (let stat in player?.stats?.Arcade) {
-                if (stat.includes("zombie")) {
+            for(let stat in player?.stats?.Arcade) {
+                if(stat.includes("zombie")) {
                     this[stat] = player?.stats?.Arcade[stat];
                 }
             }
@@ -274,7 +274,7 @@ class Account {
     }
 
     setData(oldAcc) {
-        for (let prop in oldAcc) {
+        for(let prop in oldAcc) {
             this[prop] = oldAcc[prop];
         }
     }
@@ -330,14 +330,14 @@ class Account {
         this.rank = json.player.newPackageRank != undefined ? json.player.newPackageRank : json.player.packageRank;
         this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
-        if (json.player.rank) this.rank = json.player.rank;
-        if (json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
+        if(json.player.rank) this.rank = json.player.rank;
+        if(json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
 
         this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
 
         this.name = json.player.displayname ?? "INVALID-NAME";
         this.name_lower = this.name.toLowerCase();
-        this.nameHist = json.player.knownAliases ?? [ "INVALID-NAME" ];
+        this.nameHist = json.player.knownAliases ?? ["INVALID-NAME"];
 
         this.internalId = json.player?._id ?? 0;
         this.isLoggedIn = json.player?.lastLogin > json.player?.lastLogout;
