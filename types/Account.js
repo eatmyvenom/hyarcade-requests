@@ -3,6 +3,148 @@ const optifineRequest = require("../optifineRequest");
 const labyRequest = require("../labyRequest");
 const Logger = require("hyarcade-logger");
 
+class SeasonalStats {
+
+    constructor(player) {
+        this.easter = player?.stats?.Arcade?.wins_easter_simulator ?? 0;
+        this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
+        this.halloween = player?.stats?.Arcade?.wins_halloween_simulator ?? 0;
+        this.scuba = player?.stats?.Arcade?.wins_scuba_simulator ?? 0;
+        this.total =
+            this.easter +
+            this.grinch +
+            this.halloween +
+            this.scuba;
+    }
+
+    easter = 0;
+    scuba = 0;
+    halloween = 0;
+    grinch = 0;
+    total = 0;
+}
+
+class ExtraStats {
+
+    constructor(player) {
+        this.blockingDeadKills = player?.stats?.Arcade?.kills_dayone ?? 0;
+        this.blockingDeadHeadshots = player?.stats?.Arcade?.headshots_dayone ?? 0;
+        this.bountyHuntersKills = player?.stats?.Arcade?.kills_oneinthequiver ?? 0;
+        this.bountyHuntersBountyKills = player?.stats?.Arcade?.bounty_kills_oneinthequiver ?? 0;
+        this.bountyHuntersDeaths = player?.stats?.Arcade?.deaths_oneinthequiver ?? 0;
+        this.dragonWarsKills = player?.stats?.Arcade?.kills_dragonwars2 ?? 0;
+        this.footballGoals = player?.stats?.Arcade?.goals_soccer ?? 0;
+        this.footballPKicks = player?.stats?.Arcade?.powerkicks_soccer ?? 0;
+        this.footballKicks = player?.stats?.Arcade?.kicks_soccer ?? 0;
+        this.galaxyWarsKills = player?.stats?.Arcade?.sw_kills ?? 0;
+        this.galaxyWarsDeaths = player?.stats?.Arcade?.sw_deaths ?? 0;
+        this.HNSSeekerWins = player?.stats?.Arcade?.seeker_wins_hide_and_seek ?? 0;
+        this.HNSHiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
+        this.hypixelSaysRounds = player?.stats?.Arcade?.rounds_simon_says ?? 0;
+        this.throwOutKills = player?.stats?.Arcade?.kills_throw_out ?? 0;
+        this.throwOutDeaths = player?.stats?.Arcade?.deaths_throw_out ?? 0;
+    }
+
+    blockingDeadKills= 0;
+    blockingDeadHeadshots= 0;
+    bountyHuntersKills= 0;
+    bountyHuntersBountyKills= 0;
+    bountyHuntersDeaths= 0;
+    dragonWarsKills= 0;
+    footballGoals= 0;
+    footballPKicks= 0;
+    footballKicks= 0;
+    galaxyWarsKills= 0;
+    galaxyWarsDeaths= 0;
+    HNSSeekerWins= 0;
+    HNSHiderWins= 0;
+    hypixelSaysRounds= 0;
+    throwOutKills= 0;
+    throwOutDeaths= 0;
+}
+
+class MiniWallsStats {
+
+    constructor(player) {
+        this.kit = player?.stats?.Arcade?.miniwalls_activeKit ?? "Soldier";
+        this.arrowsHit = player?.stats?.Arcade?.arrows_hit_mini_walls ?? 0;
+        this.arrowsShot = player?.stats?.Arcade?.arrows_shot_mini_walls ?? 0;
+        this.finalKills = player?.stats?.Arcade?.final_kills_mini_walls ?? 0;
+        this.kills = player?.stats?.Arcade?.kills_mini_walls ?? 0;
+        this.witherKills = player?.stats?.Arcade?.wither_kills_mini_walls ?? 0;
+        this.deaths = player?.stats?.Arcade?.deaths_mini_walls ?? 0;
+        this.witherDamage = player?.stats?.Arcade?.wither_damage_mini_walls ?? 0;
+    }
+
+    kit = "";
+    arrowsHit = 0;
+    arrowsShot = 0;
+    finalKills = 0;
+    kills = 0;
+    witherKills = 0;
+    deaths = 0;
+    witherDamage = 0;
+}
+
+class ArcadeChallenges {
+
+    constructor(player) {
+        this.challenges.blockingDead = player?.stats?.challenges?.all_time?.ARCADE__blocking_dead_challenge ?? 0;
+        this.challenges.creeperAttack = player?.stats?.challenges?.all_time?.ARCADE__creeper_attack_challenge ?? 0;
+        this.challenges.dragonWars = player?.stats?.challenges?.all_time?.ARCADE__dragon_wars_challenge ?? 0;
+        this.challenges.enderSpleef = player?.stats?.challenges?.all_time?.ARCADE__ender_spleef_challenge ?? 0;
+        this.challenges.farmHunt = player?.stats?.challenges?.all_time?.ARCADE__farm_hunt_challenge ?? 0;
+        this.challenges.galaxyWars = player?.stats?.challenges?.all_time?.ARCADE__galaxy_wars_challenge ?? 0;
+        this.challenges.hitw = player?.stats?.challenges?.all_time?.ARCADE__hole_in_the_wall_challenge ?? 0;
+        this.challenges.hns = player?.stats?.challenges?.all_time?.ARCADE__hide_and_seek_challenge ?? 0;
+        this.challenges.hypixelSays = player?.stats?.challenges?.all_time?.ARCADE__hypixel_says_challenge ?? 0;
+        this.challenges.miniWalls = player?.stats?.challenges?.all_time?.ARCADE__mini_walls_challenge ?? 0;
+        this.challenges.partyGames = player?.stats?.challenges?.all_time?.ARCADE__party_games_challenge ?? 0;
+        this.challenges.throwOut = player?.stats?.challenges?.all_time?.ARCADE__throw_out_challenge ?? 0;
+        this.challenges.zombies = player?.stats?.challenges?.all_time?.ARCADE__zombies_challenge ?? 0;
+    }
+
+    zombies = 0;
+    partyGames = 0;
+    galaxyWars = 0;
+    hitw = 0;
+    hypixelSays = 0;
+    creeperAttack = 0;
+    blockingDead = 0;
+    enderSpleef = 0;
+    football = 0;
+    miniWalls = 0;
+    hns = 0;
+    farmHunt = 0;
+    dragonWars = 0;
+    throwOut = 0;
+};
+
+class ArcadeQuests {
+
+    constructor(player) {
+        this.arcadeGamer = player?.quests?.arcade_gamer?.completions?.length;
+        this.arcadeSpecialist = player?.quests?.arcade_specialist?.completions?.length;
+        this.arcadeWinner = player?.quests?.arcade_winner?.completions?.length;
+    }
+
+    arcadeGamer = 0;
+    arcadeWinner = 0;
+    arcadeSpecialist = 0;
+}
+
+class ZombiesStats {
+    constructor(player) {
+        if(player?.stats?.Arcade) {
+            for (let stat in player?.stats?.Arcade) {
+                if (stat.includes("zombie")) {
+                    this[stat] = arcade[stat];
+                }
+            }
+        }
+    }
+}
+
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
@@ -54,74 +196,48 @@ class Account {
     combinedArcadeWins = 0;
     anyWins = 0;
     hnsKills = 0;
-    seasonalWins = {
-        easter: 0,
-        scuba: 0,
-        halloween: 0,
-        grinch: 0,
-        total: 0,
-    };
     simTotal = 0;
-    extras = {
-        blockingDeadKills: 0,
-        blockingDeadHeadshots: 0,
-        bountyHuntersKills: 0,
-        bountyHuntersBountyKills: 0,
-        bountyHuntersDeaths: 0,
-        dragonWarsKills: 0,
-        footballGoals: 0,
-        footballPKicks: 0,
-        footballKicks: 0,
-        galaxyWarsKills: 0,
-        galaxyWarsDeaths: 0,
-        HNSSeekerWins: 0,
-        HNSHiderWins: 0,
-        hypixelSaysRounds: 0,
-        throwOutKills: 0,
-        throwOutDeaths: 0,
-    };
-    miniWalls = {
-        kit: "",
-        arrowsHit: 0,
-        arrowsShot: 0,
-        finalKills: 0,
-        kills: 0,
-        witherKills: 0,
-        deaths: 0,
-        witherDamage: 0,
-    };
-    other = {
-        murderMysteryWins : 0,
-        murderMysteryGames : 0,
-        buildBattleGames : 0,
-        buildBattleScore : 0,
-        buildBattleVotes : 0,
-        buildBattleWins : 0,
-        quakeKills : 0,
-        quakeDeaths : 0,
-        quakeWins : 0,
-    };
-    challenges = {
-        zombies : 0,
-        partyGames : 0,
-        galaxyWars : 0,
-        hitw : 0,
-        hypixelSays : 0,
-        creeperAttack : 0,
-        blockingDead : 0,
-        enderSpleef : 0,
-        football : 0,
-        miniWalls : 0,
-        hns : 0,
-        farmHunt : 0,
-        dragonWars : 0,
-        throwOut : 0,
-    };
-    quests = {
-        arcadeGamer : 0,
-        arcadeWinner : 0,
-        arcadeSpecialist : 0,
-    };
+
+    /**
+     * Seasonal "simulator" games wins and stats
+     * @type {SeasonalStats}
+     * @memberof Account
+     */
+    seasonalWins;
+
+    /**
+     *
+     * @type {ExtraStats}
+     * @memberof Account
+     */
+    extras;
+
+    /**
+     *
+     * @type {MiniWallsStats}
+     * @memberof Account
+     */
+    miniWalls;
+
+    /**
+     *
+     * @type {ArcadeChallenges}
+     * @memberof Account
+     */
+    challenges;
+
+    /**
+     *
+     * @type {ArcadeQuests}
+     * @memberof Account
+     */
+    quests;
+
+    /**
+     *
+     * @type {ZombiesStats}
+     * @memberof Account
+     */
     zombies = {};
     hasOFCape = false;
     hasLabyCape = false;
@@ -198,167 +314,104 @@ class Account {
      */
     async updateHypixel() {
         let json = await HypixelApi.player(this.uuid);
-        // make sure player has stats to be checked
-        if (json.player?.stats?.Arcade != undefined) {
-            this.updateTime = Date.now();
-            let arcade = json.player?.stats?.Arcade;
+        let player = json?.player;
+        this.updateTime = Date.now();
+        let arcade = json.player?.stats?.Arcade;
 
-            let wins = 0;
-            if (arcade?.wins_party) wins += arcade?.wins_party;
-            if (arcade?.wins_party_2) wins += arcade?.wins_party_2;
-            if (arcade?.wins_party_3) wins += arcade?.wins_party_3;
-            this.wins = numberify(wins);
+        this.wins += arcade?.wins_party ?? 0;
+        this.wins += arcade?.wins_party_2 ?? 0;
+        this.wins += arcade?.wins_party_3 ?? 0;
 
-            this.ranksGifted = json.player.giftingMeta?.ranksGiven;
-            this.ranksGifted = this.ranksGifted == undefined ? 0 : this.ranksGifted; 
+        this.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
-            this.rank = json.player.newPackageRank != undefined ? json.player.newPackageRank : json.player.packageRank;
-            this.mvpColor = json.player?.monthlyRankColor;
+        this.rank = json.player.newPackageRank != undefined ? json.player.newPackageRank : json.player.packageRank;
+        this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
-            if (json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
-            if (json.player.rank) this.rank = json.player.rank;
+        if (json.player.rank) this.rank = json.player.rank;
+        if (json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
 
-            this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD;
+        this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
 
-            this.name = json.player.displayname;
-            this.name_lower = this.name.toLowerCase();
-            this.nameHist = json.player.knownAliases;
-            this.internalId = json.player._id;
-            this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
-            this.lastLogout = json.player.lastLogout;
-            this.version = json.player.mcVersionRp;
-            this.mostRecentGameType = json.player.mostRecentGameType;
-            this.xp = json.player.networkExp;
-            this.level =
-                1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
-            this.firstLogin = json.player.firstLogin;
-            this.karma = json.player.karma;
-            this.hypixelSaysWins = arcade.wins_simon_says;
-            this.achievementPoints = numberify(json.player?.achievementPoints);
-            this.plusColor = json.player.rankPlusColor;
-            this.cloak = json.player.currentCloak;
-            this.hat = json.player.currentHat;
-            this.clickEffect = json.player.currentClickEffect;
-            this.arcadeCoins = numberify(arcade.coins);
-            this.hitwFinal = arcade.hitw_record_f;
-            this.hitwQual = arcade.hitw_record_q;
-            this.hitwWins = numberify(arcade.wins_hole_in_the_wall);
-            this.hitwRounds = arcade.rounds_hole_in_the_wall;
-            this.farmhuntWins = numberify(arcade.wins_farm_hunt);
-            this.farmhuntShit = arcade.poop_collected;
-            this.miniWallsWins = numberify(arcade.wins_mini_walls);
-            this.footballWins = numberify(arcade.wins_soccer);
-            this.enderSpleefWins = numberify(arcade.wins_ender);
-            this.throwOutWins = numberify(arcade.wins_throw_out);
-            this.galaxyWarsWins = numberify(arcade.sw_game_wins);
-            this.dragonWarsWins = numberify(arcade.wins_dragonwars2);
-            this.bountyHuntersWins = numberify(arcade.wins_oneinthequiver);
-            this.blockingDeadWins = numberify(arcade.wins_dayone);
-            this.hideAndSeekWins =
-                numberify(arcade.seeker_wins_hide_and_seek) + numberify(arcade.hider_wins_hide_and_seek);
-            this.zombiesWins = numberify(arcade.wins_zombies);
-            this.ctwKills = json.player.achievements?.arcade_ctw_slayer;
-            this.ctwWoolCaptured = json.player.achievements?.arcade_ctw_oh_sheep;
-            this.pixelPaintersWins = numberify(arcade.wins_draw_their_thing);
-            this.hnsKills = numberify(json.player.achievements?.arcade_hide_and_seek_hider_kills);
+        this.name = json.player.displayname ?? "INVALID-NAME";
+        this.name_lower = this.name.toLowerCase();
+        this.nameHist = json.player.knownAliases ?? [ "INVALID-NAME" ];
 
-            this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
-            this.seasonalWins.grinch = numberify(arcade.wins_grinch_simulator_v2);
-            this.seasonalWins.halloween = numberify(arcade.wins_halloween_simulator);
-            this.seasonalWins.scuba = numberify(arcade.wins_scuba_simulator);
-            this.simTotal = this.seasonalWins.total =
-                this.seasonalWins.easter +
-                this.seasonalWins.grinch +
-                this.seasonalWins.halloween +
-                this.seasonalWins.scuba;
+        this.internalId = json.player?._id ?? 0;
+        this.isLoggedIn = json.player?.lastLogin > json.player?.lastLogout;
+        this.lastLogout = json.player?.lastLogout ?? 0;
+        this.firstLogin = json.player?.firstLogin ?? Date.now();
 
-            for (let stat in arcade) {
-                if (stat.includes("zombie")) {
-                    this.zombies[stat] = arcade[stat];
-                }
-            }
+        this.version = json.player?.mcVersionRp ?? "1.8";
+        this.mostRecentGameType = json.player.mostRecentGameType ?? "NONE";
 
-            this.extras.blockingDeadKills = arcade.kills_dayone;
-            this.extras.blockingDeadHeadshots = arcade.headshots_dayone;
-            this.extras.bountyHuntersKills = arcade.kills_oneinthequiver;
-            this.extras.bountyHuntersBountyKills = arcade.bounty_kills_oneinthequiver;
-            this.extras.bountyHuntersDeaths = arcade.deaths_oneinthequiver;
-            this.extras.dragonWarsKills = arcade.kills_dragonwars2;
-            this.extras.footballGoals = arcade.goals_soccer;
-            this.extras.footballPKicks = arcade.powerkicks_soccer;
-            this.extras.footballKicks = arcade.kicks_soccer;
-            this.extras.galaxyWarsKills = arcade.sw_kills;
-            this.extras.galaxyWarsDeaths = arcade.sw_deaths;
-            this.extras.HNSSeekerWins = arcade.seeker_wins_hide_and_seek;
-            this.extras.HNSHiderWins = arcade.hider_wins_hide_and_seek;
-            this.extras.hypixelSaysRounds = arcade.rounds_simon_says;
-            this.extras.throwOutKills = arcade.kills_throw_out;
-            this.extras.throwOutDeaths = arcade.deaths_throw_out;
+        this.xp = json.player?.networkExp ?? 0;
+        this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
 
-            this.miniWalls.kit = arcade.miniwalls_activeKit;
-            this.miniWalls.arrowsHit = arcade.arrows_hit_mini_walls;
-            this.miniWalls.arrowsShot = arcade.arrows_shot_mini_walls;
-            this.miniWalls.finalKills = arcade.final_kills_mini_walls;
-            this.miniWalls.kills = arcade.kills_mini_walls;
-            this.miniWalls.witherKills = arcade.wither_kills_mini_walls;
-            this.miniWalls.deaths = arcade.deaths_mini_walls;
-            this.miniWalls.witherDamage = arcade.wither_damage_mini_walls;
+        this.karma = json.player?.karma ?? 0;
+        this.achievementPoints = json?.player?.achievementPoints ?? 0;
 
-            this.challenges.blockingDead = json.player.stats?.challenges?.ARCADE__blocking_dead_challenge;
-            this.challenges.creeperAttack = json.player.stats?.challenges?.ARCADE__creeper_attack_challenge;
-            this.challenges.dragonWars = json.player.stats?.challenges?.ARCADE__dragon_wars_challenge;
-            this.challenges.enderSpleef = json.player.stats?.challenges?.ARCADE__ender_spleef_challenge;
-            this.challenges.farmHunt = json.player.stats?.challenges?.ARCADE__farm_hunt_challenge;
-            this.challenges.galaxyWars = json.player.stats?.challenges?.ARCADE__galaxy_wars_challenge;
-            this.challenges.hitw = json.player.stats?.challenges?.ARCADE__hole_in_the_wall_challenge;
-            this.challenges.hns = json.player.stats?.challenges?.ARCADE__hide_and_seek_challenge;
-            this.challenges.hypixelSays = json.player.stats?.challenges?.ARCADE__hypixel_says_challenge;
-            this.challenges.miniWalls = json.player.stats?.challenges?.ARCADE__mini_walls_challenge;
-            this.challenges.partyGames = json.player.stats?.challenges?.ARCADE__party_games_challenge;
-            this.challenges.throwOut = json.player.stats?.challenges?.ARCADE__throw_out_challenge;
-            this.challenges.zombies = json.player.stats?.challenges?.ARCADE__zombies_challenge;
+        this.plusColor = json?.player?.rankPlusColor ?? "GOLD";
+        this.cloak = json?.player?.currentCloak ?? "";
+        this.hat = json?.player?.currentHat ?? "";
+        this.clickEffect = json?.player?.currentClickEffect ?? "";
 
-            this.quests.arcadeGamer = json.player?.quests?.arcade_gamer?.completions?.length;
-            this.quests.arcadeSpecialist = json.player?.quests?.arcade_specialist?.completions?.length;
-            this.quests.arcadeWinner = json.player?.quests?.arcade_winner?.completions?.length;
+        this.arcadeCoins = arcade?.coins ?? 0;
 
-            this.other.murderMysteryGames = json.player.stats?.MurderMystery?.games;
-            this.other.murderMysteryWins = json.player.stats?.MurderMystery?.wins;
-            this.other.buildBattleGames = json.player.stats?.BuildBattle?.games_played;
-            this.other.buildBattleScore = json.player.stats?.BuildBattle?.score;
-            this.other.buildBattleVotes = json.player.stats?.BuildBattle?.total_votes;
-            this.other.buildBattleWins = json.player.stats?.BuildBattle?.wins;
-            this.other.quakeDeaths = json.player.stats?.Quake?.deaths;
-            this.other.quakeKills = json.player.stats?.Quake?.kills;
-            this.other.quakeWins = json.player.stats?.Quake?.wins;
+        this.hypixelSaysWins = arcade?.wins_simon_says ?? 0;
 
-            this.arcadeWins = json.player.achievements?.arcade_arcade_winner;
-            this.anyWins = json.player.achievements?.general_wins;
+        this.hitwFinal = arcade?.hitw_record_f ?? 0;
+        this.hitwQual = arcade?.hitw_record_q ?? 0;
+        this.hitwWins = arcade?.wins_hole_in_the_wall ?? 0;
+        this.hitwRounds = arcade?.rounds_hole_in_the_wall ?? 0;
 
-            this.combinedArcadeWins =
-                numberify(this.wins) +
-                numberify(this.hitwWins) +
-                numberify(this.farmhuntWins) +
-                numberify(this.hypixelSaysWins) +
-                numberify(this.miniWallsWins) +
-                numberify(this.footballWins) +
-                numberify(this.enderSpleefWins) +
-                numberify(this.throwOutWins) +
-                numberify(this.galaxyWarsWins) +
-                numberify(this.dragonWarsWins) +
-                numberify(this.bountyHuntersWins) +
-                numberify(this.blockingDeadWins) +
-                numberify(this.hideAndSeekWins) +
-                numberify(this.zombiesWins) +
-                numberify(this.pixelPaintersWins) +
-                numberify(this.simTotal);
-        } else {
-            Logger.err(`Data failure, clearing account data for ${this.name} - ${this.uuid}!`);
-            Logger.err(JSON.stringify(json));
-            for (let prop in this) {
-                this[prop] = undefined;
-            }
-        }
+        this.farmhuntWins = arcade?.wins_farm_hunt ?? 0;
+        this.farmhuntShit = arcade?.poop_collected ?? 0;
+        this.miniWallsWins = arcade?.wins_mini_walls ?? 0;
+        this.footballWins = arcade?.wins_soccer ?? 0;
+        this.enderSpleefWins = arcade?.wins_ender ?? 0;
+        this.throwOutWins = arcade?.wins_throw_out ?? 0;
+        this.galaxyWarsWins = arcade?.sw_game_wins ?? 0;
+        this.dragonWarsWins = arcade?.wins_dragonwars2 ?? 0;
+        this.bountyHuntersWins = arcade?.wins_oneinthequiver ?? 0;
+        this.blockingDeadWins = arcade?.wins_dayone ?? 0;
+        this.hideAndSeekWins = (arcade?.seeker_wins_hide_and_seek ?? 0) + (arcade?.hider_wins_hide_and_seek ?? 0);
+        this.zombiesWins = arcade?.wins_zombies ?? 0;
+        this.pixelPaintersWins = arcade?.wins_draw_their_thing ?? 0;
+
+        this.hnsKills = json.player.achievements?.arcade_hide_and_seek_hider_kills ?? 0;
+
+        this.ctwWoolCaptured = json.player?.achievements?.arcade_ctw_oh_sheep ?? 0;
+        this.ctwKills = json.player?.achievements?.arcade_ctw_slayer ?? 0;
+
+        this.seasonalWins = new SeasonalStats(json?.player);
+        this.simTotal = this.seasonalWins.total;
+
+        this.zombies = new ZombiesStats(player);
+        this.extras = new ExtraStats(player);
+        this.miniWalls = new MiniWallsStats(player);
+        this.challenges = new ArcadeChallenges(player);
+        this.quests = new ArcadeQuests(player);
+
+        this.arcadeWins = json.player?.achievements?.arcade_arcade_winner;
+        this.anyWins = json.player?.achievements?.general_wins;
+
+        this.combinedArcadeWins =
+            this.wins +
+            this.hitwWins +
+            this.farmhuntWins +
+            this.hypixelSaysWins +
+            this.miniWallsWins +
+            this.footballWins +
+            this.enderSpleefWins +
+            this.throwOutWins +
+            this.galaxyWarsWins +
+            this.dragonWarsWins +
+            this.bountyHuntersWins +
+            this.blockingDeadWins +
+            this.hideAndSeekWins +
+            this.zombiesWins +
+            this.pixelPaintersWins +
+            this.simTotal;
     }
 }
 
