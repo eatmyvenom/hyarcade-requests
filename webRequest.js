@@ -7,9 +7,10 @@ class webResponse {
     status = 200;
     /**
      * Creates an instance of webResponse.
-     * @param {String} data the raw data recived from the server
-     * @param {Object[]} headers the http response headers
-     * @param {Number} status the status code
+     *
+     * @param {string} data the raw data recived from the server
+     * @param {object[]} headers the http response headers
+     * @param {number} status the status code
      * @memberof webResponse
      */
     constructor(data, headers, status) {
@@ -22,8 +23,8 @@ class webResponse {
 /**
  * Send a get request and return response as a promise
  *
- * @param {String} url The url to send the request to
- * @return {webResponse}
+ * @param {string} url The url to send the request to
+ * @returns {webResponse}
  */
 function sendRequest(url) {
     return new Promise((resolve, reject) => {
@@ -41,7 +42,7 @@ function sendRequest(url) {
         };
 
         try {
-            let req = protocolObj.get(url, reqOptions, (res) => {
+            protocolObj.get(url, reqOptions, (res) => {
                 let reply = "";
                 res.on("data", (d) => {
                     reply += d;

@@ -5,7 +5,7 @@ const webRequest = require("./webRequest");
  * The raw uuid response from mojang
  *
  * @param {*} name
- * @return {*}
+ * @returns {*}
  */
 async function getUUIDRaw(name) {
     // promisify query
@@ -14,12 +14,18 @@ async function getUUIDRaw(name) {
     return data;
 }
 
+/**
+ * @param uuid
+ */
 async function getPlayerRaw(uuid) {
     let response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
     let data = response.data;
     return data;
 }
 
+/**
+ * @param uuid
+ */
 async function getPlayer(uuid) {
     let raw = await getPlayerRaw(uuid);
     if (raw != "") {
@@ -34,8 +40,8 @@ async function getPlayer(uuid) {
 /**
  * Actual uuid from mojang
  *
- * @param {String} name
- * @return {String}
+ * @param {string} name
+ * @returns {string}
  */
 async function getUUID(name) {
     let raw = await getUUIDRaw(name);

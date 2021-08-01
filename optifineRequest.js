@@ -3,8 +3,8 @@ const webReq = require("./webRequest");
 /**
  * Get an optifine game from in game name
  *
- * @param {String} name
- * @return {Buffer} Cape as raw png
+ * @param {string} name
+ * @returns {Buffer} Cape as raw png
  */
 async function reqOFCape(name) {
     return await webReq(`http://s.optifine.net/capes/${name}.png`);
@@ -18,7 +18,8 @@ module.exports = class optifineRequest {
 
     /**
      * Creates an instance of optifineRequest.
-     * @param {String} name players in game name
+     *
+     * @param {string} name players in game name
      */
     constructor(name) {
         this.name = name;
@@ -38,7 +39,7 @@ module.exports = class optifineRequest {
     /**
      * Returns if the player has a cape
      *
-     * @return {Boolean}
+     * @returns {boolean}
      */
     hasCape() {
         return this.status != 404;
@@ -47,7 +48,7 @@ module.exports = class optifineRequest {
     /**
      * Return the capes raw png
      *
-     * @return {Buffer}
+     * @returns {Buffer}
      */
     getCapePNG() {
         return this.data;

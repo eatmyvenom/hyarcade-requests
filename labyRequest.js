@@ -3,8 +3,8 @@ const webReq = require("./webRequest");
 /**
  * Send a request to laby mod servers for a cape
  *
- * @param {String} uuid
- * @return {Buffer}
+ * @param {string} uuid
+ * @returns {Buffer}
  */
 async function reqLabyCape(uuid) {
     return await webReq(`https://dl.labymod.net/capes/${uuid}`);
@@ -18,7 +18,8 @@ class labyRequest {
 
     /**
      * Creates an instance of labyRequest.
-     * @param {String} uuid
+     *
+     * @param {string} uuid
      * @memberof labyRequest
      */
     constructor(uuid) {
@@ -40,7 +41,7 @@ class labyRequest {
     /**
      * Returns if the player has a cape
      *
-     * @return {Boolean}
+     * @returns {boolean}
      */
     hasCape() {
         return this.status != 404;
@@ -49,7 +50,7 @@ class labyRequest {
     /**
      * Return the capes raw png
      *
-     * @return {Buffer}
+     * @returns {Buffer}
      */
     getCapePNG() {
         return this.data;

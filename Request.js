@@ -9,4 +9,4 @@ module.exports = class HyarcadeRequests {
     static types = {
         Account : require("./types/Account")
     }
-}
+};

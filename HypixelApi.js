@@ -1,3 +1,4 @@
+const process = require("process");
 const url = require("url");
 const hypixelReq = require("./hypixelReq");
 const config = require("hyarcade-config").fromJSON();
@@ -7,7 +8,7 @@ const sleep = require("./utils").sleep;
 /**
  * Function to get the key to use
  *
- * @return {String}
+ * @returns {string}
  */
 function getKey() {
     let key = config.key;
@@ -68,8 +69,8 @@ module.exports = class HypixelApi {
 
     /**
      * 
-     * @param {String} uuid 
-     * @returns {Promise<Object>}
+     * @param {string} uuid 
+     * @returns {Promise<object>}
      */
     static async player(uuid) {
         let Api = new HypixelApi("player", { uuid: uuid });

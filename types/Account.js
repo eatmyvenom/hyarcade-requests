@@ -118,7 +118,7 @@ class ArcadeChallenges {
     farmHunt = 0;
     dragonWars = 0;
     throwOut = 0;
-};
+}
 
 class ArcadeQuests {
 
@@ -197,6 +197,7 @@ class Account {
 
     /**
      * Seasonal "simulator" games wins and stats
+     *
      * @type {SeasonalStats}
      * @memberof Account
      */
@@ -249,9 +250,10 @@ class Account {
 
     /**
      * Creates an instance of Account.
-     * @param {String} name
-     * @param {Number} wins
-     * @param {String} uuid
+     *
+     * @param {string} name
+     * @param {number} wins
+     * @param {string} uuid
      * @memberof account
      */
     constructor(name, wins, uuid) {
@@ -279,6 +281,7 @@ class Account {
 
     /**
      * Update and populate all the data for this account
+     *
      * @memberof account
      */
     async updateData() {
@@ -287,6 +290,7 @@ class Account {
 
     /**
      * Update and populate the optifine data
+     *
      * @memberof account
      */
     async updateOptifine() {
@@ -297,6 +301,7 @@ class Account {
 
     /**
      * Update and populate the labymod data
+     *
      * @memberof account
      */
     async updateLaby() {
@@ -307,6 +312,7 @@ class Account {
 
     /**
      * Update and populate the hypixel data
+     *
      * @memberof account
      */
     async updateHypixel() {

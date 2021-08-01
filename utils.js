@@ -4,4 +4,4 @@ module.exports = class utils {
             setTimeout(resolve, time);
         });
     }
-}
+};
