@@ -1,3 +1,6 @@
+const {
+    Buffer
+} = require("safe-buffer");
 const webReq = require("./webRequest");
 
 /**

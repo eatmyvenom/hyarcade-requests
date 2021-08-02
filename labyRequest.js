@@ -1,4 +1,7 @@
 const webReq = require("./webRequest");
+const {
+    Buffer
+} = require("safe-buffer");
 
 /**
  * Send a request to laby mod servers for a cape

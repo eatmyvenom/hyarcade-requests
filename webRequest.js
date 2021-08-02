@@ -24,7 +24,7 @@ class webResponse {
  * Send a get request and return response as a promise
  *
  * @param {string} url The url to send the request to
- * @returns {webResponse}
+ * @returns {webResponse} The webresponse object
  */
 function sendRequest(url) {
     return new Promise((resolve, reject) => {

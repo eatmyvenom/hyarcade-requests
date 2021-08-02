@@ -15,7 +15,8 @@ async function getUUIDRaw(name) {
 }
 
 /**
- * @param uuid
+ * @param {*} uuid
+ * @returns {*}
  */
 async function getPlayerRaw(uuid) {
     let response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
@@ -24,7 +25,8 @@ async function getPlayerRaw(uuid) {
 }
 
 /**
- * @param uuid
+ * @param {*} uuid
+ * @returns {*}
  */
 async function getPlayer(uuid) {
     let raw = await getPlayerRaw(uuid);
