@@ -327,7 +327,7 @@ class Account {
 
         this.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
-        this.rank = json.player.newPackageRank != undefined ? json.player.newPackageRank : json.player.packageRank;
+        this.rank = json.player?.newPackageRank != undefined ? json?.player?.newPackageRank : json?.player?.packageRank;
         this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
         if(json.player.rank) this.rank = json.player.rank;
@@ -335,17 +335,17 @@ class Account {
 
         this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
 
-        this.name = json.player.displayname ?? "INVALID-NAME";
+        this.name = json?.player?.displayname ?? "INVALID-NAME";
         this.name_lower = this.name.toLowerCase();
-        this.nameHist = json.player.knownAliases ?? ["INVALID-NAME"];
+        this.nameHist = json?.player?.knownAliases ?? ["INVALID-NAME"];
 
-        this.internalId = json.player?._id ?? 0;
-        this.isLoggedIn = json.player?.lastLogin > json.player?.lastLogout;
-        this.lastLogout = json.player?.lastLogout ?? 0;
-        this.firstLogin = json.player?.firstLogin ?? Date.now();
+        this.internalId = json?.player?._id ?? 0;
+        this.isLoggedIn = json?.player?.lastLogin > json.player?.lastLogout;
+        this.lastLogout = json?.player?.lastLogout ?? 0;
+        this.firstLogin = json?.player?.firstLogin ?? Date.now();
 
         this.version = json.player?.mcVersionRp ?? "1.8";
-        this.mostRecentGameType = json.player.mostRecentGameType ?? "NONE";
+        this.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
 
         this.xp = json.player?.networkExp ?? 0;
         this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
@@ -381,7 +381,7 @@ class Account {
         this.zombiesWins = arcade?.wins_zombies ?? 0;
         this.pixelPaintersWins = arcade?.wins_draw_their_thing ?? 0;
 
-        this.hnsKills = json.player.achievements?.arcade_hide_and_seek_hider_kills ?? 0;
+        this.hnsKills = json.player?.achievements?.arcade_hide_and_seek_hider_kills ?? 0;
 
         this.ctwWoolCaptured = json.player?.achievements?.arcade_ctw_oh_sheep ?? 0;
         this.ctwKills = json.player?.achievements?.arcade_ctw_slayer ?? 0;
