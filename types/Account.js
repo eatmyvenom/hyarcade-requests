@@ -330,8 +330,8 @@ class Account {
         this.rank = json.player?.newPackageRank != undefined ? json?.player?.newPackageRank : json?.player?.packageRank;
         this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
-        if(json.player.rank) this.rank = json.player.rank;
-        if(json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
+        if(json.player?.rank) this.rank = json.player?.rank;
+        if(json.player?.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
 
         this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
 
