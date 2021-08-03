@@ -321,9 +321,9 @@ class Account {
         this.updateTime = Date.now();
         let arcade = json.player?.stats?.Arcade;
 
-        this.wins += arcade?.wins_party ?? 0;
-        this.wins += arcade?.wins_party_2 ?? 0;
-        this.wins += arcade?.wins_party_3 ?? 0;
+        this.wins += new Number(arcade?.wins_party ?? 0);
+        this.wins += new Number(arcade?.wins_party_2 ?? 0);
+        this.wins += new Number(arcade?.wins_party_3 ?? 0);
 
         this.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
