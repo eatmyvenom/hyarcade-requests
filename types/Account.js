@@ -321,7 +321,7 @@ class Account {
         this.updateTime = Date.now();
         let arcade = json.player?.stats?.Arcade;
 
-        this.wins += new Number(arcade?.wins_party ?? 0);
+        this.wins = new Number(arcade?.wins_party ?? 0);
         this.wins += new Number(arcade?.wins_party_2 ?? 0);
         this.wins += new Number(arcade?.wins_party_3 ?? 0);
 
@@ -350,7 +350,7 @@ class Account {
         this.xp = json.player?.networkExp ?? 0;
         this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
 
-        this.karma = json.player?.karma ?? 0;
+        this.karma = json?.player?.karma ?? 0;
         this.achievementPoints = json?.player?.achievementPoints ?? 0;
 
         this.plusColor = json?.player?.rankPlusColor ?? "GOLD";
@@ -395,8 +395,8 @@ class Account {
         this.challenges = new ArcadeChallenges(player);
         this.quests = new ArcadeQuests(player);
 
-        this.arcadeWins = json.player?.achievements?.arcade_arcade_winner;
-        this.anyWins = json.player?.achievements?.general_wins;
+        this.arcadeWins = json.player?.achievements?.arcade_arcade_winner ?? 0;
+        this.anyWins = json.player?.achievements?.general_wins ?? 0;
 
         this.combinedArcadeWins =
             this.wins +
