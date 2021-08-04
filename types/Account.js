@@ -327,11 +327,12 @@ class Account {
 
         this.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
-        this.rank = json.player?.newPackageRank != undefined ? json?.player?.newPackageRank : json?.player?.packageRank;
-        this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
-
-        if(json.player?.rank) this.rank = json.player?.rank;
+        this.rank = json.player?.rank;
+        this.rank ??= json.player?.newPackageRank;
+        this.rank ??= json?.player?.packageRank;
         if(json.player?.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
+
+        this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
         this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
 
