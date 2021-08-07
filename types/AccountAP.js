@@ -132,8 +132,8 @@ class ArcadeGameAP {
      * @param {TeiredAchievementWrapper[]} tiered 
      */
     constructor(accData, onetimes, tiered) {
-        let onetimeArr = Array.from(accData.achievementsOneTime);
-        let tieredKeys = Object.keys(accData.achievements);
+        let onetimeArr = Array.from(accData?.achievementsOneTime ?? []);
+        let tieredKeys = Object.keys(accData?.achievements ?? []);
         
         onetimes.forEach((onetime) => {
             if(onetimeArr.includes(onetime.stat)) {
