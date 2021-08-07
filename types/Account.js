@@ -2,6 +2,7 @@ const HypixelApi = require("../HypixelApi");
 const optifineRequest = require("../optifineRequest");
 const labyRequest = require("../labyRequest");
 const Logger = require("hyarcade-logger");
+const AccountAP = require("./AccountAP");
 
 class SeasonalStats {
 
@@ -152,21 +153,35 @@ class Account {
     uuid = "";
     uuidPosix = "";
     internalId = "";
+
     guildID = "";
     guild = undefined;
     guildTag = undefined;
     guildTagColor = undefined;
+
     rank = "";
+
     version = "";
+
     firstLogin = 0;
     isLoggedIn = false;
     lastLogout = 0;
+
     mostRecentGameType = "";
+
     achievementPoints = 0;
     xp = 0;
     level = 0;
     karma = 0;
     ranksGifted = 0;
+
+    /**
+     *
+     * @type {AccountAP}
+     * @memberof Account
+     */
+    arcadeAchievments = {};
+
     arcadeCoins = 0;
     wins = 0;
     hitwQual = 0;
@@ -237,15 +252,20 @@ class Account {
      * @memberof Account
      */
     zombies = {};
+
     hasOFCape = false;
     hasLabyCape = false;
+
     cloak = "";
     clickEffect = "";
+    hat = "";
+
     plusColor = "";
     mvpColor = "";
-    hat = "";
+
     hypixelDiscord = "";
     discord = "";
+
     updateTime = 0;
 
     /**
@@ -358,6 +378,8 @@ class Account {
         this.cloak = json?.player?.currentCloak ?? "";
         this.hat = json?.player?.currentHat ?? "";
         this.clickEffect = json?.player?.currentClickEffect ?? "";
+
+        this.arcadeAchievments = new AccountAP(player);
 
         this.arcadeCoins = arcade?.coins ?? 0;
 
