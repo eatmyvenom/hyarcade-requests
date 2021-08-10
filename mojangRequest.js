@@ -32,11 +32,11 @@ async function getPlayer (uuid) {
     let raw = await getPlayerRaw(uuid);
     if(raw != "") {
         return JSON.parse(raw);
-    } else {
-        // log the missing username so i can change it
-        logger.err(`"${uuid}" does not exist`);
-        return undefined;
-    }
+    } 
+    // log the missing username so i can change it
+    logger.err(`"${uuid}" does not exist`);
+    return undefined;
+    
 }
 
 /**
@@ -51,11 +51,11 @@ async function getUUID (name) {
     // make sure the data isnt an empty response
     if(raw != "") {
         return JSON.parse(raw).id;
-    } else {
-        // log the missing username so i can change it
-        logger.err(`"${name}" does not exist`);
-        return undefined;
-    }
+    } 
+    // log the missing username so i can change it
+    logger.err(`"${name}" does not exist`);
+    return undefined;
+    
 }
 
 module.exports = {
