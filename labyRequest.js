@@ -9,7 +9,7 @@ const {
  * @param {string} uuid
  * @returns {Buffer}
  */
-async function reqLabyCape(uuid) {
+async function reqLabyCape (uuid) {
     return await webReq(`https://dl.labymod.net/capes/${uuid}`);
 }
 
@@ -25,7 +25,7 @@ class labyRequest {
      * @param {string} uuid
      * @memberof labyRequest
      */
-    constructor(uuid) {
+    constructor (uuid) {
         this.uuid = uuid;
     }
 
@@ -34,7 +34,7 @@ class labyRequest {
      *
      * @memberof labyRequest
      */
-    async makeRequest() {
+    async makeRequest () {
         let res = await reqLabyCape(this.uuid);
         this.headers = res.headers;
         this.status = res.status;
@@ -46,7 +46,7 @@ class labyRequest {
      *
      * @returns {boolean}
      */
-    hasCape() {
+    hasCape () {
         return this.status != 404;
     }
 
@@ -55,7 +55,7 @@ class labyRequest {
      *
      * @returns {Buffer}
      */
-    getCapePNG() {
+    getCapePNG () {
         return this.data;
     }
 }

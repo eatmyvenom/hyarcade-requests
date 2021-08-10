@@ -7,7 +7,7 @@ const webRequest = require("./webRequest");
  * @param {*} name
  * @returns {*}
  */
-async function getUUIDRaw(name) {
+async function getUUIDRaw (name) {
     // promisify query
     let response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`);
     let data = response.data;
@@ -18,7 +18,7 @@ async function getUUIDRaw(name) {
  * @param {*} uuid
  * @returns {*}
  */
-async function getPlayerRaw(uuid) {
+async function getPlayerRaw (uuid) {
     let response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
     let data = response.data;
     return data;
@@ -28,7 +28,7 @@ async function getPlayerRaw(uuid) {
  * @param {*} uuid
  * @returns {*}
  */
-async function getPlayer(uuid) {
+async function getPlayer (uuid) {
     let raw = await getPlayerRaw(uuid);
     if(raw != "") {
         return JSON.parse(raw);
@@ -45,7 +45,7 @@ async function getPlayer(uuid) {
  * @param {string} name
  * @returns {string}
  */
-async function getUUID(name) {
+async function getUUID (name) {
     let raw = await getUUIDRaw(name);
 
     // make sure the data isnt an empty response

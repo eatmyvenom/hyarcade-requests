@@ -13,7 +13,7 @@ class webResponse {
      * @param {number} status the status code
      * @memberof webResponse
      */
-    constructor(data, headers, status) {
+    constructor (data, headers, status) {
         this.data = data;
         this.headers = headers;
         this.status = status;
@@ -26,7 +26,7 @@ class webResponse {
  * @param {string} url The url to send the request to
  * @returns {webResponse} The webresponse object
  */
-function sendRequest(url) {
+function sendRequest (url) {
     return new Promise((resolve, reject) => {
         let protocolObj = http;
         let method = "http:";
@@ -60,6 +60,6 @@ function sendRequest(url) {
     });
 }
 
-module.exports = async function webRequest(url) {
+module.exports = async function webRequest (url) {
     return await sendRequest(url);
 };

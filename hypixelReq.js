@@ -8,7 +8,7 @@ module.exports = class hypixelReq {
      *
      * @param {string} url
      */
-    constructor(url) {
+    constructor (url) {
         this.url = url;
     }
 
@@ -17,7 +17,7 @@ module.exports = class hypixelReq {
      *
      * @returns {string}
      */
-    async makeRequest() {
+    async makeRequest () {
         let req = await webRequest(this.url);
         this.headers = req.headers;
         return req.data;
