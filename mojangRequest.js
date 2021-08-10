@@ -59,7 +59,7 @@ async function getUUID (name) {
 }
 
 module.exports = {
-    getUUIDRaw: getUUIDRaw,
-    getUUID: getUUID,
-    getPlayer: getPlayer,
+    getUUIDRaw,
+    getUUID,
+    getPlayer,
 };

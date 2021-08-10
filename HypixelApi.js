@@ -76,7 +76,7 @@ module.exports = class HypixelApi {
      */
     static async player (uuid) {
         const Api = new HypixelApi("player", {
-            uuid: uuid
+            uuid
         });
         const data = await Api.makeRequest();
         try {
@@ -90,7 +90,7 @@ module.exports = class HypixelApi {
 
     static async friends (uuid) {
         const Api = new HypixelApi("friends", {
-            uuid: uuid
+            uuid
         });
         const data = await Api.makeRequest();
         try {
@@ -104,7 +104,7 @@ module.exports = class HypixelApi {
 
     static async recentgames (uuid) {
         const Api = new HypixelApi("recentgames", {
-            uuid: uuid
+            uuid
         });
         const data = await Api.makeRequest();
         try {
@@ -118,7 +118,7 @@ module.exports = class HypixelApi {
 
     static async status (uuid) {
         const Api = new HypixelApi("status", {
-            uuid: uuid
+            uuid
         });
         const data = await Api.makeRequest();
         try {
