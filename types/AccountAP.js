@@ -42,7 +42,7 @@ class TeiredAchievementWrapper {
 
     stat = "";
 
-    constructor(achievement, stat) {
+    constructor (achievement, stat) {
         this.achievement = achievement;
         this.stat = `arcade_${stat.toLowerCase()}`;
     }
@@ -58,7 +58,7 @@ class OneTimeAchievementWrapper {
 
     stat = "";
 
-    constructor(achievement, stat) {
+    constructor (achievement, stat) {
         this.achievement = achievement;
         this.stat = `arcade_${stat.toLowerCase()}`;
     }
@@ -88,13 +88,14 @@ class ArcadeTieredAP {
     toTop = 0;
     toNext = 0;
     ap = 0;
+    availiableAP = 0;
 
     /**
      * 
      * @param {number} amnt 
      * @param {TieredAP} achievement 
      */
-    constructor(amnt, achievement) {
+    constructor (amnt, achievement) {
         this.amount = amnt;
         this.name = achievement.name;
 
@@ -105,6 +106,8 @@ class ArcadeTieredAP {
                 this.currentTier = tier.tier;
                 this.ap += tier.points;
             }
+
+            this.availiableAP += tier.points;
         }, this);
 
         this.topTier = tierArr[tierArr.length - 1].tier;
@@ -117,9 +120,6 @@ class ArcadeGameAP {
     apEarned = 0;
     apAvailable = 0;
 
-    oneTimesEarned = [];
-    oneTimesMissing = [];
-
     tieredAP = [];
 
     achievementsEarned = [];
@@ -131,24 +131,32 @@ class ArcadeGameAP {
      * @param {OneTimeAchievementWrapper[]} onetimes 
      * @param {TeiredAchievementWrapper[]} tiered 
      */
-    constructor(accData, onetimes, tiered) {
+    constructor (accData, onetimes, tiered) {
         let onetimeArr = Array.from(accData?.achievementsOneTime ?? []);
         let tieredKeys = Object.keys(accData?.achievements ?? []);
-        
+
         onetimes.forEach((onetime) => {
             if(onetimeArr.includes(onetime.stat)) {
                 this.achievementsEarned.push(onetime.achievement.name);
+                this.apEarned += onetime.achievement.points;
             } else {
                 this.achievementsMissing.push(onetime.achievement.name);
             }
+
+            this.apAvailable += onetime.achievement.points;
         }, this);
 
         tiered.forEach((tierAP) => {
             if(tieredKeys.includes(tierAP.stat)) {
                 let gameTier = new ArcadeTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
-                if(gameTier.tier == gameTier.topTier) {
+                if(gameTier.currentTier == gameTier.topTier) {
                     this.achievementsEarned.push(gameTier.name);
+                } else {
+                    this.achievementsMissing.push(gameTier.name);
                 }
+
+                this.apEarned += gameTier.ap;
+                this.apAvailable += gameTier.availiableAP;
 
                 this.tieredAP.push(gameTier);
             } else {
@@ -273,7 +281,7 @@ class AccountAP {
      */
     zombies;
 
-    constructor(accData) {
+    constructor (accData) {
         this.blockingDead = new ArcadeGameAP(accData, [
             new OneTimeAchievementWrapper(arcadeOneTime.NO_MERCY, "NO_MERCY"),
             new OneTimeAchievementWrapper(arcadeOneTime.LONE_SURVIVOR, "LONE_SURVIVOR"),
