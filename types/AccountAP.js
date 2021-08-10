@@ -99,7 +99,7 @@ class ArcadeTieredAP {
         this.amount = amnt;
         this.name = achievement.name;
 
-        let tierArr = Array.from(achievement.tiers);
+        const tierArr = Array.from(achievement.tiers);
 
         tierArr.forEach((tier) => {
             if(this.amount >= tier.amount) {
@@ -132,8 +132,8 @@ class ArcadeGameAP {
      * @param {TeiredAchievementWrapper[]} tiered 
      */
     constructor (accData, onetimes, tiered) {
-        let onetimeArr = Array.from(accData?.achievementsOneTime ?? []);
-        let tieredKeys = Object.keys(accData?.achievements ?? []);
+        const onetimeArr = Array.from(accData?.achievementsOneTime ?? []);
+        const tieredKeys = Object.keys(accData?.achievements ?? []);
 
         onetimes.forEach((onetime) => {
             if(onetimeArr.includes(onetime.stat)) {
@@ -148,7 +148,7 @@ class ArcadeGameAP {
 
         tiered.forEach((tierAP) => {
             if(tieredKeys.includes(tierAP.stat)) {
-                let gameTier = new ArcadeTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
+                const gameTier = new ArcadeTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
                 if(gameTier.currentTier == gameTier.topTier) {
                     this.achievementsEarned.push(gameTier.name);
                 } else {

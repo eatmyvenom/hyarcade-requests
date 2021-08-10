@@ -9,8 +9,8 @@ const webRequest = require("./webRequest");
  */
 async function getUUIDRaw (name) {
     // promisify query
-    let response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`);
-    let {data} = response;
+    const response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`);
+    const {data} = response;
     return data;
 }
 
@@ -19,8 +19,8 @@ async function getUUIDRaw (name) {
  * @returns {*}
  */
 async function getPlayerRaw (uuid) {
-    let response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
-    let {data} = response;
+    const response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
+    const {data} = response;
     return data;
 }
 
@@ -29,7 +29,7 @@ async function getPlayerRaw (uuid) {
  * @returns {*}
  */
 async function getPlayer (uuid) {
-    let raw = await getPlayerRaw(uuid);
+    const raw = await getPlayerRaw(uuid);
     if(raw != "") {
         return JSON.parse(raw);
     } 
@@ -46,7 +46,7 @@ async function getPlayer (uuid) {
  * @returns {string}
  */
 async function getUUID (name) {
-    let raw = await getUUIDRaw(name);
+    const raw = await getUUIDRaw(name);
 
     // make sure the data isnt an empty response
     if(raw != "") {

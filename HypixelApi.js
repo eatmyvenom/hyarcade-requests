@@ -35,12 +35,12 @@ module.exports = class HypixelApi {
         this.endpoint = endpoint;
         this.args = args;
         args.key = getKey();
-        let urlargs = new url.URLSearchParams(args);
+        const urlargs = new url.URLSearchParams(args);
         this.reqUrl = new url.URL(`${endpoint}?${urlargs.toString()}`, "https://api.hypixel.net");
     }
 
     async makeRequest () {
-        let apiPoint = new hypixelReq(this.reqUrl.toString());
+        const apiPoint = new hypixelReq(this.reqUrl.toString());
         let response = await apiPoint.makeRequest();
 
         // Hypixel api put the amount of time you have to wait
@@ -58,8 +58,8 @@ module.exports = class HypixelApi {
     }
 
     static async key () {
-        let Api = new HypixelApi("key");
-        let data = await Api.makeRequest();
+        const Api = new HypixelApi("key");
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -75,10 +75,10 @@ module.exports = class HypixelApi {
      * @returns {Promise<object>}
      */
     static async player (uuid) {
-        let Api = new HypixelApi("player", {
+        const Api = new HypixelApi("player", {
             uuid: uuid
         });
-        let data = await Api.makeRequest();
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -89,10 +89,10 @@ module.exports = class HypixelApi {
     }
 
     static async friends (uuid) {
-        let Api = new HypixelApi("friends", {
+        const Api = new HypixelApi("friends", {
             uuid: uuid
         });
-        let data = await Api.makeRequest();
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -103,10 +103,10 @@ module.exports = class HypixelApi {
     }
 
     static async recentgames (uuid) {
-        let Api = new HypixelApi("recentgames", {
+        const Api = new HypixelApi("recentgames", {
             uuid: uuid
         });
-        let data = await Api.makeRequest();
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -117,10 +117,10 @@ module.exports = class HypixelApi {
     }
 
     static async status (uuid) {
-        let Api = new HypixelApi("status", {
+        const Api = new HypixelApi("status", {
             uuid: uuid
         });
-        let data = await Api.makeRequest();
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -145,7 +145,7 @@ module.exports = class HypixelApi {
                 name: something
             });
         }
-        let data = await Api.makeRequest();
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -156,8 +156,8 @@ module.exports = class HypixelApi {
     }
 
     static async achievements () {
-        let Api = new HypixelApi("resources/achievements");
-        let data = await Api.makeRequest();
+        const Api = new HypixelApi("resources/achievements");
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -168,8 +168,8 @@ module.exports = class HypixelApi {
     }
 
     static async challenges () {
-        let Api = new HypixelApi("resources/challenges");
-        let data = await Api.makeRequest();
+        const Api = new HypixelApi("resources/challenges");
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -180,8 +180,8 @@ module.exports = class HypixelApi {
     }
 
     static async boosters () {
-        let Api = new HypixelApi("boosters");
-        let data = await Api.makeRequest();
+        const Api = new HypixelApi("boosters");
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -192,8 +192,8 @@ module.exports = class HypixelApi {
     }
 
     static async counts () {
-        let Api = new HypixelApi("counts");
-        let data = await Api.makeRequest();
+        const Api = new HypixelApi("counts");
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {
@@ -204,8 +204,8 @@ module.exports = class HypixelApi {
     }
 
     static async leaderboards () {
-        let Api = new HypixelApi("leaderboards");
-        let data = await Api.makeRequest();
+        const Api = new HypixelApi("leaderboards");
+        const data = await Api.makeRequest();
         try {
             return JSON.parse(data);
         } catch (e) {

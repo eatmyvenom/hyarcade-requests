@@ -35,7 +35,7 @@ function sendRequest (url) {
             method = "https:";
         }
 
-        let reqOptions = {
+        const reqOptions = {
             family: 4,
             port: method == "http:" ? 80 : 443,
             protocol: method,

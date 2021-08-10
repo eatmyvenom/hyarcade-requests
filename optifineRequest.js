@@ -33,7 +33,7 @@ module.exports = class optifineRequest {
      *
      */
     async makeRequest () {
-        let res = await reqOFCape(this.name);
+        const res = await reqOFCape(this.name);
         this.headers = res.headers;
         this.status = res.status;
         this.data = res.data;

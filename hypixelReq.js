@@ -18,7 +18,7 @@ module.exports = class hypixelReq {
      * @returns {string}
      */
     async makeRequest () {
-        let req = await webRequest(this.url);
+        const req = await webRequest(this.url);
         this.headers = req.headers;
         return req.data;
     }

@@ -35,7 +35,7 @@ class labyRequest {
      * @memberof labyRequest
      */
     async makeRequest () {
-        let res = await reqLabyCape(this.uuid);
+        const res = await reqLabyCape(this.uuid);
         this.headers = res.headers;
         this.status = res.status;
         this.data = res.data;

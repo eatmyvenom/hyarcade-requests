@@ -285,7 +285,7 @@ class ArcadeQuests {
 class ZombiesStats {
     constructor (player) {
         if(player?.stats?.Arcade) {
-            for(let stat in player?.stats?.Arcade) {
+            for(const stat in player?.stats?.Arcade) {
                 if(stat.includes("zombie")) {
                     this[stat] = player?.stats?.Arcade[stat];
                 }
@@ -497,11 +497,11 @@ class Account {
         this.name = name;
         this.uuid = uuid;
         try {
-            let timeLow = uuid?.slice(0, 8);
-            let timeMid = uuid?.slice(8, 12);
-            let version = uuid?.slice(12, 16);
-            let varient = uuid?.slice(16, 20);
-            let node = uuid?.slice(-12);
+            const timeLow = uuid?.slice(0, 8);
+            const timeMid = uuid?.slice(8, 12);
+            const version = uuid?.slice(12, 16);
+            const varient = uuid?.slice(16, 20);
+            const node = uuid?.slice(-12);
             this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
         } catch (e) {
             Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
@@ -620,7 +620,7 @@ class Account {
      * @memberof account
      */
     async updateOptifine () {
-        let req = new optifineRequest(this.name);
+        const req = new optifineRequest(this.name);
         await req.makeRequest();
         this.hasOFCape = req.hasCape();
     }
@@ -631,7 +631,7 @@ class Account {
      * @memberof account
      */
     async updateLaby () {
-        let req = new labyRequest(this.uuidPosix);
+        const req = new labyRequest(this.uuidPosix);
         await req.makeRequest();
         this.hasLabyCape = req.hasCape();
     }
@@ -642,10 +642,10 @@ class Account {
      * @memberof account
      */
     async updateHypixel () {
-        let json = await HypixelApi.player(this.uuid);
-        let player = json?.player;
+        const json = await HypixelApi.player(this.uuid);
+        const player = json?.player;
         this.updateTime = Date.now();
-        let arcade = json.player?.stats?.Arcade;
+        const arcade = json.player?.stats?.Arcade;
 
         this.blockingDead = new BlockingDeadStats(arcade);
         this.bountyHunters = new BountyHuntersStats(arcade);
