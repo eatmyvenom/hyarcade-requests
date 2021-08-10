@@ -3,7 +3,7 @@ const url = require("url");
 const hypixelReq = require("./hypixelReq");
 const config = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
-const sleep = require("./utils").sleep;
+const {sleep} = require("./utils");
 
 /**
  * Function to get the key to use
@@ -11,11 +11,13 @@ const sleep = require("./utils").sleep;
  * @returns {string}
  */
 function getKey () {
-    let key = config.key;
+    let { key } = config;
     if(config.cluster) {
+        // eslint-disable-next-line prefer-destructuring
         key = config.clusters[config.cluster].key;
     }
     if(process.argv[2] == "bot") {
+        // eslint-disable-next-line prefer-destructuring
         key = config.clusters["serverbot"].key;
     }
     if(config.mode == "test") {
