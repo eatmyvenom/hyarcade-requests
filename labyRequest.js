@@ -1,6 +1,6 @@
 const webReq = require("./webRequest");
 const {
-    Buffer
+  Buffer
 } = require("safe-buffer");
 
 /**
@@ -10,7 +10,7 @@ const {
  * @returns {Buffer}
  */
 async function reqLabyCape (uuid) {
-    return await webReq(`https://dl.labymod.net/capes/${uuid}`);
+  return await webReq(`https://dl.labymod.net/capes/${uuid}`);
 }
 
 class labyRequest {
@@ -26,7 +26,7 @@ class labyRequest {
      * @memberof labyRequest
      */
     constructor (uuid) {
-        this.uuid = uuid;
+      this.uuid = uuid;
     }
 
     /**
@@ -35,10 +35,10 @@ class labyRequest {
      * @memberof labyRequest
      */
     async makeRequest () {
-        const res = await reqLabyCape(this.uuid);
-        this.headers = res.headers;
-        this.status = res.status;
-        this.data = res.data;
+      const res = await reqLabyCape(this.uuid);
+      this.headers = res.headers;
+      this.status = res.status;
+      this.data = res.data;
     }
 
     /**
@@ -47,7 +47,7 @@ class labyRequest {
      * @returns {boolean}
      */
     hasCape () {
-        return this.status != 404;
+      return this.status != 404;
     }
 
     /**
@@ -56,7 +56,7 @@ class labyRequest {
      * @returns {Buffer}
      */
     getCapePNG () {
-        return this.data;
+      return this.data;
     }
 }
 

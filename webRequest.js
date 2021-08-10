@@ -14,9 +14,9 @@ class webResponse {
      * @memberof webResponse
      */
     constructor (data, headers, status) {
-        this.data = data;
-        this.headers = headers;
-        this.status = status;
+      this.data = data;
+      this.headers = headers;
+      this.status = status;
     }
 }
 
@@ -27,39 +27,39 @@ class webResponse {
  * @returns {webResponse} The webresponse object
  */
 function sendRequest (url) {
-    return new Promise((resolve, reject) => {
-        let protocolObj = http;
-        let method = "http:";
-        if(url.startsWith("https")) {
-            protocolObj = https;
-            method = "https:";
-        }
+  return new Promise((resolve, reject) => {
+    let protocolObj = http;
+    let method = "http:";
+    if(url.startsWith("https")) {
+      protocolObj = https;
+      method = "https:";
+    }
 
-        const reqOptions = {
-            family: 4,
-            port: method == "http:" ? 80 : 443,
-            protocol: method,
-        };
+    const reqOptions = {
+      family: 4,
+      port: method == "http:" ? 80 : 443,
+      protocol: method,
+    };
 
-        try {
-            protocolObj.get(url, reqOptions, (res) => {
-                let reply = "";
-                res.on("data", (d) => {
-                    reply += d;
-                });
-                res.on("end", () => {
-                    resolve(new webResponse(reply, res.headers, res.statusCode));
-                });
-                res.on("error", (err) => {
-                    reject(err);
-                });
-            });
-        } catch (e) {
-            return sendRequest(url);
-        }
-    });
+    try {
+      protocolObj.get(url, reqOptions, (res) => {
+        let reply = "";
+        res.on("data", (d) => {
+          reply += d;
+        });
+        res.on("end", () => {
+          resolve(new webResponse(reply, res.headers, res.statusCode));
+        });
+        res.on("error", (err) => {
+          reject(err);
+        });
+      });
+    } catch (e) {
+      return sendRequest(url);
+    }
+  });
 }
 
 module.exports = async function webRequest (url) {
-    return await sendRequest(url);
+  return await sendRequest(url);
 };

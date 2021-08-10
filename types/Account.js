@@ -19,10 +19,10 @@ class BlockingDeadStats extends ArcadeGameStats {
     headshots = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_dayone ?? 0;
-        this.kills = arcade?.kills_dayone ?? 0;
-        this.headshots = arcade?.headshots_dayone ?? 0;
+      super();
+      this.wins = arcade?.wins_dayone ?? 0;
+      this.kills = arcade?.kills_dayone ?? 0;
+      this.headshots = arcade?.headshots_dayone ?? 0;
     }
 }
 
@@ -32,11 +32,11 @@ class BountyHuntersStats extends ArcadeGameStats {
     deaths = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_oneinthequiver ?? 0;
-        this.kills = arcade?.kills_oneinthequiver ?? 0;
-        this.bountyKills = arcade?.bounty_kills_oneinthequiver ?? 0;
-        this.deaths = arcade?.deaths_oneinthequiver ?? 0;
+      super();
+      this.wins = arcade?.wins_oneinthequiver ?? 0;
+      this.kills = arcade?.kills_oneinthequiver ?? 0;
+      this.bountyKills = arcade?.bounty_kills_oneinthequiver ?? 0;
+      this.deaths = arcade?.deaths_oneinthequiver ?? 0;
     }
 }
 
@@ -45,8 +45,8 @@ class CaptureTheWoolStats {
     woolCaptures = 0;
 
     constructor (player) {
-        this.woolCaptures = player?.achievements?.arcade_ctw_oh_sheep ?? 0;
-        this.kills = player?.achievements?.arcade_ctw_slayer ?? 0;
+      this.woolCaptures = player?.achievements?.arcade_ctw_oh_sheep ?? 0;
+      this.kills = player?.achievements?.arcade_ctw_slayer ?? 0;
     }
 }
 
@@ -55,17 +55,17 @@ class DragonWarsStats extends ArcadeGameStats {
     kills = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_dragonwars2 ?? 0;
-        this.kills = arcade?.kills_dragonwars2 ?? 0;
+      super();
+      this.wins = arcade?.wins_dragonwars2 ?? 0;
+      this.kills = arcade?.kills_dragonwars2 ?? 0;
     }
 }
 
 class EnderSpleefStats extends ArcadeGameStats {
-    constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_dragonwars2 ?? 0;
-    }
+  constructor (arcade) {
+    super();
+    this.wins = arcade?.wins_dragonwars2 ?? 0;
+  }
 }
 
 class FootballStats extends ArcadeGameStats {
@@ -75,11 +75,11 @@ class FootballStats extends ArcadeGameStats {
     kicks = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_soccer ?? 0;
-        this.goals = arcade?.goals_soccer ?? 0;
-        this.powerkicks = arcade?.powerkicks_soccer ?? 0;
-        this.kicks = arcade?.kicks_soccer ?? 0;
+      super();
+      this.wins = arcade?.wins_soccer ?? 0;
+      this.goals = arcade?.goals_soccer ?? 0;
+      this.powerkicks = arcade?.powerkicks_soccer ?? 0;
+      this.kicks = arcade?.kicks_soccer ?? 0;
     }
 }
 
@@ -88,9 +88,9 @@ class FarmhuntStats extends ArcadeGameStats {
     poop = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_farm_hunt ?? 0;
-        this.poop = arcade?.poop_collected ?? 0;
+      super();
+      this.wins = arcade?.wins_farm_hunt ?? 0;
+      this.poop = arcade?.poop_collected ?? 0;
     }
 }
 
@@ -100,10 +100,10 @@ class GalaxyWarsStats extends ArcadeGameStats {
     deaths = 0;
 
     constructor (arcade) {
-        super();
-        this.kills = arcade?.sw_kills ?? 0;
-        this.deaths = arcade?.sw_deaths ?? 0;
-        this.wins = arcade?.sw_game_wins ?? 0;
+      super();
+      this.kills = arcade?.sw_kills ?? 0;
+      this.deaths = arcade?.sw_deaths ?? 0;
+      this.wins = arcade?.sw_game_wins ?? 0;
     }
 }
 
@@ -114,11 +114,11 @@ class HideAndSeekStats extends ArcadeGameStats {
     kills = 0;
 
     constructor (player) {
-        super();
-        this.seekerWins = player?.stats?.Arcade?.seeker_wins_hide_and_seek ?? 0;
-        this.hiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
-        this.wins = this.seekerWins + this.hiderWins;
-        this.kills = player?.achievements?.arcade_hide_and_seek_hider_kills ?? 0;
+      super();
+      this.seekerWins = player?.stats?.Arcade?.seeker_wins_hide_and_seek ?? 0;
+      this.hiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
+      this.wins = this.seekerWins + this.hiderWins;
+      this.kills = player?.achievements?.arcade_hide_and_seek_hider_kills ?? 0;
     }
 }
 
@@ -129,11 +129,11 @@ class HoleInTheWallStats extends ArcadeGameStats {
     finals = 0;
 
     constructor (arcade) {
-        super();
-        this.finals = arcade?.hitw_record_f ?? 0;
-        this.qualifiers = arcade?.hitw_record_q ?? 0;
-        this.wins = arcade?.wins_hole_in_the_wall ?? 0;
-        this.rounds = arcade?.rounds_hole_in_the_wall ?? 0;
+      super();
+      this.finals = arcade?.hitw_record_f ?? 0;
+      this.qualifiers = arcade?.hitw_record_q ?? 0;
+      this.wins = arcade?.wins_hole_in_the_wall ?? 0;
+      this.rounds = arcade?.rounds_hole_in_the_wall ?? 0;
     }
 }
 
@@ -142,9 +142,9 @@ class HypixelSaysStats extends ArcadeGameStats {
     rounds = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_simon_says ?? 0;
-        this.rounds = arcade?.rounds_simon_says ?? 0;
+      super();
+      this.wins = arcade?.wins_simon_says ?? 0;
+      this.rounds = arcade?.rounds_simon_says ?? 0;
     }
 }
 
@@ -155,20 +155,20 @@ class PartyGamesStats extends ArcadeGameStats {
     wins3 = 0;
 
     constructor (arcade) {
-        super();
-        this.wins1 = arcade?.wins_party ?? 0;
-        this.wins2 = arcade?.wins_party_2 ?? 0;
-        this.wins3 = arcade?.wins_party_3 ?? 0;
-        this.wins = this.wins1 + this.wins2 + this.wins3;
+      super();
+      this.wins1 = arcade?.wins_party ?? 0;
+      this.wins2 = arcade?.wins_party_2 ?? 0;
+      this.wins3 = arcade?.wins_party_3 ?? 0;
+      this.wins = this.wins1 + this.wins2 + this.wins3;
     }
 }
 
 class PixelPaintersStats extends ArcadeGameStats {
 
-    constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_draw_their_thing ?? 0;
-    }
+  constructor (arcade) {
+    super();
+    this.wins = arcade?.wins_draw_their_thing ?? 0;
+  }
 }
 
 class ThrowOutStats extends ArcadeGameStats {
@@ -177,26 +177,26 @@ class ThrowOutStats extends ArcadeGameStats {
     deaths = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_throw_out ?? 0;
-        this.kills = arcade?.kills_throw_out ?? 0;
-        this.deaths = arcade?.deaths_throw_out ?? 0;
+      super();
+      this.wins = arcade?.wins_throw_out ?? 0;
+      this.kills = arcade?.kills_throw_out ?? 0;
+      this.deaths = arcade?.deaths_throw_out ?? 0;
     }
 }
 
 class SeasonalStats {
 
-    constructor (player) {
-        this.easter = player?.stats?.Arcade?.wins_easter_simulator ?? 0;
-        this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
-        this.halloween = player?.stats?.Arcade?.wins_halloween_simulator ?? 0;
-        this.scuba = player?.stats?.Arcade?.wins_scuba_simulator ?? 0;
-        this.total =
+  constructor (player) {
+    this.easter = player?.stats?.Arcade?.wins_easter_simulator ?? 0;
+    this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
+    this.halloween = player?.stats?.Arcade?.wins_halloween_simulator ?? 0;
+    this.scuba = player?.stats?.Arcade?.wins_scuba_simulator ?? 0;
+    this.total =
             this.easter +
             this.grinch +
             this.halloween +
             this.scuba;
-    }
+  }
 
     easter = 0;
     scuba = 0;
@@ -207,24 +207,24 @@ class SeasonalStats {
 
 class ExtraStats {
 
-    constructor (player) {
-        this.blockingDeadKills = player?.stats?.Arcade?.kills_dayone ?? 0;
-        this.blockingDeadHeadshots = player?.stats?.Arcade?.headshots_dayone ?? 0;
-        this.bountyHuntersKills = player?.stats?.Arcade?.kills_oneinthequiver ?? 0;
-        this.bountyHuntersBountyKills = player?.stats?.Arcade?.bounty_kills_oneinthequiver ?? 0;
-        this.bountyHuntersDeaths = player?.stats?.Arcade?.deaths_oneinthequiver ?? 0;
-        this.dragonWarsKills = player?.stats?.Arcade?.kills_dragonwars2 ?? 0;
-        this.footballGoals = player?.stats?.Arcade?.goals_soccer ?? 0;
-        this.footballPKicks = player?.stats?.Arcade?.powerkicks_soccer ?? 0;
-        this.footballKicks = player?.stats?.Arcade?.kicks_soccer ?? 0;
-        this.galaxyWarsKills = player?.stats?.Arcade?.sw_kills ?? 0;
-        this.galaxyWarsDeaths = player?.stats?.Arcade?.sw_deaths ?? 0;
-        this.HNSSeekerWins = player?.stats?.Arcade?.seeker_wins_hide_and_seek ?? 0;
-        this.HNSHiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
-        this.hypixelSaysRounds = player?.stats?.Arcade?.rounds_simon_says ?? 0;
-        this.throwOutKills = player?.stats?.Arcade?.kills_throw_out ?? 0;
-        this.throwOutDeaths = player?.stats?.Arcade?.deaths_throw_out ?? 0;
-    }
+  constructor (player) {
+    this.blockingDeadKills = player?.stats?.Arcade?.kills_dayone ?? 0;
+    this.blockingDeadHeadshots = player?.stats?.Arcade?.headshots_dayone ?? 0;
+    this.bountyHuntersKills = player?.stats?.Arcade?.kills_oneinthequiver ?? 0;
+    this.bountyHuntersBountyKills = player?.stats?.Arcade?.bounty_kills_oneinthequiver ?? 0;
+    this.bountyHuntersDeaths = player?.stats?.Arcade?.deaths_oneinthequiver ?? 0;
+    this.dragonWarsKills = player?.stats?.Arcade?.kills_dragonwars2 ?? 0;
+    this.footballGoals = player?.stats?.Arcade?.goals_soccer ?? 0;
+    this.footballPKicks = player?.stats?.Arcade?.powerkicks_soccer ?? 0;
+    this.footballKicks = player?.stats?.Arcade?.kicks_soccer ?? 0;
+    this.galaxyWarsKills = player?.stats?.Arcade?.sw_kills ?? 0;
+    this.galaxyWarsDeaths = player?.stats?.Arcade?.sw_deaths ?? 0;
+    this.HNSSeekerWins = player?.stats?.Arcade?.seeker_wins_hide_and_seek ?? 0;
+    this.HNSHiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
+    this.hypixelSaysRounds = player?.stats?.Arcade?.rounds_simon_says ?? 0;
+    this.throwOutKills = player?.stats?.Arcade?.kills_throw_out ?? 0;
+    this.throwOutDeaths = player?.stats?.Arcade?.deaths_throw_out ?? 0;
+  }
 
     blockingDeadKills = 0;
     blockingDeadHeadshots = 0;
@@ -256,26 +256,26 @@ class MiniWallsStats extends ArcadeGameStats {
     witherDamage = 0;
 
     constructor (arcade) {
-        super();
-        this.wins = arcade?.wins_mini_walls ?? 0;
-        this.kit = arcade?.miniwalls_activeKit ?? "Soldier";
-        this.arrowsHit = arcade?.arrows_hit_mini_walls ?? 0;
-        this.arrowsShot = arcade?.arrows_shot_mini_walls ?? 0;
-        this.finalKills = arcade?.final_kills_mini_walls ?? 0;
-        this.kills = arcade?.kills_mini_walls ?? 0;
-        this.witherKills = arcade?.wither_kills_mini_walls ?? 0;
-        this.deaths = arcade?.deaths_mini_walls ?? 0;
-        this.witherDamage = arcade?.wither_damage_mini_walls ?? 0;
+      super();
+      this.wins = arcade?.wins_mini_walls ?? 0;
+      this.kit = arcade?.miniwalls_activeKit ?? "Soldier";
+      this.arrowsHit = arcade?.arrows_hit_mini_walls ?? 0;
+      this.arrowsShot = arcade?.arrows_shot_mini_walls ?? 0;
+      this.finalKills = arcade?.final_kills_mini_walls ?? 0;
+      this.kills = arcade?.kills_mini_walls ?? 0;
+      this.witherKills = arcade?.wither_kills_mini_walls ?? 0;
+      this.deaths = arcade?.deaths_mini_walls ?? 0;
+      this.witherDamage = arcade?.wither_damage_mini_walls ?? 0;
     }
 }
 
 class ArcadeQuests {
 
-    constructor (player) {
-        this.arcadeGamer = player?.quests?.arcade_gamer?.completions?.length;
-        this.arcadeSpecialist = player?.quests?.arcade_specialist?.completions?.length;
-        this.arcadeWinner = player?.quests?.arcade_winner?.completions?.length;
-    }
+  constructor (player) {
+    this.arcadeGamer = player?.quests?.arcade_gamer?.completions?.length;
+    this.arcadeSpecialist = player?.quests?.arcade_specialist?.completions?.length;
+    this.arcadeWinner = player?.quests?.arcade_winner?.completions?.length;
+  }
 
     arcadeGamer = 0;
     arcadeWinner = 0;
@@ -283,15 +283,15 @@ class ArcadeQuests {
 }
 
 class ZombiesStats {
-    constructor (player) {
-        if(player?.stats?.Arcade) {
-            for(const stat in player?.stats?.Arcade) {
-                if(stat.includes("zombie")) {
-                    this[stat] = player?.stats?.Arcade[stat];
-                }
-            }
+  constructor (player) {
+    if(player?.stats?.Arcade) {
+      for(const stat in player?.stats?.Arcade) {
+        if(stat.includes("zombie")) {
+          this[stat] = player?.stats?.Arcade[stat];
         }
+      }
     }
+  }
 }
 
 class Account {
@@ -494,115 +494,115 @@ class Account {
      * @memberof account
      */
     constructor (name, wins, uuid) {
-        this.name = name;
-        this.uuid = uuid;
-        try {
-            const timeLow = uuid?.slice(0, 8);
-            const timeMid = uuid?.slice(8, 12);
-            const version = uuid?.slice(12, 16);
-            const varient = uuid?.slice(16, 20);
-            const node = uuid?.slice(-12);
-            this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
-        } catch (e) {
-            Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
-            Logger.error(e);
-        }
+      this.name = name;
+      this.uuid = uuid;
+      try {
+        const timeLow = uuid?.slice(0, 8);
+        const timeMid = uuid?.slice(8, 12);
+        const version = uuid?.slice(12, 16);
+        const varient = uuid?.slice(16, 20);
+        const node = uuid?.slice(-12);
+        this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
+      } catch (e) {
+        Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
+        Logger.error(e);
+      }
     }
 
     setData (oldAcc) {
-        this.from(oldAcc);
+      this.from(oldAcc);
     }
 
     from (obj) {
-        Object.assign(this, obj);
+      Object.assign(this, obj);
     }
 
     get wins () {
-        return this.partyGames.wins;
+      return this.partyGames.wins;
     }
 
     get hitwQual () {
-        return this.holeInTheWall.qualifiers;
+      return this.holeInTheWall.qualifiers;
     }
 
     get hitwFinal () {
-        return this.holeInTheWall.finals;
+      return this.holeInTheWall.finals;
     }
 
     get hitwWins () {
-        return this.holeInTheWall.wins;
+      return this.holeInTheWall.wins;
     }
 
     get hitwRounds () {
-        return this.holeInTheWall.rounds;
+      return this.holeInTheWall.rounds;
     }
 
     get farmhuntWins () {
-        return this.farmhunt.wins;
+      return this.farmhunt.wins;
     }
 
     get farmhuntShit () {
-        return this.farmhunt.poop;
+      return this.farmhunt.poop;
     }
 
     get hypixelSaysWins () {
-        return this.hypixelSays.wins;
+      return this.hypixelSays.wins;
     }
 
     get miniWallsWins () {
-        return this.miniWalls.wins;
+      return this.miniWalls.wins;
     }
 
     get footballWins () {
-        return this.football.wins;
+      return this.football.wins;
     }
 
     get enderSpleefWins () {
-        return this.enderSpleef.wins;
+      return this.enderSpleef.wins;
     }
 
     get throwOutWins () {
-        return this.throwOut.wins;
+      return this.throwOut.wins;
     }
 
     get galaxyWarsWins () {
-        return this.galaxyWars.wins;
+      return this.galaxyWars.wins;
     }
 
     get dragonWarsWins () {
-        return this.dragonWars.wins;
+      return this.dragonWars.wins;
     }
 
     get bountyHuntersWins () {
-        return this.bountyHunters.wins;
+      return this.bountyHunters.wins;
     }
 
     get blockingDeadWins () {
-        return this.blockingDead.wins;
+      return this.blockingDead.wins;
     }
 
     get hideAndSeekWins () {
-        return this.hideAndSeek.wins;
+      return this.hideAndSeek.wins;
     }
 
     get zombiesWins () {
-        return this.zombies.wins_zombies;
+      return this.zombies.wins_zombies;
     }
 
     get pixelPaintersWins () {
-        return this.pixelPainters.wins;
+      return this.pixelPainters.wins;
     }
 
     get ctwKills () {
-        return this.captureTheWool.kills;
+      return this.captureTheWool.kills;
     }
 
     get ctwWoolCaptured () {
-        return this.captureTheWool.woolCaptures;
+      return this.captureTheWool.woolCaptures;
     }
 
     get hnsKills () {
-        return this.hideAndSeek.kills;
+      return this.hideAndSeek.kills;
     }
 
     /**
@@ -611,7 +611,7 @@ class Account {
      * @memberof account
      */
     async updateData () {
-        await Promise.all([this.updateHypixel(), this.updateOptifine(), this.updateLaby()]);
+      await Promise.all([this.updateHypixel(), this.updateOptifine(), this.updateLaby()]);
     }
 
     /**
@@ -620,9 +620,9 @@ class Account {
      * @memberof account
      */
     async updateOptifine () {
-        const req = new optifineRequest(this.name);
-        await req.makeRequest();
-        this.hasOFCape = req.hasCape();
+      const req = new optifineRequest(this.name);
+      await req.makeRequest();
+      this.hasOFCape = req.hasCape();
     }
 
     /**
@@ -631,9 +631,9 @@ class Account {
      * @memberof account
      */
     async updateLaby () {
-        const req = new labyRequest(this.uuidPosix);
-        await req.makeRequest();
-        this.hasLabyCape = req.hasCape();
+      const req = new labyRequest(this.uuidPosix);
+      await req.makeRequest();
+      this.hasLabyCape = req.hasCape();
     }
 
     /**
@@ -642,75 +642,75 @@ class Account {
      * @memberof account
      */
     async updateHypixel () {
-        const json = await HypixelApi.player(this.uuid);
-        const player = json?.player;
-        this.updateTime = Date.now();
-        const arcade = json.player?.stats?.Arcade;
+      const json = await HypixelApi.player(this.uuid);
+      const player = json?.player;
+      this.updateTime = Date.now();
+      const arcade = json.player?.stats?.Arcade;
 
-        this.blockingDead = new BlockingDeadStats(arcade);
-        this.bountyHunters = new BountyHuntersStats(arcade);
-        this.captureTheWool = new CaptureTheWoolStats(player);
-        this.dragonWars = new DragonWarsStats(arcade);
-        this.enderSpleef = new EnderSpleefStats(arcade);
-        this.farmhunt = new FarmhuntStats(arcade);
-        this.football = new FootballStats(arcade);
-        this.galaxyWars = new GalaxyWarsStats(arcade);
-        this.hideAndSeek = new HideAndSeekStats(arcade);
-        this.holeInTheWall = new HoleInTheWallStats(arcade);
-        this.hypixelSays = new HypixelSaysStats(arcade);
-        this.partyGames = new PartyGamesStats(arcade);
-        this.pixelPainters = new PixelPaintersStats(arcade);
-        this.throwOut = new ThrowOutStats(arcade);
-        this.zombies = new ZombiesStats(player);
-        this.miniWalls = new MiniWallsStats(arcade);
-        this.arcadeAchievments = new AccountAP(player);
+      this.blockingDead = new BlockingDeadStats(arcade);
+      this.bountyHunters = new BountyHuntersStats(arcade);
+      this.captureTheWool = new CaptureTheWoolStats(player);
+      this.dragonWars = new DragonWarsStats(arcade);
+      this.enderSpleef = new EnderSpleefStats(arcade);
+      this.farmhunt = new FarmhuntStats(arcade);
+      this.football = new FootballStats(arcade);
+      this.galaxyWars = new GalaxyWarsStats(arcade);
+      this.hideAndSeek = new HideAndSeekStats(arcade);
+      this.holeInTheWall = new HoleInTheWallStats(arcade);
+      this.hypixelSays = new HypixelSaysStats(arcade);
+      this.partyGames = new PartyGamesStats(arcade);
+      this.pixelPainters = new PixelPaintersStats(arcade);
+      this.throwOut = new ThrowOutStats(arcade);
+      this.zombies = new ZombiesStats(player);
+      this.miniWalls = new MiniWallsStats(arcade);
+      this.arcadeAchievments = new AccountAP(player);
 
-        this.arcadeAchievments = new AccountAP(player);
-        this.quests = new ArcadeQuests(player);
-        this.seasonalWins = new SeasonalStats(json?.player);
-        this.simTotal = this.seasonalWins.total;
+      this.arcadeAchievments = new AccountAP(player);
+      this.quests = new ArcadeQuests(player);
+      this.seasonalWins = new SeasonalStats(json?.player);
+      this.simTotal = this.seasonalWins.total;
 
-        this.extras = new ExtraStats(player);
+      this.extras = new ExtraStats(player);
 
-        this.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
+      this.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
-        this.rank = json.player?.rank;
-        this.rank ??= json.player?.newPackageRank;
-        this.rank ??= json?.player?.packageRank;
-        if(json.player?.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
+      this.rank = json.player?.rank;
+      this.rank ??= json.player?.newPackageRank;
+      this.rank ??= json?.player?.packageRank;
+      if(json.player?.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
 
-        this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
+      this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
-        this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
+      this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
 
-        this.name = json?.player?.displayname ?? "INVALID-NAME";
-        this.name_lower = this.name.toLowerCase();
-        this.nameHist = json?.player?.knownAliases ?? ["INVALID-NAME"];
+      this.name = json?.player?.displayname ?? "INVALID-NAME";
+      this.name_lower = this.name.toLowerCase();
+      this.nameHist = json?.player?.knownAliases ?? ["INVALID-NAME"];
 
-        this.internalId = json?.player?._id ?? 0;
-        this.isLoggedIn = json?.player?.lastLogin > json.player?.lastLogout;
-        this.lastLogout = json?.player?.lastLogout ?? 0;
-        this.firstLogin = json?.player?.firstLogin ?? Date.now();
+      this.internalId = json?.player?._id ?? 0;
+      this.isLoggedIn = json?.player?.lastLogin > json.player?.lastLogout;
+      this.lastLogout = json?.player?.lastLogout ?? 0;
+      this.firstLogin = json?.player?.firstLogin ?? Date.now();
 
-        this.version = json.player?.mcVersionRp ?? "1.8";
-        this.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
+      this.version = json.player?.mcVersionRp ?? "1.8";
+      this.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
 
-        this.xp = json.player?.networkExp ?? 0;
-        this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
+      this.xp = json.player?.networkExp ?? 0;
+      this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
 
-        this.karma = json?.player?.karma ?? 0;
-        this.achievementPoints = json?.player?.achievementPoints ?? 0;
+      this.karma = json?.player?.karma ?? 0;
+      this.achievementPoints = json?.player?.achievementPoints ?? 0;
 
-        this.plusColor = json?.player?.rankPlusColor ?? "GOLD";
-        this.cloak = json?.player?.currentCloak ?? "";
-        this.hat = json?.player?.currentHat ?? "";
-        this.clickEffect = json?.player?.currentClickEffect ?? "";
+      this.plusColor = json?.player?.rankPlusColor ?? "GOLD";
+      this.cloak = json?.player?.currentCloak ?? "";
+      this.hat = json?.player?.currentHat ?? "";
+      this.clickEffect = json?.player?.currentClickEffect ?? "";
 
-        this.arcadeCoins = arcade?.coins ?? 0;
-        this.arcadeWins = json.player?.achievements?.arcade_arcade_winner ?? 0;
-        this.anyWins = json.player?.achievements?.general_wins ?? 0;
+      this.arcadeCoins = arcade?.coins ?? 0;
+      this.arcadeWins = json.player?.achievements?.arcade_arcade_winner ?? 0;
+      this.anyWins = json.player?.achievements?.general_wins ?? 0;
 
-        this.combinedArcadeWins =
+      this.combinedArcadeWins =
             this.blockingDead.wins +
             this.bountyHunters.wins +
             this.dragonWars.wins +

@@ -1,5 +1,5 @@
 const {
-    Buffer
+  Buffer
 } = require("safe-buffer");
 const webReq = require("./webRequest");
 
@@ -10,7 +10,7 @@ const webReq = require("./webRequest");
  * @returns {Buffer} Cape as raw png
  */
 async function reqOFCape (name) {
-    return await webReq(`http://s.optifine.net/capes/${name}.png`);
+  return await webReq(`http://s.optifine.net/capes/${name}.png`);
 }
 
 module.exports = class optifineRequest {
@@ -25,7 +25,7 @@ module.exports = class optifineRequest {
      * @param {string} name players in game name
      */
     constructor (name) {
-        this.name = name;
+      this.name = name;
     }
 
     /**
@@ -33,10 +33,10 @@ module.exports = class optifineRequest {
      *
      */
     async makeRequest () {
-        const res = await reqOFCape(this.name);
-        this.headers = res.headers;
-        this.status = res.status;
-        this.data = res.data;
+      const res = await reqOFCape(this.name);
+      this.headers = res.headers;
+      this.status = res.status;
+      this.data = res.data;
     }
 
     /**
@@ -45,7 +45,7 @@ module.exports = class optifineRequest {
      * @returns {boolean}
      */
     hasCape () {
-        return this.status != 404;
+      return this.status != 404;
     }
 
     /**
@@ -54,6 +54,6 @@ module.exports = class optifineRequest {
      * @returns {Buffer}
      */
     getCapePNG () {
-        return this.data;
+      return this.data;
     }
 };
