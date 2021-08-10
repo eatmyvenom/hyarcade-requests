@@ -18,7 +18,7 @@ function getKey () {
     }
     if(process.argv[2] == "bot") {
         // eslint-disable-next-line prefer-destructuring
-        key = config.clusters["serverbot"].key;
+        key = config.clusters.serverbot.key;
     }
     if(config.mode == "test") {
         key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
