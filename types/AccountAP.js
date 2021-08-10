@@ -1,7 +1,9 @@
 /* eslint-disable jsdoc/no-undefined-types */
 
 const fs = require("fs-extra");
-const { achievements } = JSON.parse(fs.readFileSync("data/achievements.json"));
+const {
+  achievements
+} = JSON.parse(fs.readFileSync("data/achievements.json"));
 const arcadeOneTime = achievements.arcade.one_time;
 const arcadeTiered = achievements.arcade.tiered;
 

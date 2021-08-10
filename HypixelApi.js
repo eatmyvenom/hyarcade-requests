@@ -3,7 +3,9 @@ const url = require("url");
 const hypixelReq = require("./hypixelReq");
 const config = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
-const { sleep } = require("./utils");
+const {
+  sleep
+} = require("./utils");
 
 /**
  * Function to get the key to use
@@ -11,7 +13,9 @@ const { sleep } = require("./utils");
  * @returns {string}
  */
 function getKey () {
-  let { key } = config;
+  let {
+    key
+  } = config;
   if(config.cluster) {
     // eslint-disable-next-line prefer-destructuring
     key = config.clusters[config.cluster].key;
