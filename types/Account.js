@@ -510,11 +510,19 @@ class Account {
     }
 
     setData (oldAcc) {
-      this.from(oldAcc);
+      Object.assign(this, oldAcc);
     }
 
-    from (obj) {
-      Object.assign(this, obj);
+    /**
+     * 
+     * @param {*} obj 
+     * @returns {Account}
+     */
+    static from (obj) {
+      const acc = new Account("", 0, "");
+      Object.assign(acc, obj);
+
+      return acc;
     }
 
     get wins () {
@@ -644,8 +652,8 @@ class Account {
     async updateHypixel () {
       const json = await HypixelApi.player(this.uuid);
       const player = json?.player;
-      this.updateTime = Date.now();
       const arcade = json.player?.stats?.Arcade;
+      this.updateTime = Date.now();
 
       this.blockingDead = new BlockingDeadStats(arcade);
       this.bountyHunters = new BountyHuntersStats(arcade);
