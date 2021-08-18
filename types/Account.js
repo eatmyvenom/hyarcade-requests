@@ -548,7 +548,7 @@ class Account {
     set farmhuntShit (v) {this.farmhunt.poop = v;}
 
     get hypixelSaysWins () {return this.hypixelSays.wins;}
-    set hypixelSaysRounds (v) {this.hypixelSays.rounds = v;}
+    set hypixelSaysWins (v) {this.hypixelSays.rounds = v;}
 
     get miniWallsWins () {return this.miniWalls.wins;}
     set miniWallsWins (v) {this.miniWalls.wins = v;}
