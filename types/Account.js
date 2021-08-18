@@ -3,6 +3,7 @@ const optifineRequest = require("../optifineRequest");
 const labyRequest = require("../labyRequest");
 const Logger = require("hyarcade-logger");
 const AccountAP = require("./AccountAP");
+const PopulateAccountData = require("./PopulateAccountData");
 
 class ArcadeGameStats {
     /**
@@ -440,28 +441,28 @@ class Account {
      * @type {SeasonalStats}
      * @memberof Account
      */
-    seasonalWins;
+    seasonalWins = {};
 
     /**
      *
      * @type {ExtraStats}
      * @memberof Account
      */
-    extras;
+    extras = {};
 
     /**
      *
      * @type {MiniWallsStats}
      * @memberof Account
      */
-    miniWalls;
+    miniWalls = {};
 
     /**
      *
      * @type {ArcadeQuests}
      * @memberof Account
      */
-    quests;
+    quests = {};
 
     /**
      *
@@ -525,92 +526,114 @@ class Account {
       return acc;
     }
 
-    get wins () {
-      return this.partyGames.wins;
+    get wins () {return this.partyGames.wins;}
+    set wins (count) {this.partyGames.wins = count;}
+
+    get hitwQual () {return this.holeInTheWall.qualifiers;}
+    set hitwQual (v) {this.holeInTheWall.qualifiers = v;}
+
+    get hitwFinal () {return this.holeInTheWall.finals;}
+    set hitwFinal (v) {this.holeInTheWall.finals = v;}
+
+    get hitwWins () {return this.holeInTheWall.wins;}
+    set hitwWins (v) {this.holeInTheWall.wins = v;}
+
+    get hitwRounds () {return this.holeInTheWall.rounds;}
+    set hitwRounds (v) {this.holeInTheWall.rounds = v;}
+
+    get farmhuntWins () {return this.farmhunt.wins;}
+    set farmhuntWins (v) {this.farmhunt.wins = v;}
+
+    get farmhuntShit () {return this.farmhunt.poop;}
+    set farmhuntShit (v) {this.farmhunt.poop = v;}
+
+    get hypixelSaysWins () {return this.hypixelSays.wins;}
+    set hypixelSaysRounds (v) {this.hypixelSays.rounds = v;}
+
+    get miniWallsWins () {return this.miniWalls.wins;}
+    set miniWallsWins (v) {this.miniWalls.wins = v;}
+
+    get footballWins () {return this.football.wins;}
+    set footballWins (v) {this.football.wins = v;}
+
+    get enderSpleefWins () {return this.enderSpleef.wins;}
+    set enderSpleefWins (v) {this.enderSpleef.wins = v;}
+
+    get throwOutWins () {return this.throwOut.wins;}
+    set throwOutWins (v) {this.throwOut.wins = v;}
+
+    get galaxyWarsWins () {return this.galaxyWars.wins;}
+    set galaxyWarsWins (v) {this.galaxyWars.wins = v;}
+
+    get dragonWarsWins () {return this.dragonWars.wins;}
+    set dragonWarsWins (v) {this.dragonWars.wins = v;}
+
+    get bountyHuntersWins () {return this.bountyHunters.wins;}
+    set bountyHuntersWins (v) {this.bountyHunters.wins = v;}
+
+    get blockingDeadWins () {return this.blockingDead.wins;}
+    set blockingDeadWins (v) {this.blockingDead.wins = v;}
+
+    get hideAndSeekWins () {return this.hideAndSeek.wins;}
+    set hideAndSeekWins (v) {this.hideAndSeek.wins = v;}
+
+    get zombiesWins () {return this.zombies.wins_zombies;}
+    set zombiesWins (v) {this.zombies.wins_zombies = v;}
+
+    get pixelPaintersWins () {return this.pixelPainters.wins;}
+    set pixelPaintersWins (v) {this.pixelPainters.wins = v;}
+
+    get ctwKills () {return this.captureTheWool.kills;}
+    set ctwKills (v) {this.captureTheWool.kills = v;}
+
+    get ctwWoolCaptured () {return this.captureTheWool.woolCaptures;}
+    set ctwWoolCaptured (v) {this.captureTheWool.woolCaptures = v;}
+
+    get hnsKills () {return this.hideAndSeek.kills;}
+    set hnsKills (v) {this.hideAndSeek.kills = v;}
+
+    get extras () {
+      return {
+        blockingDeadKills: this.blockingDead.kills,
+        blockingDeadHeadshots: this.blockingDead.headshots,
+        bountyHuntersKills: this.bountyHunters.kills,
+        bountyHuntersBountyKills: this.bountyHunters.bountyKills,
+        bountyHuntersDeaths: this.bountyHunters.deaths,
+        dragonWarsKills: this.dragonWars.kills,
+        footballGoals: this.football.goals,
+        footballPKicks: this.football.powerkicks,
+        footballKicks: this.football.kicks,
+        galaxyWarsKills: this.galaxyWars.kills,
+        galaxyWarsDeaths: this.galaxyWars.deaths,
+        HNSSeekerWins: this.hideAndSeek.seekerWins,
+        HNSHiderWins: this.hideAndSeek.hiderWins,
+        hypixelSaysRounds: this.hypixelSays.rounds,
+        throwOutKills: this.throwOut.kills,
+        throwOutDeaths: this.throwOut.deaths
+      };
     }
 
-    get hitwQual () {
-      return this.holeInTheWall.qualifiers;
-    }
-
-    get hitwFinal () {
-      return this.holeInTheWall.finals;
-    }
-
-    get hitwWins () {
-      return this.holeInTheWall.wins;
-    }
-
-    get hitwRounds () {
-      return this.holeInTheWall.rounds;
-    }
-
-    get farmhuntWins () {
-      return this.farmhunt.wins;
-    }
-
-    get farmhuntShit () {
-      return this.farmhunt.poop;
-    }
-
-    get hypixelSaysWins () {
-      return this.hypixelSays.wins;
-    }
-
-    get miniWallsWins () {
-      return this.miniWalls.wins;
-    }
-
-    get footballWins () {
-      return this.football.wins;
-    }
-
-    get enderSpleefWins () {
-      return this.enderSpleef.wins;
-    }
-
-    get throwOutWins () {
-      return this.throwOut.wins;
-    }
-
-    get galaxyWarsWins () {
-      return this.galaxyWars.wins;
-    }
-
-    get dragonWarsWins () {
-      return this.dragonWars.wins;
-    }
-
-    get bountyHuntersWins () {
-      return this.bountyHunters.wins;
-    }
-
-    get blockingDeadWins () {
-      return this.blockingDead.wins;
-    }
-
-    get hideAndSeekWins () {
-      return this.hideAndSeek.wins;
-    }
-
-    get zombiesWins () {
-      return this.zombies.wins_zombies;
-    }
-
-    get pixelPaintersWins () {
-      return this.pixelPainters.wins;
-    }
-
-    get ctwKills () {
-      return this.captureTheWool.kills;
-    }
-
-    get ctwWoolCaptured () {
-      return this.captureTheWool.woolCaptures;
-    }
-
-    get hnsKills () {
-      return this.hideAndSeek.kills;
+    /**
+     *
+     * @param {ExtraStats} v
+     * @memberof Account
+     */
+    set extras (v) {
+      this.blockingDead.kills = v.blockingDeadKills;
+      this.blockingDead.headshots = v.blockingDeadHeadshots;
+      this.bountyHunters.kills = v.bountyHuntersKills;
+      this.bountyHunters.bountyKills = v.bountyHuntersBountyKills;
+      this.dragonWars.kills = v.dragonWarsKills;
+      this.football.goals = v.footballGoals;
+      this.football.powerkicks = v.footballPKicks;
+      this.football.kicks = v.footballKicks;
+      this.galaxyWars.kills = v.galaxyWarsKills;
+      this.galaxyWars.deaths = v.galaxyWarsDeaths;
+      this.hideAndSeek.seekerWins = v.HNSSeekerWins;
+      this.hideAndSeek.hiderWins = v.HNSHiderWins;
+      this.hypixelSays.rounds = v.hypixelSaysRounds;
+      this.throwOut.deaths = v.throwOutDeaths;
+      this.throwOut.kills = v.throwOutKills;
     }
 
     /**
@@ -651,10 +674,13 @@ class Account {
      */
     async updateHypixel () {
       const json = await HypixelApi.player(this.uuid);
+
       const player = json?.player;
       const arcade = json.player?.stats?.Arcade;
+
       this.updateTime = Date.now();
 
+      this.extras = new ExtraStats(player);
       this.blockingDead = new BlockingDeadStats(arcade);
       this.bountyHunters = new BountyHuntersStats(arcade);
       this.captureTheWool = new CaptureTheWoolStats(player);
@@ -673,68 +699,11 @@ class Account {
       this.miniWalls = new MiniWallsStats(arcade);
       this.arcadeAchievments = new AccountAP(player);
 
-      this.arcadeAchievments = new AccountAP(player);
       this.quests = new ArcadeQuests(player);
       this.seasonalWins = new SeasonalStats(json?.player);
       this.simTotal = this.seasonalWins.total;
 
-      this.extras = new ExtraStats(player);
-
-      this.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
-
-      this.rank = json.player?.rank;
-      this.rank ??= json.player?.newPackageRank;
-      this.rank ??= json?.player?.packageRank;
-      if(json.player?.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
-
-      this.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
-
-      this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
-
-      this.name = json?.player?.displayname ?? "INVALID-NAME";
-      this.name_lower = this.name.toLowerCase();
-      this.nameHist = json?.player?.knownAliases ?? ["INVALID-NAME"];
-
-      this.internalId = json?.player?._id ?? 0;
-      this.isLoggedIn = json?.player?.lastLogin > json.player?.lastLogout;
-      this.lastLogout = json?.player?.lastLogout ?? 0;
-      this.firstLogin = json?.player?.firstLogin ?? Date.now();
-
-      this.version = json.player?.mcVersionRp ?? "1.8";
-      this.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
-
-      this.xp = json.player?.networkExp ?? 0;
-      this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
-
-      this.karma = json?.player?.karma ?? 0;
-      this.achievementPoints = json?.player?.achievementPoints ?? 0;
-
-      this.plusColor = json?.player?.rankPlusColor ?? "GOLD";
-      this.cloak = json?.player?.currentCloak ?? "";
-      this.hat = json?.player?.currentHat ?? "";
-      this.clickEffect = json?.player?.currentClickEffect ?? "";
-
-      this.arcadeCoins = arcade?.coins ?? 0;
-      this.arcadeWins = json.player?.achievements?.arcade_arcade_winner ?? 0;
-      this.anyWins = json.player?.achievements?.general_wins ?? 0;
-
-      this.combinedArcadeWins =
-            this.blockingDead.wins +
-            this.bountyHunters.wins +
-            this.dragonWars.wins +
-            this.enderSpleef.wins +
-            this.farmhunt.wins +
-            this.football.wins +
-            this.galaxyWars.wins +
-            this.hideAndSeek.wins +
-            this.holeInTheWall.wins +
-            this.hypixelSays.wins +
-            this.miniWalls.wins +
-            this.partyGames.wins +
-            this.pixelPainters.wins +
-            this.simTotal +
-            this.throwOut.wins +
-            this.zombies.wins_zombies;
+      PopulateAccountData(json, this);
     }
 }
 
