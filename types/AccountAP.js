@@ -114,7 +114,7 @@ class ArcadeTieredAP {
 
       this.topTier = tierArr[tierArr.length - 1].tier;
       this.toTop = tierArr[tierArr.length - 1].amount - this.amount;
-      this.toNext = (tierArr[this.tier]?.amount ?? tierArr[tierArr.length - 1].amount) - this.amount;
+      this.toNext = (tierArr[this.currentTier]?.amount ?? tierArr[tierArr.length - 1].amount) - this.amount;
     }
 }
 
