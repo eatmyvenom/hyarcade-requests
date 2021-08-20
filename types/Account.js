@@ -329,105 +329,105 @@ class Account {
      * @type {AccountAP}
      * @memberof Account
      */
-    arcadeAchievments = {};
+    arcadeAchievments = new AccountAP();
 
     /**
      *
      * @type {BlockingDeadStats}
      * @memberof Account
      */
-    blockingDead = {};
+    blockingDead = new BlockingDeadStats();
 
     /**
      *
      * @type {BountyHuntersStats}
      * @memberof Account
      */
-    bountyHunters = {};
+    bountyHunters = new BountyHuntersStats();
 
     /**
      *
      * @type {CaptureTheWoolStats}
      * @memberof Account
      */
-    captureTheWool = {};
+    captureTheWool = new CaptureTheWoolStats();
 
     /**
      *
      * @type {DragonWarsStats}
      * @memberof Account
      */
-    dragonWars = {};
+    dragonWars = new DragonWarsStats();
 
     /**
      *
      * @type {EnderSpleefStats}
      * @memberof Account
      */
-    enderSpleef = {};
+    enderSpleef = new EnderSpleefStats();
 
     /**
      *
      * @type {FarmhuntStats}
      * @memberof Account
      */
-    farmhunt = {};
+    farmhunt = new FarmhuntStats();
 
     /**
      *
      * @type {FootballStats}
      * @memberof Account
      */
-    football = {};
+    football = new FootballStats();
 
     /**
      *
      * @type {GalaxyWarsStats}
      * @memberof Account
      */
-    galaxyWars = {};
+    galaxyWars = new GalaxyWarsStats();
 
     /**
      *
      * @type {HideAndSeekStats}
      * @memberof Account
      */
-    hideAndSeek = {};
+    hideAndSeek = new HideAndSeekStats();
 
     /**
      *
      * @type {HoleInTheWallStats}
      * @memberof Account
      */
-    holeInTheWall = {};
+    holeInTheWall = new HoleInTheWallStats();
 
     /**
      *
      * @type {HypixelSaysStats}
      * @memberof Account
      */
-    hypixelSays = {};
+    hypixelSays = new HypixelSaysStats();
 
     /**
      *
      * @type {PartyGamesStats}
      * @memberof Account
      */
-    partyGames = {};
+    partyGames = new PartyGamesStats();
 
     /**
      *
      * @type {PixelPaintersStats}
      * @memberof Account
      */
-    pixelPainters = {};
+    pixelPainters = new PixelPaintersStats();
 
     /**
      *
      * @type {ThrowOutStats}
      * @memberof Account
      */
-    throwOut = {};
+    throwOut = new ThrowOutStats();
 
     simTotal = 0;
     arcadeCoins = 0;
@@ -441,21 +441,14 @@ class Account {
      * @type {SeasonalStats}
      * @memberof Account
      */
-    seasonalWins = {};
-
-    /**
-     *
-     * @type {ExtraStats}
-     * @memberof Account
-     */
-    extras = {};
+    seasonalWins = new SeasonalStats();
 
     /**
      *
      * @type {MiniWallsStats}
      * @memberof Account
      */
-    miniWalls = {};
+    miniWalls = new MiniWallsStats();
 
     /**
      *
@@ -680,7 +673,6 @@ class Account {
 
       this.updateTime = Date.now();
 
-      this.extras = new ExtraStats(player);
       this.blockingDead = new BlockingDeadStats(arcade);
       this.bountyHunters = new BountyHuntersStats(arcade);
       this.captureTheWool = new CaptureTheWoolStats(player);
@@ -689,7 +681,7 @@ class Account {
       this.farmhunt = new FarmhuntStats(arcade);
       this.football = new FootballStats(arcade);
       this.galaxyWars = new GalaxyWarsStats(arcade);
-      this.hideAndSeek = new HideAndSeekStats(arcade);
+      this.hideAndSeek = new HideAndSeekStats(player);
       this.holeInTheWall = new HoleInTheWallStats(arcade);
       this.hypixelSays = new HypixelSaysStats(arcade);
       this.partyGames = new PartyGamesStats(arcade);
