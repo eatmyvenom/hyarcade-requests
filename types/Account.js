@@ -489,13 +489,19 @@ class Account {
      */
     constructor (name, wins, uuid) {
       this.name = name;
-      this.uuid = uuid;
+
+      if(uuid == undefined && wins.toString().length > 16) {
+        this.uuid = wins.toString();
+      } else {
+        this.uuid = uuid;
+      }
+
       try {
-        const timeLow = uuid?.slice(0, 8);
-        const timeMid = uuid?.slice(8, 12);
-        const version = uuid?.slice(12, 16);
-        const varient = uuid?.slice(16, 20);
-        const node = uuid?.slice(-12);
+        const timeLow = this.uuid?.slice(0, 8);
+        const timeMid = this.uuid?.slice(8, 12);
+        const version = this.uuid?.slice(12, 16);
+        const varient = this.uuid?.slice(16, 20);
+        const node = this.uuid?.slice(-12);
         this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
       } catch (e) {
         Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
