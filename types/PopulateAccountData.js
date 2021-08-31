@@ -45,20 +45,20 @@ module.exports = function PopulateAccountData (json, account) {
   account.anyWins = json.player?.achievements?.general_wins ?? 0;
 
   account.combinedArcadeWins =
-          account.blockingDead.wins +
-          account.bountyHunters.wins +
-          account.dragonWars.wins +
-          account.enderSpleef.wins +
-          account.farmhunt.wins +
-          account.football.wins +
-          account.galaxyWars.wins +
-          account.hideAndSeek.wins +
-          account.holeInTheWall.wins +
-          account.hypixelSays.wins +
-          account.miniWalls.wins +
-          account.partyGames.wins +
-          account.pixelPainters.wins +
-          account.simTotal +
-          account.throwOut.wins +
-          account.zombies.wins_zombies;
+          (account?.blockingDead?.wins ?? 0) +
+          (account?.bountyHunters?.wins ?? 0) +
+          (account?.dragonWars?.wins ?? 0) +
+          (account?.enderSpleef?.wins ?? 0) +
+          (account?.farmhunt?.wins ?? 0) +
+          (account?.football?.wins ?? 0) +
+          (account?.galaxyWars?.wins ?? 0) +
+          (account?.hideAndSeek?.wins ?? 0) +
+          (account?.holeInTheWall?.wins ?? 0) +
+          (account?.hypixelSays?.wins ?? 0) +
+          (account?.miniWalls?.wins ?? 0) +
+          (account?.partyGames?.wins ?? 0) +
+          (account?.pixelPainters?.wins ?? 0) +
+          (account?.simTotal ?? 0) +
+          (account ?? 0?.throwOut?.wins ?? 0) +
+          (account?.zombies?.wins_zombies ?? 0);
 };
