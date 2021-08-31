@@ -59,6 +59,6 @@ module.exports = function PopulateAccountData (json, account) {
           (account?.partyGames?.wins ?? 0) +
           (account?.pixelPainters?.wins ?? 0) +
           (account?.simTotal ?? 0) +
-          (account ?? 0?.throwOut?.wins ?? 0) +
+          (account?.throwOut?.wins ?? 0) +
           (account?.zombies?.wins_zombies ?? 0);
 };
