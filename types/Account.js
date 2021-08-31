@@ -65,7 +65,7 @@ class DragonWarsStats extends ArcadeGameStats {
 class EnderSpleefStats extends ArcadeGameStats {
   constructor (arcade) {
     super();
-    this.wins = arcade?.wins_dragonwars2 ?? 0;
+    this.wins = arcade?.wins_ender ?? 0;
   }
 }
 
