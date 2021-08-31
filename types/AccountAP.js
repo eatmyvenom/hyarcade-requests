@@ -170,6 +170,10 @@ class ArcadeGameAP {
 
 class AccountAP {
 
+
+    totalEarned = 0;
+    totalAvailiable = 0;
+
     /**
      *
      * @type {ArcadeGameAP}
@@ -422,6 +426,42 @@ class AccountAP {
         new TeiredAchievementWrapper(arcadeTiered.ZOMBIES_ROUND_PROGRESSION, "ZOMBIES_ROUND_PROGRESSION"),
         new TeiredAchievementWrapper(arcadeTiered.ZOMBIES_HIGH_ROUND, "ZOMBIES_HIGH_ROUND"),
       ]);
+
+      this.totalAvailiable = this.blockingDead.apAvailable + 
+        this.bountyHunters.apAvailable + 
+        this.captureTheWool.apAvailable +
+        this.creeperAttack.apAvailable +
+        this.dragonWars.apAvailable +
+        this.enderSpleef.apAvailable +
+        this.farmHunt.apAvailable +
+        this.football.apAvailable +
+        this.galaxyWars.apAvailable +
+        this.hideAndSeek.apAvailable +
+        this.holeInTheWall.apAvailable +
+        this.hypixelSays.apAvailable +
+        this.miniWalls.apAvailable +
+        this.partyGames.apAvailable +
+        this.pixelPainters.apAvailable +
+        this.throwOut.apAvailable +
+        this.zombies.apAvailable;
+
+      this.totalEarned = this.blockingDead.apEarned + 
+        this.bountyHunters.apEarned + 
+        this.captureTheWool.apEarned +
+        this.creeperAttack.apEarned +
+        this.dragonWars.apEarned +
+        this.enderSpleef.apEarned +
+        this.farmHunt.apEarned +
+        this.football.apEarned +
+        this.galaxyWars.apEarned +
+        this.hideAndSeek.apEarned +
+        this.holeInTheWall.apEarned +
+        this.hypixelSays.apEarned +
+        this.miniWalls.apEarned +
+        this.partyGames.apEarned +
+        this.pixelPainters.apEarned +
+        this.throwOut.apEarned +
+        this.zombies.apEarned;
     }
 }
 
