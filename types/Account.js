@@ -273,14 +273,50 @@ class MiniWallsStats extends ArcadeGameStats {
 class ArcadeQuests {
 
   constructor (player) {
-    this.arcadeGamer = player?.quests?.arcade_gamer?.completions?.length;
-    this.arcadeSpecialist = player?.quests?.arcade_specialist?.completions?.length;
-    this.arcadeWinner = player?.quests?.arcade_winner?.completions?.length;
+    this.arcadeGamer = player?.quests?.arcade_gamer?.completions?.length ?? 0;
+    this.arcadeSpecialist = player?.quests?.arcade_specialist?.completions?.length ?? 0;
+    this.arcadeWinner = player?.quests?.arcade_winner?.completions?.length ?? 0;
   }
 
     arcadeGamer = 0;
     arcadeWinner = 0;
     arcadeSpecialist = 0;
+}
+
+class ArcadeChallenges {
+  zombies = 0;
+  partyGames = 0;
+  galaxyWars = 0;
+  holeInTheWall = 0;
+  hypixelSays = 0;
+  creeperAttack = 0;
+  blockingDead = 0;
+  enderSpleef = 0;
+  football = 0;
+  miniWalls = 0;
+  hideAndSeek = 0;
+  farmhunt = 0;
+  throwOut = 0;
+  dragonWars = 0;
+
+  constructor (player) {
+    const challenges = player?.challenges?.all_time;
+
+    this.zombies = challenges?.ARCADE__zombies_challenge ?? 0;
+    this.partyGames = challenges?.ARCADE__party_games_challenge ?? 0;
+    this.galaxyWars = challenges?.ARCADE__galaxy_wars_challenge ?? 0;
+    this.holeInTheWall = challenges?.ARCADE__hole_in_the_wall_challenge ?? 0;
+    this.hypixelSays = challenges?.ARCADE__hypixel_says_challenge ?? 0;
+    this.creeperAttack = challenges?.ARCADE__creeper_attack_challenge ?? 0;
+    this.blockingDead = challenges?.ARCADE__blocking_dead_challenge ?? 0;
+    this.enderSpleef = challenges?.ARCADE__ender_spleef_challenge ?? 0;
+    this.football = challenges?.ARCADE__football_challenge ?? 0;
+    this.miniWalls = challenges?.ARCADE__mini_walls_challenge ?? 0;
+    this.hideAndSeek = challenges?.ARCADE__hide_and_seek_challenge ?? 0;
+    this.farmhunt = challenges?.ARCADE__farm_hunt_challenge ?? 0;
+    this.throwOut = challenges?.ARCADE__throw_out_challenge ?? 0;
+    this.dragonWars = challenges?.ARCADE__dragon_wars_challenge ?? 0;
+  }
 }
 
 class ZombiesStats {
@@ -318,6 +354,7 @@ class Account {
 
     mostRecentGameType = "";
 
+    questsCompleted = 0;
     achievementPoints = 0;
     xp = 0;
     level = 0;
@@ -330,6 +367,13 @@ class Account {
      * @memberof Account
      */
     arcadeAchievments = new AccountAP();
+
+    /**
+     *
+     * @type {ArcadeChallenges}
+     * @memberof Account
+     */
+    arcadeChallenges = new ArcadeChallenges();
 
     /**
      *
@@ -477,6 +521,7 @@ class Account {
     hypixelDiscord = "";
     discord = "";
 
+    timePlaying = 0;
     updateTime = 0;
 
     /**
@@ -695,8 +740,9 @@ class Account {
       this.throwOut = new ThrowOutStats(arcade);
       this.zombies = new ZombiesStats(player);
       this.miniWalls = new MiniWallsStats(arcade);
-      this.arcadeAchievments = new AccountAP(player);
 
+      this.arcadeChallenges = new ArcadeChallenges(player);
+      this.arcadeAchievments = new AccountAP(player);
       this.quests = new ArcadeQuests(player);
       this.seasonalWins = new SeasonalStats(json?.player);
       this.simTotal = this.seasonalWins.total;

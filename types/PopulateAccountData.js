@@ -8,10 +8,10 @@ const Account = require("./Account");
 module.exports = function PopulateAccountData (json, account) {
   account.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
-  account.rank = json.player?.rank;
-  account.rank ??= json.player?.newPackageRank;
   account.rank ??= json?.player?.packageRank;
+  account.rank ??= json.player?.newPackageRank;
   if(json.player?.monthlyPackageRank == "SUPERSTAR") account.rank = "MVP_PLUS_PLUS";
+  if(json.player?.rank) account.rank = json.player.rank;
 
   account.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
@@ -43,6 +43,9 @@ module.exports = function PopulateAccountData (json, account) {
   account.arcadeCoins = json.player?.stats?.Arcade?.coins ?? 0;
   account.arcadeWins = json.player?.achievements?.arcade_arcade_winner ?? 0;
   account.anyWins = json.player?.achievements?.general_wins ?? 0;
+
+  account.questsCompleted = json.player?.achievements?.general_quest_master ?? 0;
+  account.timePlaying = json.player?.timePlaying ?? 0;
 
   account.combinedArcadeWins =
           (account?.blockingDead?.wins ?? 0) +
