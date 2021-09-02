@@ -442,7 +442,8 @@ class AccountAP {
         new TeiredAchievementWrapper(arcadeTiered.ZOMBIES_HIGH_ROUND, "ZOMBIES_HIGH_ROUND"),
       ]);
 
-      this.totalAvailiable = this.blockingDead.apAvailable + 
+      this.totalAvailiable = this.overall.apAvailable +
+        this.blockingDead.apAvailable + 
         this.bountyHunters.apAvailable + 
         this.captureTheWool.apAvailable +
         this.creeperAttack.apAvailable +
@@ -460,7 +461,8 @@ class AccountAP {
         this.throwOut.apAvailable +
         this.zombies.apAvailable;
 
-      this.totalEarned = this.blockingDead.apEarned + 
+      this.totalEarned = this.overall.apEarned +
+        this.blockingDead.apEarned + 
         this.bountyHunters.apEarned + 
         this.captureTheWool.apEarned +
         this.creeperAttack.apEarned +
