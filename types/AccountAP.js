@@ -179,6 +179,13 @@ class AccountAP {
      * @type {ArcadeGameAP}
      * @memberof AccountAP
      */
+    overall
+
+    /**
+     *
+     * @type {ArcadeGameAP}
+     * @memberof AccountAP
+     */
     blockingDead;
 
     /**
@@ -288,6 +295,14 @@ class AccountAP {
     zombies;
 
     constructor (accData) {
+
+      this.overall = new ArcadeGameAP(accData, [
+        new OneTimeAchievementWrapper(arcadeOneTime.WORLD_ECONOMICS, "WORLD_ECONOMICS")
+      ], [
+        new TeiredAchievementWrapper(arcadeTiered.ARCADE_BANKER, "ARCADE_BANKER"),
+        new TeiredAchievementWrapper(arcadeTiered.ARCADE_WINNER, "ARCADE_WINNER")
+      ]);
+
       this.blockingDead = new ArcadeGameAP(accData, [
         new OneTimeAchievementWrapper(arcadeOneTime.NO_MERCY, "NO_MERCY"),
         new OneTimeAchievementWrapper(arcadeOneTime.LONE_SURVIVOR, "LONE_SURVIVOR"),
