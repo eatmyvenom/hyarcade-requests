@@ -11,7 +11,7 @@ module.exports = function PopulateAccountData (json, account) {
   account.rank ??= json?.player?.packageRank;
   account.rank ??= json.player?.newPackageRank;
   if(json.player?.monthlyPackageRank == "SUPERSTAR") account.rank = "MVP_PLUS_PLUS";
-  if(json.player?.rank) account.rank = json.player.rank;
+  if(json.player?.rank != "" && json.player?.rank != undefined) account.rank = json.player.rank;
 
   account.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
