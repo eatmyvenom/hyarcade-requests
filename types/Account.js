@@ -298,6 +298,8 @@ class ArcadeChallenges {
   farmhunt = 0;
   throwOut = 0;
   dragonWars = 0;
+  pixelPainters = 0;
+  bountyHunters = 0;
 
   constructor (player) {
     const challenges = player?.challenges?.all_time;
@@ -316,6 +318,8 @@ class ArcadeChallenges {
     this.farmhunt = challenges?.ARCADE__farm_hunt_challenge ?? 0;
     this.throwOut = challenges?.ARCADE__throw_out_challenge ?? 0;
     this.dragonWars = challenges?.ARCADE__dragon_wars_challenge ?? 0;
+    this.pixelPainters = challenges?.ARCADE__pixel_painters_challenge ?? 0;
+    this.bountyHunters = challenges?.ARCADE__bounty_hunter_challenge ?? 0;
   }
 }
 
