@@ -162,7 +162,11 @@ class ArcadeGameAP {
 
           this.tieredAP.push(gameTier);
         } else {
-          this.tieredAP.push(new ArcadeTieredAP(0, tierAP.achievement));
+          const gameTier = new ArcadeTieredAP(0, tierAP.achievement);
+          
+          this.apAvailable += gameTier.availiableAP;
+          
+          this.tieredAP.push(gameTier);
         }
       });
     }
