@@ -3,15 +3,41 @@ const Account = require("./Account");
 /**
  * 
  * @param {object} json 
+ * @returns {string}
+ */
+function getRank (json) {
+  let rank = json?.player?.packageRank ?? "";
+  rank ??= json.player?.newPackageRank;
+  if(json.player?.monthlyPackageRank == "SUPERSTAR") rank = "MVP_PLUS_PLUS";
+
+  if(json?.player?.prefix != undefined) { return json?.player?.prefix; }
+
+  switch(json?.player?.rank) {
+  case "YOUTUBER": {
+    return "YOUTUBER";
+  }
+
+  case "ADMIN": {
+    return "ADMIN";
+  }
+
+  case "GAME_MASTER": {
+    return "GM";
+  }
+  }
+
+  return rank;
+}
+
+/**
+ * 
+ * @param {object} json 
  * @param {Account} account 
  */
 module.exports = function PopulateAccountData (json, account) {
   account.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
-  account.rank ??= json?.player?.packageRank;
-  account.rank ??= json.player?.newPackageRank;
-  if(json.player?.monthlyPackageRank == "SUPERSTAR") account.rank = "MVP_PLUS_PLUS";
-  if(json.player?.rank != "" && json.player?.rank != undefined) account.rank = json.player.rank;
+  account.rank = getRank(json);
 
   account.mvpColor = json.player?.monthlyRankColor ?? "GOLD";
 
