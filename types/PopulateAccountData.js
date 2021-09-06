@@ -6,8 +6,8 @@ const Account = require("./Account");
  * @returns {string}
  */
 function getRank (json) {
-  let rank = json?.player?.packageRank ?? "";
-  rank ??= json.player?.newPackageRank;
+  let rank = json?.player?.newPackageRank ?? "";
+  rank ??= json.player?.packageRank;
   if(json.player?.monthlyPackageRank == "SUPERSTAR") rank = "MVP_PLUS_PLUS";
 
   if(json?.player?.prefix != undefined) { return json?.player?.prefix; }
