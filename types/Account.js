@@ -300,6 +300,7 @@ class ArcadeChallenges {
   dragonWars = 0;
   pixelPainters = 0;
   bountyHunters = 0;
+  captureTheWool = 0;
 
   constructor (player) {
     const challenges = player?.challenges?.all_time;
@@ -320,6 +321,7 @@ class ArcadeChallenges {
     this.dragonWars = challenges?.ARCADE__dragon_wars_challenge ?? 0;
     this.pixelPainters = challenges?.ARCADE__pixel_painters_challenge ?? 0;
     this.bountyHunters = challenges?.ARCADE__bounty_hunter_challenge ?? 0;
+    this.captureTheWool = challenges?.ARCADE__capture_the_wool_challenge ?? 0;
   }
 }
 
