@@ -144,8 +144,8 @@ class HypixelSaysStats extends ArcadeGameStats {
 
     constructor (arcade) {
       super();
-      this.wins = arcade?.wins_simon_says ?? 0;
-      this.rounds = arcade?.rounds_simon_says ?? 0;
+      this.wins = (arcade?.wins_simon_says ?? 0) + (arcade?.wins_santa_says ?? 0);
+      this.rounds = (arcade?.rounds_simon_says ?? 0) + (arcade?.rounds_santa_says ?? 0);
     }
 }
 
