@@ -16,14 +16,18 @@ class ArcadeGameStats {
 
 class BlockingDeadStats extends ArcadeGameStats {
 
+    hints = true;
     kills = 0;
     headshots = 0;
+    weapon = "";
 
     constructor (arcade) {
       super();
       this.wins = arcade?.wins_dayone ?? 0;
       this.kills = arcade?.kills_dayone ?? 0;
       this.headshots = arcade?.headshots_dayone ?? 0;
+      this.hints = arcade?.hints ?? true;
+      this.weapon = arcade?.melee_weapon ?? "";
     }
 }
 
@@ -48,6 +52,14 @@ class CaptureTheWoolStats {
     constructor (player) {
       this.woolCaptures = player?.achievements?.arcade_ctw_oh_sheep ?? 0;
       this.kills = player?.achievements?.arcade_ctw_slayer ?? 0;
+    }
+}
+
+class CreeperAttackStats {
+    maxWave = 0;
+
+    constructor (arcade) {
+      this.maxWave = arcade?.max_wave ?? 0;
     }
 }
 
@@ -188,6 +200,11 @@ class ThrowOutStats extends ArcadeGameStats {
 class SeasonalStats {
 
   constructor (player) {
+
+    this.pointsScuba = player?.stats?.Arcade?.total_points_scuba_simulator ?? 0;
+    this.foundScuba = player?.stats?.Arcade?.items_found_scuba_simulator ?? 0;
+    this.foundEaster = player?.stats?.Arcade?.eggs_found_easter_simulator ?? 0;
+
     this.easter = player?.stats?.Arcade?.wins_easter_simulator ?? 0;
     this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
     this.halloween = player?.stats?.Arcade?.wins_halloween_simulator ?? 0;
@@ -204,6 +221,10 @@ class SeasonalStats {
     halloween = 0;
     grinch = 0;
     total = 0;
+
+    pointsScuba = 0;
+    foundScuba = 0;
+    foundEaster = 0;
 }
 
 class ExtraStats {
@@ -355,7 +376,9 @@ class Account {
     version = "";
 
     firstLogin = 0;
+
     isLoggedIn = false;
+    lastLogin = 0;
     lastLogout = 0;
 
     mostRecentGameType = "";
@@ -381,102 +404,20 @@ class Account {
      */
     arcadeChallenges = new ArcadeChallenges();
 
-    /**
-     *
-     * @type {BlockingDeadStats}
-     * @memberof Account
-     */
     blockingDead = new BlockingDeadStats();
-
-    /**
-     *
-     * @type {BountyHuntersStats}
-     * @memberof Account
-     */
     bountyHunters = new BountyHuntersStats();
-
-    /**
-     *
-     * @type {CaptureTheWoolStats}
-     * @memberof Account
-     */
     captureTheWool = new CaptureTheWoolStats();
-
-    /**
-     *
-     * @type {DragonWarsStats}
-     * @memberof Account
-     */
+    creeperAttack = new CreeperAttackStats();
     dragonWars = new DragonWarsStats();
-
-    /**
-     *
-     * @type {EnderSpleefStats}
-     * @memberof Account
-     */
     enderSpleef = new EnderSpleefStats();
-
-    /**
-     *
-     * @type {FarmhuntStats}
-     * @memberof Account
-     */
     farmhunt = new FarmhuntStats();
-
-    /**
-     *
-     * @type {FootballStats}
-     * @memberof Account
-     */
     football = new FootballStats();
-
-    /**
-     *
-     * @type {GalaxyWarsStats}
-     * @memberof Account
-     */
     galaxyWars = new GalaxyWarsStats();
-
-    /**
-     *
-     * @type {HideAndSeekStats}
-     * @memberof Account
-     */
     hideAndSeek = new HideAndSeekStats();
-
-    /**
-     *
-     * @type {HoleInTheWallStats}
-     * @memberof Account
-     */
     holeInTheWall = new HoleInTheWallStats();
-
-    /**
-     *
-     * @type {HypixelSaysStats}
-     * @memberof Account
-     */
     hypixelSays = new HypixelSaysStats();
-
-    /**
-     *
-     * @type {PartyGamesStats}
-     * @memberof Account
-     */
     partyGames = new PartyGamesStats();
-
-    /**
-     *
-     * @type {PixelPaintersStats}
-     * @memberof Account
-     */
     pixelPainters = new PixelPaintersStats();
-
-    /**
-     *
-     * @type {ThrowOutStats}
-     * @memberof Account
-     */
     throwOut = new ThrowOutStats();
 
     simTotal = 0;
@@ -484,6 +425,9 @@ class Account {
     arcadeWins = 0;
     combinedArcadeWins = 0;
     anyWins = 0;
+    coinsEarned = 0;
+    monthlyCoins = 0;
+    weeklyCoins = 0;
 
     /**
      * Seasonal "simulator" games wins and stats
