@@ -1,6 +1,4 @@
 const HypixelApi = require("../HypixelApi");
-const optifineRequest = require("../optifineRequest");
-const labyRequest = require("../labyRequest");
 const Logger = require("hyarcade-logger");
 const AccountAP = require("./AccountAP");
 const PopulateAccountData = require("./PopulateAccountData");
@@ -636,39 +634,16 @@ class Account {
      * @memberof account
      */
     async updateData () {
-      await Promise.all([this.updateHypixel(), this.updateOptifine(), this.updateLaby()]);
+      await this.updateHypixel();
     }
 
     /**
-     * Update and populate the optifine data
+     * populate the hypixel data
      *
      * @memberof account
+     * @param {object} json
      */
-    async updateOptifine () {
-      const req = new optifineRequest(this.name);
-      await req.makeRequest();
-      this.hasOFCape = req.hasCape();
-    }
-
-    /**
-     * Update and populate the labymod data
-     *
-     * @memberof account
-     */
-    async updateLaby () {
-      const req = new labyRequest(this.uuidPosix);
-      await req.makeRequest();
-      this.hasLabyCape = req.hasCape();
-    }
-
-    /**
-     * Update and populate the hypixel data
-     *
-     * @memberof account
-     */
-    async updateHypixel () {
-      const json = await HypixelApi.player(this.uuid);
-
+    setHypixel (json) {
       const player = json?.player;
       const arcade = json.player?.stats?.Arcade;
 
@@ -698,6 +673,17 @@ class Account {
       this.simTotal = this.seasonalWins.total;
 
       PopulateAccountData(json, this);
+    }
+
+    /**
+     * Update and populate the hypixel data
+     *
+     * @memberof account
+     */
+    async updateHypixel () {
+      const json = await HypixelApi.player(this.uuid);
+
+      this.setHypixel(json);
     }
 }
 
