@@ -1,19 +1,34 @@
 const https = require("https");
+const logger = require("hyarcade-logger");
 const cfg = require("hyarcade-config").fromJSON();
 const keys = cfg.altkeys;
+
+let currentKey = 0;
 
 /**
  * 
  * @returns {string}
  */
 function getAPIKey () {
-  return keys[Math.floor(Math.random() * keys.length)];
+  logger.debug(`Using key : ${currentKey + 1} of ${keys.length}`);
+  const key = keys[currentKey];
+  currentKey += 1;
+  if(currentKey == keys.length) {
+    currentKey = 0;
+  }
+
+  return key;
+}
+
+class Response {
+  key = {};
+  data = [];
 }
 
 /**
  * 
  * @param {string[]} accs 
- * @returns {Promise<object[]>}
+ * @returns {Promise<Response>}
  */
 async function HyarcadeWorkerRequest (accs) {
   return new Promise((resolve, reject) => {
