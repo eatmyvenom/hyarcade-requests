@@ -1,7 +1,7 @@
 const https = require("https");
 const logger = require("hyarcade-logger");
 const cfg = require("hyarcade-config").fromJSON();
-const keys = cfg.altkeys;
+const keys = cfg.altkeys.concat([cfg.clusters[cfg.cluster].key]);
 
 let currentKey = 0;
 
