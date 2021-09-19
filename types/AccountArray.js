@@ -6,7 +6,7 @@ const Account = require("./Account");
  * @returns {Account[]}
  */
 function AccountArray (accounts) {
-  return accounts.map((v) => Account.from(v));
+  return [ ...new Set(accounts.map((v) => Account.from(v))) ];
 }
 
 module.exports = AccountArray;
