@@ -20,7 +20,7 @@ function getKey () {
     // eslint-disable-next-line prefer-destructuring
     key = config.clusters[config.cluster].key;
   }
-  if(process.argv[2] == "bot") {
+  if(process.argv[2] == "bot" || process.argv[2] == "serveDB") {
     // eslint-disable-next-line prefer-destructuring
     key = config.clusters.serverbot.key;
   }
