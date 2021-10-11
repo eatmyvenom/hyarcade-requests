@@ -202,6 +202,7 @@ class SeasonalStats {
     this.pointsScuba = player?.stats?.Arcade?.total_points_scuba_simulator ?? 0;
     this.foundScuba = player?.stats?.Arcade?.items_found_scuba_simulator ?? 0;
     this.foundEaster = player?.stats?.Arcade?.eggs_found_easter_simulator ?? 0;
+    this.foundHalloween = player?.stats?.Arcade?.candy_found_halloween_simulator ?? 0;
 
     this.easter = player?.stats?.Arcade?.wins_easter_simulator ?? 0;
     this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
