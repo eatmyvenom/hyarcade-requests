@@ -418,7 +418,7 @@ class AccountAP {
       ]);
 
       this.hypixelSays = new ArcadeGameAP(accData, [
-        new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_MASTER, "HYPIXEL_SAYS_MASTER"),
+
       ], [
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_BAD_HEALTH_CHOICES, "HYPIXEL_SAYS_BAD_HEALTH_CHOICES"),
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_TNT_DODGER, "HYPIXEL_SAYS_TNT_DODGER"),
