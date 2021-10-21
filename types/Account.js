@@ -31,6 +31,8 @@ class BlockingDeadStats extends ArcadeGameStats {
 
 class BountyHuntersStats extends ArcadeGameStats {
     kills = 0;
+    bowKills = 0;
+    swordKills = 0;
     bountyKills = 0;
     deaths = 0;
 
@@ -38,6 +40,8 @@ class BountyHuntersStats extends ArcadeGameStats {
       super();
       this.wins = arcade?.wins_oneinthequiver ?? 0;
       this.kills = arcade?.kills_oneinthequiver ?? 0;
+      this.bowKills = arcade?.bow_kills_oneinthequiver ?? 0;
+      this.swordKills = arcade?.sword_kills_oneinthequiver ?? 0;
       this.bountyKills = arcade?.bounty_kills_oneinthequiver ?? 0;
       this.deaths = arcade?.deaths_oneinthequiver ?? 0;
     }
@@ -73,8 +77,18 @@ class DragonWarsStats extends ArcadeGameStats {
 }
 
 class EnderSpleefStats extends ArcadeGameStats {
+
+  blocksBroken = 0;
+  totalPowerups = 0;
+  bigshotPowerups = 0;
+  tripleshotPowerups = 0;
+
   constructor (arcade) {
     super();
+    this.blocksBroken = arcade?.blocks_destroyed_ender ?? 0;
+    this.totalPowerups = arcade?.powerup_activations ?? 0;
+    this.bigshotPowerups = arcade?.bigshot_powerup_activations ?? 0;
+    this.tripleshotPowerups = arcade?.triple_powerup_activations ?? 0;
     this.wins = arcade?.wins_ender ?? 0;
   }
 }
@@ -97,11 +111,37 @@ class FootballStats extends ArcadeGameStats {
 class FarmhuntStats extends ArcadeGameStats {
 
     poop = 0;
+    animalWins = 0;
+    hunterWins = 0;
+    kills = 0;
+    animalKills = 0;
+    hunterKills = 0;
+    bowKills = 0;
+    animalBowKills = 0;
+    hunterBowKills = 0;
+    tauntsUsed = 0;
+    safeTauntsUsed = 0;
+    riskyTauntsUsed = 0;
+    dangerousTauntsUsed = 0;
+    fireworksUsed = 0;
 
     constructor (arcade) {
       super();
       this.wins = arcade?.wins_farm_hunt ?? 0;
-      this.poop = arcade?.poop_collected ?? 0;
+      this.animalWins = arcade?.animal_wins_farm_hunt ?? 0;
+      this.hunterWins = arcade?.hunter_wins_farm_hunt ?? 0;
+      this.kills = arcade?.kills_farm_hunt ?? 0;
+      this.animalKills = arcade?.animal_kills_farm_hunt ?? 0;
+      this.hunterKills = arcade?.hunter_kills_farm_hunt ?? 0;
+      this.bowKills = arcade?.bow_kills_farm_hunt ?? 0;
+      this.animalBowKills = arcade?.animal_bow_kills_farm_hunt ?? 0;
+      this.hunterBowKills = arcade?.hunter_bow_kills_farm_hunt ?? 0;
+      this.tauntsUsed = arcade?.taunts_used_farm_hunt ?? 0;
+      this.safeTauntsUsed = arcade?.safe_taunts_used_farm_hunt ?? 0;
+      this.riskyTauntsUsed = arcade?.risky_taunts_used_farm_hunt ?? 0;
+      this.dangerousTauntsUsed = arcade?.dangerous_taunts_used_farm_hunt ?? 0;
+      this.fireworksUsed = arcade?.firework_taunts_used_farm_hunt ?? 0;
+      this.poop = (arcade?.poop_collected ?? 0) + (arcade?.poop_collected_farm_hunt ?? 0);
     }
 }
 
@@ -150,28 +190,206 @@ class HoleInTheWallStats extends ArcadeGameStats {
 
 class HypixelSaysStats extends ArcadeGameStats {
 
-    rounds = 0;
+    simonWins = 0;
+    santaWins = 0;
+    totalPoints = 0;
+    simonPoints = 0;
+    santaPoints = 0;
+    totalRoundWins = 0;
+    simonRoundWins = 0;
+    santaRoundWins = 0;
+    maxScoreSimon = 0
+    maxScoreSanta = 0
+    maxScore = 0;
 
     constructor (arcade) {
       super();
-      this.wins = (arcade?.wins_simon_says ?? 0) + (arcade?.wins_santa_says ?? 0);
-      this.rounds = (arcade?.rounds_simon_says ?? 0) + (arcade?.rounds_santa_says ?? 0);
+
+      this.simonWins = arcade?.wins_simon_says ?? 0;
+      this.santaWins = arcade?.wins_santa_says ?? 0;
+      this.wins = this.simonPoints + this.santaWins;
+
+      this.simonPoints = arcade?.rounds_simon_says ?? 0;
+      this.santaPoints = arcade?.rounds_santa_says ?? 0;
+      this.totalPoints = this.simonPoints + this.santaPoints;
+
+      this.simonRoundWins = arcade?.round_wins_simon_says ?? 0;
+      this.santaRoundWins = arcade?.round_wins_santa_says ?? 0;
+      this.totalRoundWins = this.simonRoundWins + this.santaRoundWins;
+
+      this.maxScoreSimon = arcade?.top_score_simon_says ?? 0;
+      this.maxScoreSanta = arcade?.top_score_santa_says ?? 0; 
+
+      this.maxScore = Math.max(this.maxScoreSimon, this.maxScoreSanta);
     }
 }
 
 class PartyGamesStats extends ArcadeGameStats {
 
-    wins1 = 0;
-    wins2 = 0;
-    wins3 = 0;
+  wins1 = 0;
+  wins2 = 0;
+  wins3 = 0;
 
-    constructor (arcade) {
-      super();
-      this.wins1 = arcade?.wins_party ?? 0;
-      this.wins2 = arcade?.wins_party_2 ?? 0;
-      this.wins3 = arcade?.wins_party_3 ?? 0;
-      this.wins = this.wins1 + this.wins2 + this.wins3;
-    }
+  roundsWon = 0;
+  starsEarned = 0;
+
+  animalSlaughterWins = 0;
+  animalSlaughterKills = 0;
+  animalSlaughterPB = 0;
+
+  anvilSpleefWins = 0;
+  anvilSpleefPB = 0;
+
+  bombardmentWins = 0;
+  bombardmentPB = 0;
+
+  chickenRingsWins = 0;
+  chickenRingsPB = Infinity;
+
+  diveWins = 0;
+  diveScore = 0;
+  divePB = 0;
+
+  highGroundWins = 0;
+  highGroundScore = 0;
+  highGroundPB = 0;
+
+  hoeWins = 0;
+  hoeScore = 0;
+  hoePB = 0;
+
+  jigsawWins = 0;
+  jigsawPB = Infinity;
+
+  jungleJumpWins = 0;
+  jungleJumpPB = Infinity;
+
+  labEscapeWins = 0;
+  labEscapePB = Infinity;
+
+  lawnMoowerWins = 0;
+  lawnMoowerScore = 0;
+  lawnMoowerPB = 0;
+
+  minecartRacingWins = 0;
+  minecartRacingPB = Infinity;
+
+  rpgWins = 0;
+  rpgKills = 0;
+  rpgPB = 0;
+
+  spiderMazeWins = 0;
+  spiderMazePB = Infinity;
+
+  theFloorIsLavaWins = 0;
+  theFloorIsLavaPB = Infinity;
+
+  avalancheWins = 0;
+
+  volcanoWins = 0;
+
+  pigFishingWins = 0;
+
+  trampolinioWins = 0;
+
+  pigJoustingWins = 0;
+
+  workshopWins = 0;
+
+  shootingRangeWins = 0;
+
+  frozenFloorWins = 0;
+
+  cannonPaintingWins = 0;
+
+  fireLeapersWins = 0;
+
+  superSheepWins = 0
+
+  constructor (arcade) {
+    super();
+
+    this.wins1 = arcade?.wins_party ?? 0;
+    this.wins2 = arcade?.wins_party_2 ?? 0;
+    this.wins3 = arcade?.wins_party_3 ?? 0;
+    this.wins = this.wins1 + this.wins2 + this.wins3;
+
+    this.roundsWon = arcade?.round_wins_party ?? 0;
+    this.starsEarned = arcade?.total_stars_party ?? 0;
+
+    this.animalSlaughterWins = arcade?.animal_slaughter_round_wins_party ?? 0;
+    this.animalSlaughterKills = arcade?.animal_slaughter_kills_party ?? 0;
+    this.animalSlaughterPB = arcade?.animal_slaughter_best_score_party ?? 0;
+
+    this.anvilSpleefWins = arcade?.anvil_spleef_round_wins_party ?? 0;
+    this.anvilSpleefPB = arcade?.anvil_spleef_best_time_party ?? 0;
+
+    this.bombardmentWins = arcade?.bombardment_round_wins_party ?? 0;
+    this.bombardmentPB = arcade?.bombardment_best_time_party ?? 0;
+
+    this.chickenRingsWins = arcade?.chicken_rings_round_wins_party ?? 0;
+    this.chickenRingsPB = arcade?.chicken_rings_best_time_party ?? Infinity;
+
+    this.diveWins = arcade?.dive_round_wins_party ?? 0;
+    this.diveScore = arcade?.dive_total_score_party ?? 0;
+    this.divePB = arcade?.dive_best_score_party ?? 0;
+
+    this.highGroundWins = arcade?.high_ground_round_wins_party ?? 0;
+    this.highGroundScore = arcade?.high_ground_total_score_party ?? 0;
+    this.highGroundPB = arcade?.high_ground_best_score_party ?? 0;
+
+    this.hoeWins = arcade?.hoe_hoe_hoe_round_wins_party ?? 0;
+    this.hoeScore = arcade?.hoe_hoe_hoe_total_score_party ?? 0;
+    this.hoePB = arcade?.hoe_hoe_hoe_best_score_party ?? 0;
+
+    this.jigsawWins = arcade?.jigsaw_rush_round_wins_party ?? 0;
+    this.jigsawPB = arcade?.jigsaw_rush_best_time_party ?? Infinity;
+
+    this.jungleJumpWins = arcade?.jungle_jump_round_wins_party ?? 0;
+    this.jungleJumpPB = arcade?.jungle_jump_best_time_party ?? Infinity;
+
+    this.labEscapeWins = arcade?.lab_escape_round_wins_party ?? 0;
+    this.labEscapePB = arcade?.lab_escape_best_time_party ?? Infinity;
+
+    this.lawnMoowerWins = arcade?.lawn_moower_round_wins_party ?? 0;
+    this.lawnMoowerScore = arcade?.lawn_moower_mowed_total_score_party ?? 0;
+    this.lawnMoowerPB = arcade?.lawn_moower_mowed_best_score_party ?? 0;
+
+    this.minecartRacingWins = arcade?.minecart_racing_round_wins_party ?? 0;
+    this.minecartRacingPB = arcade?.minecart_racing_best_time_party ?? Infinity;
+
+    this.rpgWins = arcade?.rpg_16_round_wins_party ?? 0;
+    this.rpgKills = arcade?.rpg_16_kills_party ?? 0;
+    this.rpgPB = arcade?.rpg_16_kills_best_score_party ?? 0;
+
+    this.spiderMazeWins = arcade?.spider_maze_round_wins_party ?? 0;
+    this.spiderMazePB = arcade?.spider_maze_best_time_party ?? Infinity;
+
+    this.theFloorIsLavaWins = arcade?.the_floor_is_lava_round_wins_party ?? 0;
+    this.theFloorIsLavaPB = arcade?.the_floor_is_lava_best_time_party ?? Infinity;
+
+    this.avalancheWins = arcade?.avalanche_round_wins_party ?? 0;
+
+    this.volcanoWins = arcade?.volcano_round_wins_party ?? 0;
+
+    this.pigFishingWins = arcade?.pig_fishing_round_wins_party ?? 0;
+
+    this.pigJoustingWins = arcade?.pig_jousting_round_wins_party ?? 0;
+
+    this.trampolinioWins = arcade?.trampolinio_round_wins_party ?? 0;
+
+    this.workshopWins = arcade?.workshop_round_wins_party ?? 0;
+
+    this.shootingRangeWins = arcade?.shooting_range_round_wins_party ?? 0;
+
+    this.frozenFloorWins = arcade?.frozen_floor_round_wins_party ?? 0;
+
+    this.cannonPaintingWins = arcade?.cannon_painting_round_wins_party ?? 0;
+
+    this.fireLeapersWins = arcade?.fire_leapers_round_wins_party ?? 0;
+
+    this.superSheepWins = arcade?.super_sheep_round_wins_party ?? 0;
+  }
 }
 
 class PixelPaintersStats extends ArcadeGameStats {
@@ -224,45 +442,7 @@ class SeasonalStats {
     pointsScuba = 0;
     foundScuba = 0;
     foundEaster = 0;
-}
-
-class ExtraStats {
-
-  constructor (player) {
-    this.blockingDeadKills = player?.stats?.Arcade?.kills_dayone ?? 0;
-    this.blockingDeadHeadshots = player?.stats?.Arcade?.headshots_dayone ?? 0;
-    this.bountyHuntersKills = player?.stats?.Arcade?.kills_oneinthequiver ?? 0;
-    this.bountyHuntersBountyKills = player?.stats?.Arcade?.bounty_kills_oneinthequiver ?? 0;
-    this.bountyHuntersDeaths = player?.stats?.Arcade?.deaths_oneinthequiver ?? 0;
-    this.dragonWarsKills = player?.stats?.Arcade?.kills_dragonwars2 ?? 0;
-    this.footballGoals = player?.stats?.Arcade?.goals_soccer ?? 0;
-    this.footballPKicks = player?.stats?.Arcade?.powerkicks_soccer ?? 0;
-    this.footballKicks = player?.stats?.Arcade?.kicks_soccer ?? 0;
-    this.galaxyWarsKills = player?.stats?.Arcade?.sw_kills ?? 0;
-    this.galaxyWarsDeaths = player?.stats?.Arcade?.sw_deaths ?? 0;
-    this.HNSSeekerWins = player?.stats?.Arcade?.seeker_wins_hide_and_seek ?? 0;
-    this.HNSHiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
-    this.hypixelSaysRounds = player?.stats?.Arcade?.rounds_simon_says ?? 0;
-    this.throwOutKills = player?.stats?.Arcade?.kills_throw_out ?? 0;
-    this.throwOutDeaths = player?.stats?.Arcade?.deaths_throw_out ?? 0;
-  }
-
-    blockingDeadKills = 0;
-    blockingDeadHeadshots = 0;
-    bountyHuntersKills = 0;
-    bountyHuntersBountyKills = 0;
-    bountyHuntersDeaths = 0;
-    dragonWarsKills = 0;
-    footballGoals = 0;
-    footballPKicks = 0;
-    footballKicks = 0;
-    galaxyWarsKills = 0;
-    galaxyWarsDeaths = 0;
-    HNSSeekerWins = 0;
-    HNSHiderWins = 0;
-    hypixelSaysRounds = 0;
-    throwOutKills = 0;
-    throwOutDeaths = 0;
+    foundHalloween = 0;
 }
 
 class MiniWallsStats extends ArcadeGameStats {
@@ -585,50 +765,6 @@ class Account {
     get hnsKills () {return this.hideAndSeek.kills;}
     set hnsKills (v) {this.hideAndSeek.kills = v;}
 
-    get extras () {
-      return {
-        blockingDeadKills: this.blockingDead.kills,
-        blockingDeadHeadshots: this.blockingDead.headshots,
-        bountyHuntersKills: this.bountyHunters.kills,
-        bountyHuntersBountyKills: this.bountyHunters.bountyKills,
-        bountyHuntersDeaths: this.bountyHunters.deaths,
-        dragonWarsKills: this.dragonWars.kills,
-        footballGoals: this.football.goals,
-        footballPKicks: this.football.powerkicks,
-        footballKicks: this.football.kicks,
-        galaxyWarsKills: this.galaxyWars.kills,
-        galaxyWarsDeaths: this.galaxyWars.deaths,
-        HNSSeekerWins: this.hideAndSeek.seekerWins,
-        HNSHiderWins: this.hideAndSeek.hiderWins,
-        hypixelSaysRounds: this.hypixelSays.rounds,
-        throwOutKills: this.throwOut.kills,
-        throwOutDeaths: this.throwOut.deaths
-      };
-    }
-
-    /**
-     *
-     * @param {ExtraStats} v
-     * @memberof Account
-     */
-    set extras (v) {
-      this.blockingDead.kills = v.blockingDeadKills;
-      this.blockingDead.headshots = v.blockingDeadHeadshots;
-      this.bountyHunters.kills = v.bountyHuntersKills;
-      this.bountyHunters.bountyKills = v.bountyHuntersBountyKills;
-      this.dragonWars.kills = v.dragonWarsKills;
-      this.football.goals = v.footballGoals;
-      this.football.powerkicks = v.footballPKicks;
-      this.football.kicks = v.footballKicks;
-      this.galaxyWars.kills = v.galaxyWarsKills;
-      this.galaxyWars.deaths = v.galaxyWarsDeaths;
-      this.hideAndSeek.seekerWins = v.HNSSeekerWins;
-      this.hideAndSeek.hiderWins = v.HNSHiderWins;
-      this.hypixelSays.rounds = v.hypixelSaysRounds;
-      this.throwOut.deaths = v.throwOutDeaths;
-      this.throwOut.kills = v.throwOutKills;
-    }
-
     /**
      * Update and populate all the data for this account
      *
@@ -646,7 +782,7 @@ class Account {
      */
     setHypixel (json) {
       const player = json?.player;
-      const arcade = json.player?.stats?.Arcade;
+      const arcade = json?.player?.stats?.Arcade;
 
       this.updateTime = Date.now();
 
