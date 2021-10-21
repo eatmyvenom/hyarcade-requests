@@ -242,7 +242,6 @@ class AccountAP {
     football;
 
     /**
-     * WARNING: This is empty because galaxy wars has no AP
      * 
      * @type {ArcadeGameAP}
      * @memberof AccountAP
@@ -418,13 +417,11 @@ class AccountAP {
       ]);
 
       this.hypixelSays = new ArcadeGameAP(accData, [
-
-      ], [
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_BAD_HEALTH_CHOICES, "HYPIXEL_SAYS_BAD_HEALTH_CHOICES"),
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_TNT_DODGER, "HYPIXEL_SAYS_TNT_DODGER"),
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_PVE_EXPERT, "HYPIXEL_SAYS_PVE_EXPERT"),
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_PIG_RIDER, "HYPIXEL_SAYS_PIG_RIDER"),
-      ]);
+      ], []);
 
       this.miniWalls = new ArcadeGameAP(accData, [
         new OneTimeAchievementWrapper(arcadeOneTime.MINI_WALLS_LAST_MAN, "MINI_WALLS_LAST_MAN"),
