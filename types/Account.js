@@ -207,7 +207,7 @@ class HypixelSaysStats extends ArcadeGameStats {
 
       this.simonWins = arcade?.wins_simon_says ?? 0;
       this.santaWins = arcade?.wins_santa_says ?? 0;
-      this.wins = this.simonPoints + this.santaWins;
+      this.wins = this.simonWins + this.santaWins;
 
       this.simonPoints = arcade?.rounds_simon_says ?? 0;
       this.santaPoints = arcade?.rounds_santa_says ?? 0;
