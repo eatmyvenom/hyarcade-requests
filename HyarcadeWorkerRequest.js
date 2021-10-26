@@ -10,7 +10,7 @@ let currentKey = 0;
  * @returns {string}
  */
 function getAPIKey () {
-  logger.debug(`Using key : ${currentKey + 1} of ${keys.length}`);
+  logger.debug(`Using key : ${currentKey + 1} of ${keys.length} (${currentKey.toString().slice(0, 16)}`);
   const key = keys[currentKey];
   currentKey += 1;
   if(currentKey == keys.length) {
