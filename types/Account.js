@@ -670,6 +670,8 @@ class Account {
         this.uuid = uuid;
       }
 
+      this.uuid = uuid.toLowerCase().replace(/-/g, "");
+
       try {
         const timeLow = this.uuid?.slice(0, 8);
         const timeMid = this.uuid?.slice(8, 12);
