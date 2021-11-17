@@ -139,10 +139,10 @@ class ArcadeGameAP {
 
       onetimes.forEach((onetime) => {
         if(onetimeArr.includes(onetime.stat)) {
-          this.achievementsEarned.push(onetime.achievement.name);
+          this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points });
           this.apEarned += onetime.achievement.points;
         } else {
-          this.achievementsMissing.push(onetime.achievement.name);
+          this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points });
         }
 
         this.apAvailable += onetime.achievement.points;
