@@ -697,6 +697,7 @@ class Account {
     static from (obj) {
       const acc = new Account("", 0, "");
       Object.assign(acc, obj);
+      acc.uuid = acc.uuid.toLowerCase().replace(/-/g, "");
 
       return acc;
     }

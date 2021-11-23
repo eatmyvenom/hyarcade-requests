@@ -22,7 +22,7 @@ function uniqBy (a, key) {
  */
 function AccountArray (accounts) {
   const accs = accounts.map((v) => Account.from(v));
-  return uniqBy(accs, (a) => a.uuid?.toLowerCase().replace(/-/g,""));
+  return uniqBy(accs, (a) => a.uuid?.toLowerCase().replace(/-/g, ""));
 
 }
 
