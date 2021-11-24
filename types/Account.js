@@ -687,6 +687,20 @@ class Account {
 
     setData (oldAcc) {
       Object.assign(this, oldAcc);
+      this.uuid = this.uuid.toLowerCase().replace(/-/g, "");
+
+
+      try {
+        const timeLow = this.uuid?.slice(0, 8);
+        const timeMid = this.uuid?.slice(8, 12);
+        const version = this.uuid?.slice(12, 16);
+        const varient = this.uuid?.slice(16, 20);
+        const node = this.uuid?.slice(-12);
+        this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
+      } catch (e) {
+        Logger.error(`Error caused from the uuid of ${this.name} : ${this.uuid}`);
+        Logger.error(e);
+      }
     }
 
     /**
@@ -697,7 +711,6 @@ class Account {
     static from (obj) {
       const acc = new Account("", 0, "");
       Object.assign(acc, obj);
-      acc.uuid = acc.uuid.toLowerCase().replace(/-/g, "");
 
       return acc;
     }
