@@ -163,6 +163,7 @@ class HideAndSeekStats extends ArcadeGameStats {
     seekerWins = 0;
     hiderWins = 0;
     kills = 0;
+    objectives = 0;
 
     constructor (player) {
       super();
@@ -170,6 +171,7 @@ class HideAndSeekStats extends ArcadeGameStats {
       this.hiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
       this.wins = this.seekerWins + this.hiderWins;
       this.kills = player?.achievements?.arcade_hide_and_seek_hider_kills ?? 0;
+      this.objectives = player?.achievements?.arcade_hide_and_seek_master_hider ?? 0;
     }
 }
 
