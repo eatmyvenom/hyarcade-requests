@@ -802,6 +802,10 @@ class Account {
       const player = json?.player;
       const arcade = json?.player?.stats?.Arcade;
 
+      if(player == undefined) {
+        return;
+      }
+
       this.updateTime = Date.now();
 
       this.blockingDead = new BlockingDeadStats(arcade);
