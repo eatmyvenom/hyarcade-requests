@@ -18,12 +18,16 @@ function uniqBy (a, key) {
 /**
  * 
  * @param {object[]} accounts 
+ * @param {boolean} fix
  * @returns {Account[]}
  */
-function AccountArray (accounts) {
+function AccountArray (accounts, fix = true) {
   const accs = accounts.map((v) => Account.from(v));
-  return uniqBy(accs, (a) => a.uuid?.toLowerCase().replace(/-/g, ""));
+  if(fix) {
+    return uniqBy(accs, (a) => a.uuid?.toLowerCase().replace(/-/g, ""));
+  }
 
+  return accs;
 }
 
 module.exports = AccountArray;
