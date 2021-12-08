@@ -16,7 +16,7 @@ function getAPIKey () {
     currentKey = 0;
   }
 
-  logger.debug(`Using key : ${currentKey + 1} of ${keys.length} (${currentKey.toString().slice(0, 16)}`);
+  logger.verbose(`Using key : ${currentKey + 1} of ${keys.length} (${currentKey.toString().slice(0, 16)})`);
 
   return key;
 }
