@@ -20,13 +20,16 @@ function getKey () {
     // eslint-disable-next-line prefer-destructuring
     key = config.clusters[config.cluster].key;
   }
+
   if(process.argv[2] == "bot" || process.argv[2] == "serveDB") {
     // eslint-disable-next-line prefer-destructuring
     key = config.clusters.serverbot.key;
   }
+
   if(config.mode == "test") {
     key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
   }
+
   return key;
 }
 
@@ -47,10 +50,6 @@ module.exports = class HypixelApi {
       const apiPoint = new hypixelReq(this.reqUrl.toString());
       let response = await apiPoint.makeRequest();
 
-      // Hypixel api put the amount of time you have to wait
-      // upon rate limit within the response headers. If this
-      // exists, wait that amount of time in seconds then
-      // make a new request.
       while(apiPoint.headers["retry-after"]) {
         if(config.logRateLimit) {
           logger.warn(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);

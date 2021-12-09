@@ -1,5 +1,6 @@
 const https = require("https");
 const http = require("http");
+const Logger = require("hyarcade-logger");
 
 class webResponse {
     data = "";
@@ -51,15 +52,23 @@ function sendRequest (url) {
           resolve(new webResponse(reply, res.headers, res.statusCode));
         });
         res.on("error", (err) => {
+          Logger.err(err);
           reject(err);
         });
       });
     } catch (e) {
+      Logger.err(e);
+      Logger.err(`Web request to ${url} caused an error, resending!`);
       return sendRequest(url);
     }
   });
 }
 
 module.exports = async function webRequest (url) {
-  return await sendRequest(url);
+  try {
+    return await sendRequest(url);
+  } catch (e) {
+    Logger.err(e);
+    Logger.err(`Web request to ${url} caused an error, resending!`);
+  }
 };
