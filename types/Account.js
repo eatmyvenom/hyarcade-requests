@@ -601,6 +601,7 @@ class Account {
     pixelPainters = new PixelPaintersStats();
     throwOut = new ThrowOutStats();
 
+    coinTransfers = 0;
     simTotal = 0;
     arcadeCoins = 0;
     arcadeWins = 0;

@@ -117,6 +117,8 @@ module.exports = function PopulateAccountData (json, account) {
   account.timePlaying = json.player?.timePlaying ?? 0;
 
   account.lastLogin = json.player?.lastLogin ?? 0;
+
+  account.coinTransfers = json?.player?.stats?.Arcade?.stamp_level ?? 0;
   
   account.coinsEarned = json.player?.achievements?.arcade_arcade_banker ?? 0;
   account.weeklyCoins = getWeeklyStat(json?.player?.stats?.Arcade?.weekly_coins_a, json?.player?.stats?.Arcade?.weekly_coins_b);
