@@ -423,6 +423,7 @@ class SeasonalStats {
     this.foundScuba = player?.stats?.Arcade?.items_found_scuba_simulator ?? 0;
     this.foundEaster = player?.stats?.Arcade?.eggs_found_easter_simulator ?? 0;
     this.foundHalloween = player?.stats?.Arcade?.candy_found_halloween_simulator ?? 0;
+    this.grinchGiftsFound = player?.stats?.Arcade?.gifts_grinch_simulator_v2 ?? 0;
 
     this.easter = player?.stats?.Arcade?.wins_easter_simulator ?? 0;
     this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
@@ -441,6 +442,7 @@ class SeasonalStats {
     grinch = 0;
     total = 0;
 
+    grinchGiftsFound = 0;
     pointsScuba = 0;
     foundScuba = 0;
     foundEaster = 0;
