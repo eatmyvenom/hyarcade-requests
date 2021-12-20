@@ -117,7 +117,9 @@ module.exports = function PopulateAccountData (json, account) {
   account.timePlaying = json.player?.timePlaying ?? 0;
 
   account.lastLogin = json.player?.lastLogin ?? 0;
+  account.apiHidden = account.lastLogin == 0;
 
+  account.migrated = json?.player?.tourney?.quake_solo2_1 != undefined;
   account.coinTransfers = json?.player?.stats?.Arcade?.stamp_level ?? 0;
   
   account.coinsEarned = json.player?.achievements?.arcade_arcade_banker ?? 0;

@@ -814,6 +814,7 @@ class Account {
       this.blockingDead = new BlockingDeadStats(arcade);
       this.bountyHunters = new BountyHuntersStats(arcade);
       this.captureTheWool = new CaptureTheWoolStats(player);
+      this.creeperAttack = new CreeperAttackStats(arcade);
       this.dragonWars = new DragonWarsStats(arcade);
       this.enderSpleef = new EnderSpleefStats(arcade);
       this.farmhunt = new FarmhuntStats(arcade);
