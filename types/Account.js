@@ -149,12 +149,18 @@ class GalaxyWarsStats extends ArcadeGameStats {
 
     kills = 0;
     deaths = 0;
+    rebelKills = 0;
+    empireKills = 0;
+    shotsFired = 0;
 
     constructor (arcade) {
       super();
       this.kills = arcade?.sw_kills ?? 0;
       this.deaths = arcade?.sw_deaths ?? 0;
       this.wins = arcade?.sw_game_wins ?? 0;
+      this.rebelKills = arcade?.sw_rebel_kills ?? 0;
+      this.empireKills = arcade?.sw_empire_kills ?? 0;
+      this.shotsFired = arcade?.sw_shots_fired ?? 0;
     }
 }
 

@@ -104,7 +104,7 @@ module.exports = function PopulateAccountData (json, account) {
   account.karma = json?.player?.karma ?? 0;
   account.achievementPoints = json?.player?.achievementPoints ?? 0;
 
-  account.plusColor = json?.player?.rankPlusColor ?? "GOLD";
+  account.plusColor = json?.player?.rankPlusColor ?? (account.rank == "VIP_PLUS") ? "GOLD" : "RED";
   account.cloak = json?.player?.currentCloak ?? "";
   account.hat = json?.player?.currentHat ?? "";
   account.clickEffect = json?.player?.currentClickEffect ?? "";
@@ -112,6 +112,7 @@ module.exports = function PopulateAccountData (json, account) {
   account.arcadeCoins = json.player?.stats?.Arcade?.coins ?? 0;
   account.arcadeWins = json.player?.achievements?.arcade_arcade_winner ?? 0;
   account.anyWins = json.player?.achievements?.general_wins ?? 0;
+  account.arcadeAchievementPoints = account?.arcadeAchievments?.totalEarned ?? 0;
 
   account.questsCompleted = json.player?.achievements?.general_quest_master ?? 0;
   account.timePlaying = json.player?.timePlaying ?? 0;
@@ -121,7 +122,7 @@ module.exports = function PopulateAccountData (json, account) {
 
   account.migrated = json?.player?.tourney?.quake_solo2_1 != undefined;
   account.coinTransfers = json?.player?.stats?.Arcade?.stamp_level ?? 0;
-  
+
   account.coinsEarned = json.player?.achievements?.arcade_arcade_banker ?? 0;
   account.weeklyCoins = getWeeklyStat(json?.player?.stats?.Arcade?.weekly_coins_a, json?.player?.stats?.Arcade?.weekly_coins_b);
   account.monthlyCoins = getMonthlyStat(json?.player?.stats?.Arcade?.monthly_coins_a, json?.player?.stats?.Arcade?.monthly_coins_b);
@@ -143,4 +144,6 @@ module.exports = function PopulateAccountData (json, account) {
           (account?.simTotal ?? 0) +
           (account?.throwOut?.wins ?? 0) +
           (account?.zombies?.wins_zombies ?? 0);
+
+  account.unknownWins = Math.abs(account.arcadeWins - account.combinedArcadeWins);
 };
