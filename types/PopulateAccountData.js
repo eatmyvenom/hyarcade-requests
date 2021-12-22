@@ -104,7 +104,11 @@ module.exports = function PopulateAccountData (json, account) {
   account.karma = json?.player?.karma ?? 0;
   account.achievementPoints = json?.player?.achievementPoints ?? 0;
 
-  account.plusColor = json?.player?.rankPlusColor ?? (account.rank == "VIP_PLUS") ? "GOLD" : "RED";
+  account.plusColor = json?.player?.rankPlusColor;
+  
+  if(account.plusColor == undefined) {
+    account.plusColor = (account.rank == "VIP_PLUS") ? "GOLD" : "RED";
+  }
   account.cloak = json?.player?.currentCloak ?? "";
   account.hat = json?.player?.currentHat ?? "";
   account.clickEffect = json?.player?.currentClickEffect ?? "";
