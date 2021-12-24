@@ -86,9 +86,9 @@ class EnderSpleefStats extends ArcadeGameStats {
   constructor (arcade) {
     super();
     this.blocksBroken = arcade?.blocks_destroyed_ender ?? 0;
-    this.totalPowerups = arcade?.powerup_activations ?? 0;
-    this.bigshotPowerups = arcade?.bigshot_powerup_activations ?? 0;
-    this.tripleshotPowerups = arcade?.triple_powerup_activations ?? 0;
+    this.totalPowerups = arcade?.powerup_activations_ender ?? 0;
+    this.bigshotPowerups = arcade?.bigshot_powerup_activations_ender ?? 0;
+    this.tripleshotPowerups = arcade?.tripleshot_powerup_activations_ender ?? 0;
     this.wins = arcade?.wins_ender ?? 0;
   }
 }
