@@ -47,7 +47,7 @@ async function HyarcadeWorkerRequest (accs) {
     };
 
     try {
-      https.get(url, reqOptions, (res) => {
+      const requester = https.get(url, reqOptions, (res) => {
         let reply = "";
         res.on("data", (d) => {
           reply += d;
@@ -67,6 +67,8 @@ async function HyarcadeWorkerRequest (accs) {
           reject(err);
         });
       });
+
+      requester.on("error", logger.err);
     } catch (e) {
       reject(e);
     }

@@ -43,7 +43,7 @@ function sendRequest (url) {
     };
 
     try {
-      protocolObj.get(url, reqOptions, (res) => {
+      const requester = protocolObj.get(url, reqOptions, (res) => {
         let reply = "";
         res.on("data", (d) => {
           reply += d;
@@ -56,6 +56,8 @@ function sendRequest (url) {
           reject(err);
         });
       });
+
+      requester.on("error", Logger.err);
     } catch (e) {
       Logger.err(e);
       Logger.err(`Web request to ${url} caused an error, resending!`);
