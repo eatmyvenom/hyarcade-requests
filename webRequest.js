@@ -57,7 +57,6 @@ function sendRequest (url) {
         });
       });
 
-      requester.req.on("error", Logger.err);
       requester.on("error", Logger.err);
     } catch (e) {
       Logger.err(e);
