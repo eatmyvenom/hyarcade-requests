@@ -166,6 +166,12 @@ class GalaxyWarsStats extends ArcadeGameStats {
 
 class HideAndSeekStats extends ArcadeGameStats {
 
+    propHuntHiderWins = 0;
+    propHuntSeekerWins = 0;
+    propHuntWins = 0;
+    partyPooperHiderWins = 0;
+    partyPooperSeekerWins = 0;
+    partyPooperWins = 0;
     seekerWins = 0;
     hiderWins = 0;
     kills = 0;
@@ -173,10 +179,20 @@ class HideAndSeekStats extends ArcadeGameStats {
 
     constructor (player) {
       super();
+      this.propHuntHiderWins = player?.stats?.Arcade?.prop_hunt_hider_wins_hide_and_seek ?? 0;
+      this.propHuntSeekerWins = player?.stats?.Arcade?.prop_hunt_seeker_wins_hide_and_seek ?? 0;
+      this.propHuntWins = this.propHuntHiderWins + this.propHuntSeekerWins;
+
+      this.partyPooperSeekerWins = player?.stats?.Arcade?.party_pooper_seeker_wins_hide_and_seek ?? 0;
+      this.partyPooperHiderWins = player?.stats?.Arcade?.party_pooper_hider_wins_hide_and_seek ?? 0;
+      this.partyPooperWins = this.partyPooperHiderWins + this.partyPooperSeekerWins;
+
       this.seekerWins = player?.stats?.Arcade?.seeker_wins_hide_and_seek ?? 0;
       this.hiderWins = player?.stats?.Arcade?.hider_wins_hide_and_seek ?? 0;
       this.wins = this.seekerWins + this.hiderWins;
+
       this.kills = player?.achievements?.arcade_hide_and_seek_hider_kills ?? 0;
+
       this.objectives = player?.achievements?.arcade_hide_and_seek_master_hider ?? 0;
     }
 }
