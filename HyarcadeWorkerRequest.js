@@ -68,8 +68,6 @@ async function HyarcadeWorkerRequest (accs) {
         });
       });
 
-      requester.req.on("error", logger.err);
-      requester.socket.on("error", logger.err);
       requester.on("error", logger.err);
     } catch (e) {
       reject(e);
