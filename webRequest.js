@@ -57,9 +57,11 @@ function sendRequest (url) {
         });
       });
 
-      requester.on("error", Logger.err);
+      if(requester) {
+        requester.on("error", Logger.err);
+      }
     } catch (e) {
-      Logger.err(e);
+      Logger.err(e.stack);
       Logger.err(`Web request to ${url} caused an error, resending!`);
       return sendRequest(url);
     }
@@ -70,7 +72,7 @@ module.exports = async function webRequest (url) {
   try {
     return await sendRequest(url);
   } catch (e) {
-    Logger.err(e);
+    Logger.err(e.stack);
     Logger.err(`Web request to ${url} caused an error, resending!`);
   }
 };
