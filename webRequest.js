@@ -58,7 +58,7 @@ function sendRequest (url) {
       });
 
       if(requester) {
-        requester.on("error", Logger.err);
+        requester.on("error", reject);
       }
     } catch (e) {
       Logger.err(e.stack);
@@ -74,5 +74,6 @@ module.exports = async function webRequest (url) {
   } catch (e) {
     Logger.err(e.stack);
     Logger.err(`Web request to ${url} caused an error, resending!`);
+    return {};
   }
 };
