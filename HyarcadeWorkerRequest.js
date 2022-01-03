@@ -1,5 +1,5 @@
+const https = require("https");
 const logger = require("hyarcade-logger");
-const webRequest = require("./webRequest");
 const cfg = require("hyarcade-config").fromJSON();
 const keys = cfg.altkeys.concat([cfg.clusters[cfg.cluster].key]);
 
@@ -28,29 +28,51 @@ class Response {
 
 /**
  * 
- * @param {string} uuids 
+ * @param {string[]} accs 
  * @returns {Promise<Response>}
  */
-async function HyarcadeWorkerRequest (uuids) {
+async function HyarcadeWorkerRequest (accs) {
+  return new Promise((resolve, reject) => {
 
-  const accs = {};
-  
-  let acc;
+    const url = `https://hyarcade-worker.vnmm.workers.dev?pass=${cfg.dbPass}`;
 
-  for(let i = 0;i < uuids.length;i += 1) {
-    const uuid = uuids[i];
-    acc = await webRequest(`https://api.hypixel.net/player?key=${getAPIKey()}&uuid=${uuid.trim()}`);
+    const reqOptions = {
+      family: 4,
+      port: 443,
+      protocol: "https:",
+      headers: {
+        apikey: getAPIKey(),
+        accs,
+      }
+    };
 
     try {
-      accs[uuid.trim()] = JSON.parse(acc.data);
-    } catch (e) {
-      console.log(acc.data);
-      console.log(acc.headers);
-      i -= 1;
-    }
-  }
+      const requester = https.get(url, reqOptions, (res) => {
+        let reply = "";
+        res.on("data", (d) => {
+          reply += d;
+        });
+        res.on("end", () => {
+          let response;
 
-  return { data: accs, key: { limit: acc.headers["ratelimit-limit"], remaining: acc.headers["ratelimit-remaining"], reset: acc.headers["ratelimit-reset"] } };
+          try {
+            response = JSON.parse(reply);
+          } catch (e) {
+            reject(e);
+          }
+
+          resolve(response);
+        });
+        res.on("error", (err) => {
+          reject(err);
+        });
+      });
+
+      requester.on("error", logger.err);
+    } catch (e) {
+      reject(e);
+    }
+  });
 }
 
 module.exports = HyarcadeWorkerRequest;
