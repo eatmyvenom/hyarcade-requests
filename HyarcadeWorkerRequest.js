@@ -68,7 +68,7 @@ async function HyarcadeWorkerRequest (accs) {
         });
       });
 
-      requester.on("error", logger.err);
+      requester.on("error", reject);
     } catch (e) {
       reject(e);
     }
