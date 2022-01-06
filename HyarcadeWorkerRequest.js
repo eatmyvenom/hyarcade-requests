@@ -63,9 +63,7 @@ async function HyarcadeWorkerRequest (accs) {
 
           resolve(response);
         });
-        res.on("error", (err) => {
-          reject(err);
-        });
+        res.on("error", reject);
       });
 
       requester.on("error", reject);
