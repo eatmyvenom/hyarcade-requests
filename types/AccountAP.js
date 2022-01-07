@@ -353,7 +353,8 @@ class AccountAP {
         new OneTimeAchievementWrapper(arcadeOneTime.DRAGON_WARS_BLAST, "DRAGON_WARS_BLAST"),
         new OneTimeAchievementWrapper(arcadeOneTime.DRAGON_SLAYER, "DRAGON_SLAYER"),
         new OneTimeAchievementWrapper(arcadeOneTime.DRAGON_KILLER, "DRAGON_KILLER"),
-        new OneTimeAchievementWrapper(arcadeOneTime.DW_QUICK_WIN, "DW_QUICK_WIN")
+        new OneTimeAchievementWrapper(arcadeOneTime.DW_QUICK_WIN, "DW_QUICK_WIN"),
+        new OneTimeAchievementWrapper(arcadeOneTime.DW_VOID, "DW_VOID")
       ], [
         new TeiredAchievementWrapper(arcadeTiered.DW_SLAYER, "DW_SLAYER"),
         new TeiredAchievementWrapper(arcadeTiered.DW_DRAGONBORN, "DW_DRAGONBORN")
@@ -362,6 +363,7 @@ class AccountAP {
       this.enderSpleef = new ArcadeGameAP(accData, [
         new OneTimeAchievementWrapper(arcadeOneTime.OVERPOWERED, "OVERPOWERED"),
         new OneTimeAchievementWrapper(arcadeOneTime.GOTTA_CATCH_THEM_ALL, "GOTTA_CATCH_THEM_ALL"),
+        new OneTimeAchievementWrapper(arcadeOneTime.ENDER_SPLEEF_NO_POWERHOUSE, "ENDER_SPLEEF_NO_POWERHOUSE"),
       ], [
         new TeiredAchievementWrapper(arcadeTiered.ENDER_SPLEEF_POWERUPS, "ENDER_SPLEEF_POWERUPS"),
         new TeiredAchievementWrapper(arcadeTiered.ENDER_SPLEEF_BLOCK_STEALER, "ENDER_SPLEEF_BLOCK_STEALER")
@@ -421,6 +423,8 @@ class AccountAP {
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_TNT_DODGER, "HYPIXEL_SAYS_TNT_DODGER"),
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_PVE_EXPERT, "HYPIXEL_SAYS_PVE_EXPERT"),
         new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_PIG_RIDER, "HYPIXEL_SAYS_PIG_RIDER"),
+        new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_MASTER, "HYPIXEL_SAYS_MASTER"),
+        new OneTimeAchievementWrapper(arcadeOneTime.HYPIXEL_SAYS_MOVEMENT, "HYPIXEL_SAYS_MOVEMENT"),
       ], []);
 
       this.miniWalls = new ArcadeGameAP(accData, [
@@ -448,6 +452,8 @@ class AccountAP {
         new OneTimeAchievementWrapper(arcadeOneTime.PARTY_PARKOUR, "PARTY_PARKOUR"),
         new OneTimeAchievementWrapper(arcadeOneTime.PARTY_PERFECTION, "PARTY_PERFECTION"),
         new OneTimeAchievementWrapper(arcadeOneTime.PARTY_FAST_HANDS, "PARTY_FAST_HANDS"),
+        new OneTimeAchievementWrapper(arcadeOneTime.PARTY_SHEEP_RIDER, "PARTY_SHEEP_RIDER"),
+        new OneTimeAchievementWrapper(arcadeOneTime.PROFESSIONAL_MOWER, "PROFESSIONAL_MOWER"),
       ], [
         new TeiredAchievementWrapper(arcadeTiered.PARTY_SUPER_STAR, "PARTY_SUPER_STAR")
       ]);
