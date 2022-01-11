@@ -151,5 +151,5 @@ module.exports = function PopulateAccountData (json, account) {
           (account?.zombies?.wins_zombies ?? 0);
 
   account.unknownWins = Math.abs(account.arcadeWins - account.combinedArcadeWins);
-  account.actionTime = GetLastActions(account);
+  account.actionTime = GetLastActions(json?.player);
 };
