@@ -109,7 +109,7 @@ module.exports = class Database {
     let acc;
     try {
       Logger.debug(`Fetching ${url.searchParams} from database!`);
-      acc = await JSON.parse((await webRequest(url)).data);
+      acc = await JSON.parse((await webRequest(url.toString())).data);
     } catch (e) {
       Logger.err("Error fetching data from database");
       Logger.err(e.stack);
@@ -142,7 +142,7 @@ module.exports = class Database {
     let acc;
     try {
       Logger.debug(`Fetching ${url.searchParams} from database!`);
-      acc = await JSON.parse((await webRequest(url)).data);
+      acc = await JSON.parse((await webRequest(url.toString())).data);
     } catch (e) {
       Logger.err("Can't connect to database");
       Logger.err(e.stack);
@@ -158,7 +158,7 @@ module.exports = class Database {
 
     let info;
     try {
-      info = await JSON.parse((await webRequest(url)).data);
+      info = await JSON.parse((await webRequest(url.toString())).data);
     } catch (e) {
       Logger.err("Can't connect to database");
       Logger.err(e.stack);
@@ -220,7 +220,7 @@ module.exports = class Database {
 
     Logger.debug(`Fetching ${time ?? "lifetime"} ${category ?? ""} ${path} leaderboard`);
     try {
-      lb = await JSON.parse((await webRequest(url)).data);
+      lb = await JSON.parse((await webRequest(url.toString())).data);
     } catch (e) {
       Logger.err("Can't connect to database");
       Logger.err(e.stack);
@@ -244,7 +244,7 @@ module.exports = class Database {
     let lb;
 
     try {
-      lb = await JSON.parse((await webRequest(url)).data);
+      lb = await JSON.parse((await webRequest(url.toString())).data);
     } catch (e) {
       Logger.err("Can't connect to database");
       Logger.err(e.stack);
