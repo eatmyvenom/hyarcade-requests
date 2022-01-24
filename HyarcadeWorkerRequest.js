@@ -40,6 +40,7 @@ async function HyarcadeWorkerRequest (accs) {
       family: 4,
       port: 443,
       protocol: "https:",
+      timeout: 30000,
       headers: {
         apikey: getAPIKey(),
         accs,
@@ -66,6 +67,7 @@ async function HyarcadeWorkerRequest (accs) {
         res.on("error", reject);
       });
 
+      requester.on("timeout", reject);
       requester.on("error", reject);
     } catch (e) {
       reject(e);
