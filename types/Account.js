@@ -446,16 +446,19 @@ class SeasonalStats {
     this.foundEaster = player?.stats?.Arcade?.eggs_found_easter_simulator ?? 0;
     this.foundHalloween = player?.stats?.Arcade?.candy_found_halloween_simulator ?? 0;
     this.grinchGiftsFound = player?.stats?.Arcade?.gifts_grinch_simulator_v2 ?? 0;
+    this.deliveredSanta = player?.stats?.Arcade?.delivered_santa_simulator ?? 0;
 
     this.easter = player?.stats?.Arcade?.wins_easter_simulator ?? 0;
     this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
     this.halloween = player?.stats?.Arcade?.wins_halloween_simulator ?? 0;
     this.scuba = player?.stats?.Arcade?.wins_scuba_simulator ?? 0;
+    this.santaWins = player?.stats?.Arcade?.wins_santa_simulator ?? 0;
     this.total =
             this.easter +
             this.grinch +
             this.halloween +
-            this.scuba;
+            this.scuba +
+            this.santaWins;
   }
 
     easter = 0;
