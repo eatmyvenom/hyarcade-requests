@@ -51,7 +51,7 @@ class MongoConnector {
     const options = {
       limit,
       sort: {
-        [stat] : reverse ? -1 : 1
+        [stat] : reverse ? 1 : -1
       },
     };
 
