@@ -637,6 +637,7 @@ class Account {
     coinsEarned = 0;
     monthlyCoins = 0;
     weeklyCoins = 0;
+    importance = 0;
 
     /**
      * Seasonal "simulator" games wins and stats

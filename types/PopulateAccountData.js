@@ -1,5 +1,6 @@
 const Account = require("./Account");
 const GetLastActions = require("./GetLastActions");
+const NormalizeAccount = require("./NormalizeAccount");
 
 /**
  * Gets the correct monthly statistic from the two oscillating
@@ -152,4 +153,5 @@ module.exports = function PopulateAccountData (json, account) {
 
   account.unknownWins = Math.abs(account.arcadeWins - account.combinedArcadeWins);
   account.actionTime = GetLastActions(json?.player);
+  account.importance = NormalizeAccount(account);
 };
