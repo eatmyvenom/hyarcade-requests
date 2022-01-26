@@ -39,6 +39,10 @@ class MongoConnector {
 
     Logger.log(`${result.insertedCount} docs inserted`);
   }
+
+  async destroy() {
+    await this.client.close();
+  }
 }
 
 module.exports = MongoConnector;
