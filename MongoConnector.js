@@ -1,6 +1,5 @@
 const Account = require("./types/Account");
-const { MongoClient } = require("mongodb");
-const Logger = require("hyarcade-logger");
+const { MongoClient, Collection } = require("mongodb");
 
 class MongoConnector {
 
@@ -11,6 +10,9 @@ class MongoConnector {
    */
   client;
 
+  /**
+   * @type {Collection<Account>}
+   */
   accounts;
 
   constructor(url) {
@@ -22,10 +24,11 @@ class MongoConnector {
     
     this.database = this.client.db("hyarcade");
     this.accounts = this.database.collection("accounts");
+    this.accounts.createIndex({ uuid: 1 });
   }
 
-  async getAccount (name, uuid, discordID) {
-    return await this.accounts.findOne({ name, uuid, discordID });
+  async getAccount (uuid) {
+    return await this.accounts.findOne({ uuid });
   }
 
   /**
@@ -34,10 +37,44 @@ class MongoConnector {
    * @param {Account[]} accs
    * @memberof MongoConnector
    */
-  async setAccounts (accs) {
-    const result = await this.accounts.insertMany(accs);
+  async updateAccounts (accs) {
+    for(const acc of accs) {
+      this.accounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
+    }
+  }
 
-    Logger.log(`${result.insertedCount} docs inserted`);
+  async updateAccount (acc) {
+    this.accounts.replaceOne({ uuid: acc.uuid }, acc, { upsert : true });
+  }
+
+  async getLeaderboard (stat, min, reverse, limit, filter) {
+    const options = {
+      limit,
+      sort: {
+        [stat] : reverse ? -1 : 1
+      },
+    };
+
+    const query = {};
+
+    if(min) {
+      options.projection = {
+        uuid: 1,
+        name: 1,
+        rank: 1,
+        plusColor: 1,
+        mvpColor: 1,
+        [stat]: 1,
+      };
+    }
+
+    if(filter) {
+      for(const field of filter) {
+        query[field] = { $exists: false };
+      }
+    }
+
+    return await this.accounts.find(query, options).toArray();
   }
 
   async destroy() {
