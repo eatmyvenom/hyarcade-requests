@@ -174,11 +174,19 @@ class MongoConnector {
           mvpColor: 1,
           historicalData: 1,
           [stat]: 1,
-          lbProp: 1
+          lbProp: {
+            $subtract: [`$${stat}`, {
+              $reduce: {
+                input: "$historicalData",
+                initialValue: 0,
+                in: { $max: ["$$value", `$$this.${stat}`] }
+              }
+            }]
+          }
         }
       }
     ])
-      .sort({ [stat] : reverse ? 1 : -1 })
+      .sort({ lbProp : reverse ? 1 : -1 })
       .limit(limit)
       .toArray();
 
