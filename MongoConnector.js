@@ -40,16 +40,16 @@ class MongoConnector {
     this.database = this.client.db("hyarcade");
 
     this.accounts = this.database.collection("accounts");
-    this.accounts.createIndex({ uuid: 1 });
+    await this.accounts.createIndex({ uuid: 1 });
 
     this.dailyAccounts = this.database.collection("dailyAccounts");
-    this.dailyAccounts.createIndex({ uuid: 1 });
+    await this.dailyAccounts.createIndex({ uuid: 1 });
 
     this.weeklyAccounts = this.database.collection("weeklyAccounts");
-    this.weeklyAccounts.createIndex({ uuid: 1 });
+    await this.weeklyAccounts.createIndex({ uuid: 1 });
 
     this.monthlyAccounts = this.database.collection("monthlyAccounts");
-    this.monthlyAccounts.createIndex({ uuid: 1 });
+    await this.monthlyAccounts.createIndex({ uuid: 1 });
 
   }
 
