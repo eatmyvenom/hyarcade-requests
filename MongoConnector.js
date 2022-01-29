@@ -50,7 +50,6 @@ class MongoConnector {
 
     this.monthlyAccounts = this.database.collection("monthlyAccounts");
     await this.monthlyAccounts.createIndex({ uuid: 1 });
-
   }
 
   async getAccount (uuid) {
@@ -111,11 +110,11 @@ class MongoConnector {
 
   async getLeaderboard (stat, reverse = false, limit = 10, filter = false) {
     const options = {
-      limit,
       sort: {
         [stat] : reverse ? 1 : -1
       },
       projection : {
+        _id: 0,
         uuid: 1,
         name: 1,
         rank: 1,
@@ -125,11 +124,11 @@ class MongoConnector {
         importance: 1,
         mvpColor: 1,
         [stat]: 1,
-      }
+      },
+      limit
     };
 
     const query = {};
-
 
     if(filter) {
       for(const field of filter) {
@@ -142,6 +141,7 @@ class MongoConnector {
 
   async getHistoricalLeaderboard (stat, time, reverse = false, limit = 10, filter = false) {
     if(this[`${time}Accounts`] == undefined) {
+      // Exit if query will throw an error
       return [];
     }
 
@@ -162,16 +162,18 @@ class MongoConnector {
     };
     pipeline.push({ $lookup: lookup });
 
+
     if(filter) {
       const and = {};
       
       for(const stat of filter) {
         and.push( { $ne : [ `$${stat}`, true] });
       }
-      const match = {};
+      const match = { $and : and };
 
       pipeline.push({ $match: match });
     }
+
 
     const project = {
       _id: 0,
@@ -195,13 +197,16 @@ class MongoConnector {
         }]
       }
     };
-
     pipeline.push({ $project: project });
 
-    const historical = await this.accounts.aggregate(pipeline)
-      .sort({ lbProp : reverse ? 1 : -1 })
-      .limit(limit)
-      .toArray();
+
+    const sort = { lbProp : reverse ? 1 : -1 };
+    pipeline.push({ $sort: sort });
+
+    pipeline.push({ $limit: limit });
+
+
+    const historical = await this.accounts.aggregate(pipeline).toArray();
 
     return historical;
   }
