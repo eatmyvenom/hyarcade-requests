@@ -178,7 +178,7 @@ class MongoConnector {
               $reduce: {
                 input: "$historicalData",
                 initialValue: 0,
-                in: { $toInt : { $max: ["$$value", `$$this.${stat}`] } }
+                in: { toInt : { $max: ["$$value", `$$this.${stat}`] } }
               }
             }]
           }
