@@ -156,7 +156,7 @@ class MongoConnector {
                 $expr: { $eq: [ "$uuid", "$$uuid" ] }
               },
             },
-            { $project: { [stat]: 1, _id: 0, uuid: 1 } }
+            { $project: { lbProp: 1, _id: 0, uuid: 1 } }
           ],
           as: "historicalData"
         }
@@ -172,19 +172,20 @@ class MongoConnector {
           importance: 1,
           plusColor: 1,
           mvpColor: 1,
+          historicalData: 1,
           lbProp: {
             $subtract: [{ toInt: `$${stat}` }, {
               $reduce: {
                 input: "$historicalData",
                 initialValue: 0,
-                in: { $max: ["$$value", `$$this.${stat}`] }
+                in: { toInt: { $max: ["$$value", "$$this.lbProp"] } }
               }
             }]
           }
         }
       }
     ])
-      .sort({ [stat] : reverse ? 1 : -1 })
+      .sort({ lbProp : reverse ? 1 : -1 })
       .limit(limit)
       .toArray();
 
