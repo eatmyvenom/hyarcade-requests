@@ -173,15 +173,8 @@ class MongoConnector {
           plusColor: 1,
           mvpColor: 1,
           historicalData: 1,
-          lbProp: {
-            $subtract: [{ toInt: `$${stat}` }, {
-              $reduce: {
-                input: "$historicalData",
-                initialValue: 0,
-                in: { toInt : { $max: ["$$value", `$$this.${stat}`] } }
-              }
-            }]
-          }
+          [stat]: 1,
+          lbProp: 1
         }
       }
     ])
