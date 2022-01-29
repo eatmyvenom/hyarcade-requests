@@ -69,6 +69,42 @@ class MongoConnector {
     }
   }
 
+  /**
+   *
+   *
+   * @param {Account[]} accs
+   * @memberof MongoConnector
+   */
+  async updateDaily (accs) {
+    for(const acc of accs) {
+      this.dailyAccounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
+    }
+  }
+
+  /**
+   *
+   *
+   * @param {Account[]} accs
+   * @memberof MongoConnector
+   */
+  async updateWeekly (accs) {
+    for(const acc of accs) {
+      this.weeklyAccounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
+    }
+  }
+
+  /**
+   *
+   *
+   * @param {Account[]} accs
+   * @memberof MongoConnector
+   */
+  async updateMonthly (accs) {
+    for(const acc of accs) {
+      this.monthlyAccounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
+    }
+  }
+
   async updateAccount (acc) {
     this.accounts.replaceOne({ uuid: acc.uuid }, acc, { upsert : true });
   }
