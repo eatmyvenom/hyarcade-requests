@@ -140,52 +140,65 @@ class MongoConnector {
     return await this.accounts.find(query, options).toArray();
   }
 
-  async getHistoricalLeaderboard (stat, time, reverse = false, limit = 10) {
+  async getHistoricalLeaderboard (stat, time, reverse = false, limit = 10, filter = false) {
     if(this[`${time}Accounts`] == undefined) {
       return [];
     }
 
-    const historical = await this.accounts.aggregate([
-      {
-        $lookup: {
-          from: this[`${time}Accounts`].collectionName,
-          let: { uuid : "$uuid" },
-          pipeline: [
-            {
-              $match: {
-                $expr: { $eq: [ "$uuid", "$$uuid" ] }
-              },
-            },
-            { $project: { [stat]: 1, _id: 0, uuid: 1 } }
-          ],
-          as: "historicalData"
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          uuid: 1,
-          name: 1,
-          rank: 1,
-          banned: 1,
-          hacker: 1,
-          importance: 1,
-          plusColor: 1,
-          mvpColor: 1,
-          historicalData: 1,
-          [stat]: 1,
-          lbProp: {
-            $subtract: [`$${stat}`, {
-              $reduce: {
-                input: "$historicalData",
-                initialValue: 0,
-                in: { $max: ["$$value", `$$this.${stat}`] }
-              }
-            }]
-          }
-        }
+    const pipeline = [];
+
+    const lookup = {
+      from: this[`${time}Accounts`].collectionName,
+      let: { uuid : "$uuid" },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: [ "$uuid", "$$uuid" ] }
+          },
+        },
+        { $project: { [stat]: 1, _id: 0, uuid: 1 } }
+      ],
+      as: "historicalData"
+    };
+    pipeline.push({ $lookup: lookup });
+
+    if(filter) {
+      const and = {};
+      
+      for(const stat of filter) {
+        and.push( { $ne : [ `$${stat}`, true] });
       }
-    ])
+      const match = {};
+
+      pipeline.push({ $match: match });
+    }
+
+    const project = {
+      _id: 0,
+      uuid: 1,
+      name: 1,
+      rank: 1,
+      banned: 1,
+      hacker: 1,
+      importance: 1,
+      plusColor: 1,
+      mvpColor: 1,
+      historicalData: 1,
+      [stat]: 1,
+      lbProp: {
+        $subtract: [`$${stat}`, {
+          $reduce: {
+            input: "$historicalData",
+            initialValue: 0,
+            in: { $max: ["$$value", `$$this.${stat}`] }
+          }
+        }]
+      }
+    };
+
+    pipeline.push({ $project: project });
+
+    const historical = await this.accounts.aggregate(pipeline)
       .sort({ lbProp : reverse ? 1 : -1 })
       .limit(limit)
       .toArray();
