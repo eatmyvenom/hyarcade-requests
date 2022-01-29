@@ -156,7 +156,7 @@ class MongoConnector {
                 $expr: { $eq: [ "$uuid", "$$uuid" ] }
               },
             },
-            { $project: { lbProp: 1, _id: 0, uuid: 1 } }
+            { $project: { [stat]: 1, _id: 0, uuid: 1 } }
           ],
           as: "historicalData"
         }
@@ -178,7 +178,7 @@ class MongoConnector {
               $reduce: {
                 input: "$historicalData",
                 initialValue: 0,
-                in: { toInt: { $max: ["$$value", "$$this.lbProp"] } }
+                in: { $toInt : { $max: ["$$value", `$$this.${stat}`] } }
               }
             }]
           }
