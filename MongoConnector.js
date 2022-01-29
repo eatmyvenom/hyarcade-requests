@@ -178,7 +178,7 @@ class MongoConnector {
         }
       }
     ])
-      .sort({ lbProp : reverse ? 1 : -1 })
+      .sort({ [stat] : reverse ? 1 : -1 })
       .limit(limit)
       .toArray();
 
