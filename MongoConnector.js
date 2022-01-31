@@ -1,12 +1,19 @@
 const Account = require("./types/Account");
 const { MongoClient, Collection } = require("mongodb");
+const AccountMetadata = require("hyarcade-structures/AccountMetadata");
+const Guild = require("hyarcade-structures/Guild");
+const Config = require("hyarcade-config");
+const Logger = require("hyarcade-logger");
+
+class DiscordObject {
+  uuid = "";
+  discordID = "";
+}
 
 class MongoConnector {
 
   /**
-   *
    * @type {MongoClient}
-   * @memberof MongoConnector
    */
   client;
 
@@ -30,11 +37,32 @@ class MongoConnector {
    */
   monthlyAccounts;
 
-  constructor(url) {
+  /**
+   * @type {Collection<DiscordObject>}
+   */
+  discordList;
+  
+  /**
+   * @type {Collection<Guild>}
+   */
+  guilds;
+
+  /**
+   * @type {Collection<AccountMetadata>}
+   */
+  metadataList;
+
+  /**
+   * Creates an instance of MongoConnector.
+   *
+   * @param {*} url
+   * @memberof MongoConnector
+   */
+  constructor (url) {
     this.client = new MongoClient(url);
   }
 
-  async connect() {
+  async connect () {
     await this.client.connect();
 
     this.database = this.client.db("hyarcade");
@@ -50,10 +78,70 @@ class MongoConnector {
 
     this.monthlyAccounts = this.database.collection("monthlyAccounts");
     await this.monthlyAccounts.createIndex({ uuid: 1 });
+
+    this.discordList = this.database.collection("discordList");
+    await this.discordList.createIndex({ discordID: 1 });
+
+    this.guilds = this.database.collection("guilds");
+
+    this.metadataList = this.database.collection("metadata");
   }
 
-  async getAccount (uuid) {
-    return await this.accounts.findOne({ uuid });
+  async snapshotAccounts (time) {
+    let realTime = time;
+    if(time == "day") {
+      realTime = "daily";
+    }
+
+    if(this[`${realTime}Accounts`] == undefined) {
+      // Exit if query will throw an error
+      return undefined;
+    }
+
+    Logger.info(`Snapshotting to "${realTime}Accounts" collection`);
+
+    const cursor = this.accounts.find();
+
+    /** @type {Collection} */
+    const newCollection = this[`${realTime}Accounts`];
+
+    await cursor.forEach(async (account) => {
+      await newCollection.replaceOne({ uuid: account.uuid }, account, { upsert: true });
+    });
+
+    Logger.info("Snapshot process completed");
+  }
+
+  async getAccount (input) {
+    if(input.length == 32 || input.length == 36) {
+      return await this.accounts.findOne({ uuid: input });
+    } else if(input.length == 18) {
+      return await this.accounts.findOne({ uuid: (await this.discordList.findOne({ discordID: input })).uuid });
+    } else {
+      return await this.accounts.findOne({ name_lower: input.toLowerCase() });
+    }
+  }
+
+  async getTimedAccount (uuid, time) {
+    let realTime = time;
+    if(time == "day") {
+      realTime = "daily";
+    }
+
+    if(this[`${realTime}Accounts`] == undefined) {
+      // Exit if query will throw an error
+      return undefined;
+    }
+
+    return await this[`${realTime}Accounts`].findOne({ uuid });
+  }
+
+  async getGuild (guildID) {
+    return await this.guilds.findOne({ uuid: guildID });
+  }
+
+  async getGuildByMember (memberUUID) {
+    return await this.guilds.findOne({ memberUUIDs: { $elemMatch: memberUUID } });
   }
 
   /**
@@ -140,7 +228,12 @@ class MongoConnector {
   }
 
   async getHistoricalLeaderboard (stat, time, reverse = false, limit = 10, filter = false) {
-    if(this[`${time}Accounts`] == undefined) {
+    let realTime = time;
+    if(time == "day") {
+      realTime = "daily";
+    }
+
+    if(this[`${realTime}Accounts`] == undefined) {
       // Exit if query will throw an error
       return [];
     }
@@ -148,7 +241,7 @@ class MongoConnector {
     const pipeline = [];
 
     const lookup = {
-      from: this[`${time}Accounts`].collectionName,
+      from: this[`${realTime}Accounts`].collectionName,
       let: { uuid : "$uuid" },
       pipeline: [
         {
@@ -209,6 +302,28 @@ class MongoConnector {
     const historical = await this.accounts.aggregate(pipeline).toArray();
 
     return historical;
+  }
+
+  async getImportantAccounts (level = 0) {
+    const cfg = Config.fromJSON();
+    if(level == 0) {
+      return await this.accounts.find({ $or : [ { importance: { $gte : cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } } ] , lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit }  }).toArray();
+    } else if (level == 1) {
+      return await this.accounts.find({ $or : [ { importance: { $gte : cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } } ] }).toArray();
+    } else if (level == 2) {
+      return await this.accounts.find({ $or : [ { importance: { $gte : cfg.hypixel.minImportance } }, { discordID: { $exists: true }, }, { updateTime : { $gte : cfg.hypixel.loginLimit * 4 } } ] }).toArray();
+    } else {
+      return await this.accounts.find().toArray();
+    }
+  }
+
+  async getInfo () {
+    return {
+      accs: await this.accounts.estimatedDocumentCount(),
+      guilds: await this.guilds.estimatedDocumentCount(),
+      links: await this.discordList.estimatedDocumentCount(),
+      mem: (await this.database.admin().serverStatus()).tcmalloc.tcmalloc.formattedString
+    };
   }
 
   async destroy() {
