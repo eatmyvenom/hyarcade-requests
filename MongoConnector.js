@@ -342,6 +342,16 @@ class MongoConnector {
     };
   }
 
+  /**
+   *
+   *
+   * @param {Guild} guild
+   * @memberof MongoConnector
+   */
+  async updateGuild (guild) {
+    this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
+  }
+
   async linkDiscord (discordID, uuid) {
     await this.discordList.replaceOne({ discordID }, { discordID, uuid }, { upsert : true });
   }
