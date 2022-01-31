@@ -374,7 +374,7 @@ class MongoConnector {
   }
 
   async addHacker (uuid) {
-    await this.hackerlist.replaceOne({ uuid }, { uuid }, { upsert : true });
+    await this.hackerList.replaceOne({ uuid }, { uuid }, { upsert : true });
   }
 
   async deleteHacker (uuid) {
