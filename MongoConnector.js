@@ -1,6 +1,5 @@
 const Account = require("./types/Account");
 const { MongoClient, Collection } = require("mongodb");
-const AccountMetadata = require("hyarcade-structures/AccountMetadata");
 const Guild = require("hyarcade-structures/Guild");
 const Config = require("hyarcade-config");
 const Logger = require("hyarcade-logger");
@@ -8,6 +7,14 @@ const Logger = require("hyarcade-logger");
 class DiscordObject {
   uuid = "";
   discordID = "";
+}
+
+class HackerObject {
+  uuid = "";
+}
+
+class BannedObject {
+  uuid = "";
 }
 
 class MongoConnector {
@@ -48,9 +55,14 @@ class MongoConnector {
   guilds;
 
   /**
-   * @type {Collection<AccountMetadata>}
+   * @type {Collection<HackerObject>}
    */
-  metadataList;
+  hackerList;
+
+  /**
+   * @type {Collection<BannedObject>}
+   */
+  bannedList;
 
   /**
    * Creates an instance of MongoConnector.
@@ -62,29 +74,33 @@ class MongoConnector {
     this.client = new MongoClient(url);
   }
 
-  async connect () {
+  async connect (index = true) {
     await this.client.connect();
 
     this.database = this.client.db("hyarcade");
 
     this.accounts = this.database.collection("accounts");
-    await this.accounts.createIndex({ uuid: 1 });
-
+    
     this.dailyAccounts = this.database.collection("dailyAccounts");
-    await this.dailyAccounts.createIndex({ uuid: 1 });
-
+    
     this.weeklyAccounts = this.database.collection("weeklyAccounts");
-    await this.weeklyAccounts.createIndex({ uuid: 1 });
-
+    
     this.monthlyAccounts = this.database.collection("monthlyAccounts");
-    await this.monthlyAccounts.createIndex({ uuid: 1 });
-
+    
     this.discordList = this.database.collection("discordList");
-    await this.discordList.createIndex({ discordID: 1 });
-
+    
+    this.hackerList = this.database.collection("hackerlist");
+    this.bannedList = this.database.collection("banlist");
+    
     this.guilds = this.database.collection("guilds");
 
-    this.metadataList = this.database.collection("metadata");
+    if(index) {
+      await this.accounts.createIndex({ uuid: 1 });
+      await this.dailyAccounts.createIndex({ uuid: 1 });
+      await this.weeklyAccounts.createIndex({ uuid: 1 });
+      await this.monthlyAccounts.createIndex({ uuid: 1 });
+      await this.discordList.createIndex({ discordID: 1 });
+    }
   }
 
   async snapshotAccounts (time) {
@@ -324,6 +340,34 @@ class MongoConnector {
       links: await this.discordList.estimatedDocumentCount(),
       mem: (await this.database.admin().serverStatus()).tcmalloc.tcmalloc.formattedString
     };
+  }
+
+  async linkDiscord (discordID, uuid) {
+    await this.discordList.replaceOne({ discordID }, { discordID, uuid }, { upsert : true });
+  }
+
+  async unlinkDiscord (input) {
+    if(input.length == 18) {
+      await this.discordList.deleteOne({ discordID: input });
+    } else {
+      await this.discordList.deleteOne({ uuid: input });
+    }
+  }
+
+  async addHacker (uuid) {
+    await this.hackerlist.replaceOne({ uuid }, { uuid }, { upsert : true });
+  }
+
+  async deleteHacker (uuid) {
+    await this.hackerList.deleteOne({ uuid });
+  }
+
+  async addBanned (uuid) {
+    await this.bannedList.replaceOne({ uuid }, { uuid }, { upsert : true });
+  }
+
+  async deleteBanned (uuid) {
+    await this.bannedList.deleteOne({ uuid });
   }
 
   async destroy() {
