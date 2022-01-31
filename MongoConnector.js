@@ -103,6 +103,15 @@ class MongoConnector {
     }
   }
 
+  async readCollection (collection) {
+    if(this[collection] == undefined) {
+      // Exit if query will throw an error
+      return undefined;
+    }
+
+    return await this[collection].find().toArray();
+  }
+
   async snapshotAccounts (time) {
     let realTime = time;
     if(time == "day") {
