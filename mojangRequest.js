@@ -7,12 +7,10 @@ const webRequest = require("./webRequest");
  * @param {*} name
  * @returns {*}
  */
-async function getUUIDRaw (name) {
+async function getUUIDRaw(name) {
   // promisify query
   const response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`);
-  const {
-    data
-  } = response;
+  const { data } = response;
   return data;
 }
 
@@ -20,11 +18,9 @@ async function getUUIDRaw (name) {
  * @param {*} uuid
  * @returns {*}
  */
-async function getPlayerRaw (uuid) {
+async function getPlayerRaw(uuid) {
   const response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
-  const {
-    data
-  } = response;
+  const { data } = response;
   return data;
 }
 
@@ -32,15 +28,14 @@ async function getPlayerRaw (uuid) {
  * @param {*} uuid
  * @returns {*}
  */
-async function getPlayer (uuid) {
+async function getPlayer(uuid) {
   const raw = await getPlayerRaw(uuid);
-  if(raw != "") {
+  if (raw != "") {
     return JSON.parse(raw);
   }
   // log the missing username so i can change it
   logger.err(`"${uuid}" does not exist`);
   return undefined;
-
 }
 
 /**
@@ -49,17 +44,16 @@ async function getPlayer (uuid) {
  * @param {string} name
  * @returns {string}
  */
-async function getUUID (name) {
+async function getUUID(name) {
   const raw = await getUUIDRaw(name);
 
   // make sure the data isnt an empty response
-  if(raw != "") {
+  if (raw != "") {
     return JSON.parse(raw).id;
   }
   // log the missing username so i can change it
   logger.err(`"${name}" does not exist`);
   return undefined;
-
 }
 
 module.exports = {

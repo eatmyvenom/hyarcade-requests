@@ -1,32 +1,31 @@
-const Config = require("hyarcade-config");
-const cfg = Config.fromJSON();
-const { parseChunked, stringifyStream } = require("@discoveryjs/json-ext");
-const Logger = require("hyarcade-logger");
 const http = require("http");
 const https = require("https");
-const webRequest = require("./webRequest");
+const { parseChunked, stringifyStream } = require("@discoveryjs/json-ext");
+const Config = require("hyarcade-config");
+const Logger = require("hyarcade-logger");
 const { default: fetch } = require("node-fetch");
+const webRequest = require("./webRequest");
+
+const cfg = Config.fromJSON();
 
 /**
  * Read JSON data as a stream from a url
  * This is used as a stream due to the the string length limitations of nodejs/v8
- * 
- * 
- * @param {URL} url 
+ *
+ *
+ * @param {URL} url
  */
-function readJSONStream (url) {
+function readJSONStream(url) {
   let reqModule;
-  if(url.protocol == "https:") {
+  if (url.protocol == "https:") {
     reqModule = https;
   } else {
     reqModule = http;
   }
 
   return new Promise((resolve, rejects) => {
-    reqModule.get(url, { headers: { Authorization: cfg.dbPass } }, (res) => {
-      parseChunked(res)
-        .then(resolve)
-        .catch(rejects);
+    reqModule.get(url, { headers: { Authorization: cfg.dbPass } }, res => {
+      parseChunked(res).then(resolve).catch(rejects);
     });
   });
 }
@@ -34,15 +33,15 @@ function readJSONStream (url) {
 /**
  * Write JSON data as a stream to a url
  * This is used as a stream due to the the string length limitations of nodejs/v8
- * 
- * 
- * @param {URL} url 
+ *
+ *
+ * @param {URL} url
  * @param {*} obj
  * @returns {Promise<any>}
  */
-function writeJSONStream (url, obj) {
+function writeJSONStream(url, obj) {
   let reqModule;
-  if(url.protocol == "https:") {
+  if (url.protocol == "https:") {
     reqModule = https;
   } else {
     reqModule = http;
@@ -50,23 +49,19 @@ function writeJSONStream (url, obj) {
 
   return new Promise((resolve, reject) => {
     const req = reqModule.request(url, { headers: { Authorization: cfg.dbPass }, method: "POST" });
-    
-    stringifyStream(obj)
-      .on("error", reject)
-      .pipe(req)
-      .on("error", reject)
-      .on("finish", resolve);
+
+    stringifyStream(obj).on("error", reject).pipe(req).on("error", reject).on("finish", resolve);
   });
 }
 
 module.exports = class Database {
-  static async readDB (file, fields) {
+  static async readDB(file, fields) {
     let fileData;
     const url = new URL("db", cfg.dbUrl);
     const path = `${file}`;
     url.searchParams.set("path", path);
 
-    if(fields != undefined) {
+    if (fields != undefined) {
       url.searchParams.set("fields", fields.join(","));
     }
 
@@ -83,7 +78,7 @@ module.exports = class Database {
     return fileData;
   }
 
-  static async writeDB (path, json) {
+  static async writeDB(path, json) {
     const url = new URL("db", cfg.dbUrl);
     url.searchParams.set("path", path);
     Logger.debug(`Writing to ${path} in database`);
@@ -91,11 +86,11 @@ module.exports = class Database {
     await writeJSONStream(url, json);
   }
 
-  static async account (text, discordID) {
+  static async account(text, discordID) {
     const url = new URL("account", cfg.dbUrl);
 
-    if(text != undefined && text != "" && text != "!") {
-      if(text.length < 17) {
+    if (text != undefined && text != "" && text != "!") {
+      if (text.length < 17) {
         url.searchParams.set("ign", text);
       } else {
         url.searchParams.set("uuid", text.replace(/-/g, ""));
@@ -120,22 +115,22 @@ module.exports = class Database {
     return acc;
   }
 
-  static async timedAccount (text, discordID, time) {
+  static async timedAccount(text, discordID, time) {
     const url = new URL("timeacc", cfg.dbUrl);
 
-    if(text != undefined && text != "" && text != "!") {
-      if(text.length < 17) {
+    if (text != undefined && text != "" && text != "!") {
+      if (text.length < 17) {
         url.searchParams.set("ign", text);
       } else {
         url.searchParams.set("uuid", text.replace(/-/g, ""));
       }
-    } 
+    }
 
-    if(discordID != undefined && discordID != "") {
+    if (discordID != undefined && discordID != "") {
       url.searchParams.set("discid", discordID);
     }
 
-    if(time != undefined && time != "lifetime" && time != "life") {
+    if (time != undefined && time != "lifetime" && time != "life") {
       url.searchParams.set("time", time);
     }
 
@@ -153,7 +148,7 @@ module.exports = class Database {
     return acc;
   }
 
-  static async info () {
+  static async info() {
     const url = new URL("info", cfg.dbUrl);
 
     let info;
@@ -169,7 +164,7 @@ module.exports = class Database {
     return info;
   }
 
-  static async addAccount (json) {
+  static async addAccount(json) {
     const data = JSON.stringify(json);
     const url = new URL("account", cfg.dbUrl);
     Logger.info(`Adding ${data.name} to accounts in database`);
@@ -180,8 +175,8 @@ module.exports = class Database {
         body: data,
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass
-        }
+          Authorization: cfg.dbPass,
+        },
       });
     } catch (e) {
       Logger.err("Can't connect to database");
@@ -190,29 +185,29 @@ module.exports = class Database {
     }
   }
 
-  static async getLeaderboard (path, category, time, min, reverse, max) {
+  static async getLeaderboard(path, category, time, min, reverse, max) {
     Logger.verbose("Reading database");
 
     const url = new URL("lb", cfg.dbUrl);
-    url.searchParams.set("path", path) ;
-    
-    if(category != undefined && category != "undefined") {
+    url.searchParams.set("path", path);
+
+    if (category != undefined && category != "undefined") {
       url.searchParams.set("category", category);
     }
 
-    if(time != undefined) {
+    if (time != undefined) {
       url.searchParams.set("time", time);
     }
 
-    if(max != undefined) {
+    if (max != undefined) {
       url.searchParams.set("max", max);
     }
 
-    if(min) {
+    if (min) {
       url.searchParams.set("min", "");
     }
 
-    if(reverse) {
+    if (reverse) {
       url.searchParams.set("reverse", "");
     }
 
@@ -231,13 +226,13 @@ module.exports = class Database {
     return lb;
   }
 
-  static async getMWLeaderboard (stat, time) {
+  static async getMWLeaderboard(stat, time) {
     Logger.info(`Fetching miniwalls ${stat} leaderboard from!`);
 
     const url = new URL("mwlb", cfg.dbUrl);
     url.searchParams.set("stat", stat);
 
-    if(time != undefined) {
+    if (time != undefined) {
       url.searchParams.set("time", time);
     }
 

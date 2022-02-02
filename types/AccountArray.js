@@ -2,29 +2,29 @@
 const Account = require("./Account");
 
 /**
- * 
- * @param {Array} a 
- * @param {Function} key 
+ *
+ * @param {Array} a
+ * @param {Function} key
  * @returns {Array}
  */
-function uniqBy (a, key) {
+function uniqBy(a, key) {
   const seen = {};
-  return a.filter((item) => {
+  return a.filter(item => {
     const k = key(item);
     return seen.hasOwnProperty(k) ? false : (seen[k] = true);
   });
 }
 
 /**
- * 
- * @param {object[]} accounts 
+ *
+ * @param {object[]} accounts
  * @param {boolean} fix
  * @returns {Account[]}
  */
-function AccountArray (accounts, fix = true) {
-  const accs = accounts.map((v) => Account.from(v));
-  if(fix) {
-    return uniqBy(accs, (a) => a.uuid?.toLowerCase().replace(/-/g, ""));
+function AccountArray(accounts, fix = true) {
+  const accs = accounts.map(v => Account.from(v));
+  if (fix) {
+    return uniqBy(accs, a => a.uuid?.toLowerCase().replace(/-/g, ""));
   }
 
   return accs;

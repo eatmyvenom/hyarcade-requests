@@ -5,17 +5,17 @@ const NormalizeAccount = require("./NormalizeAccount");
 /**
  * Gets the correct monthly statistic from the two oscillating
  * monthly fields.
- * 
+ *
  * This code is copied directly from the SlothPixel project which uses exactly this
  * https://github.com/slothpixel/core/blob/41a815f4682ab883ef81a036bd07a6c3937d7f5a/util/utility.js#L69
- * 
+ *
  * Therefore this is licensed under the MIT License and not MPL-2.0
- * 
+ *
  * @param {number} a
  * @param {number} b
  * @returns {number}
  */
-function getMonthlyStat (a, b) {
+function getMonthlyStat(a, b) {
   const start = new Date();
   const end = new Date(1417410000000);
 
@@ -28,58 +28,60 @@ function getMonthlyStat (a, b) {
 /**
  * Gets the correct weekly statistic from the two oscillating
  * weekly fields.
- * 
+ *
  * This code is copied directly from the SlothPixel project which uses exactly this
  * https://github.com/slothpixel/core/blob/41a815f4682ab883ef81a036bd07a6c3937d7f5a/util/utility.js#L58
- * 
+ *
  * Therefore this is licensed under the MIT License and not MPL-2.0
- * 
+ *
  * @param {number} a
  * @param {number} b
  * @returns {number}
  */
-function getWeeklyStat (a, b) {
+function getWeeklyStat(a, b) {
   const delta = new Date() - new Date(1417237200000);
   const numberWeeks = Math.floor(delta / 604800000);
 
-  return numberWeeks % 2 === 0 ? (a ?? 0) : (b ?? 0);
+  return numberWeeks % 2 === 0 ? a ?? 0 : b ?? 0;
 }
 
 /**
- * 
- * @param {object} json 
+ *
+ * @param {object} json
  * @returns {string}
  */
-function getRank (json) {
+function getRank(json) {
   let rank = json?.player?.newPackageRank;
   rank ??= json.player?.packageRank ?? "";
-  if(json.player?.monthlyPackageRank == "SUPERSTAR") rank = "MVP_PLUS_PLUS";
+  if (json.player?.monthlyPackageRank == "SUPERSTAR") rank = "MVP_PLUS_PLUS";
 
-  if(json?.player?.prefix != undefined) { return json?.player?.prefix; }
-
-  switch(json?.player?.rank) {
-  case "YOUTUBER": {
-    return "YOUTUBER";
+  if (json?.player?.prefix != undefined) {
+    return json?.player?.prefix;
   }
 
-  case "ADMIN": {
-    return "ADMIN";
-  }
+  switch (json?.player?.rank) {
+    case "YOUTUBER": {
+      return "YOUTUBER";
+    }
 
-  case "GAME_MASTER": {
-    return "GM";
-  }
+    case "ADMIN": {
+      return "ADMIN";
+    }
+
+    case "GAME_MASTER": {
+      return "GM";
+    }
   }
 
   return rank;
 }
 
 /**
- * 
- * @param {object} json 
- * @param {Account} account 
+ *
+ * @param {object} json
+ * @param {Account} account
  */
-module.exports = function PopulateAccountData (json, account) {
+module.exports = function PopulateAccountData(json, account) {
   account.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
   account.rank = getRank(json);
@@ -101,15 +103,16 @@ module.exports = function PopulateAccountData (json, account) {
   account.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
 
   account.xp = json.player?.networkExp ?? 0;
-  account.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * account.xp);
+  account.level =
+    1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * account.xp);
 
   account.karma = json?.player?.karma ?? 0;
   account.achievementPoints = json?.player?.achievementPoints ?? 0;
 
   account.plusColor = json?.player?.rankPlusColor;
-  
-  if(account.plusColor == undefined) {
-    account.plusColor = (account.rank == "VIP_PLUS") ? "GOLD" : "RED";
+
+  if (account.plusColor == undefined) {
+    account.plusColor = account.rank == "VIP_PLUS" ? "GOLD" : "RED";
   }
   account.cloak = json?.player?.currentCloak ?? "";
   account.hat = json?.player?.currentHat ?? "";
@@ -130,26 +133,32 @@ module.exports = function PopulateAccountData (json, account) {
   account.coinTransfers = json?.player?.stats?.Arcade?.stamp_level ?? 0;
 
   account.coinsEarned = json.player?.achievements?.arcade_arcade_banker ?? 0;
-  account.weeklyCoins = getWeeklyStat(json?.player?.stats?.Arcade?.weekly_coins_a, json?.player?.stats?.Arcade?.weekly_coins_b);
-  account.monthlyCoins = getMonthlyStat(json?.player?.stats?.Arcade?.monthly_coins_a, json?.player?.stats?.Arcade?.monthly_coins_b);
+  account.weeklyCoins = getWeeklyStat(
+    json?.player?.stats?.Arcade?.weekly_coins_a,
+    json?.player?.stats?.Arcade?.weekly_coins_b,
+  );
+  account.monthlyCoins = getMonthlyStat(
+    json?.player?.stats?.Arcade?.monthly_coins_a,
+    json?.player?.stats?.Arcade?.monthly_coins_b,
+  );
 
   account.combinedArcadeWins =
-          (account?.blockingDead?.wins ?? 0) +
-          (account?.bountyHunters?.wins ?? 0) +
-          (account?.dragonWars?.wins ?? 0) +
-          (account?.enderSpleef?.wins ?? 0) +
-          (account?.farmhunt?.wins ?? 0) +
-          (account?.football?.wins ?? 0) +
-          (account?.galaxyWars?.wins ?? 0) +
-          (account?.hideAndSeek?.wins ?? 0) +
-          (account?.holeInTheWall?.wins ?? 0) +
-          (account?.hypixelSays?.wins ?? 0) +
-          (account?.miniWalls?.wins ?? 0) +
-          (account?.partyGames?.wins ?? 0) +
-          (account?.pixelPainters?.wins ?? 0) +
-          (account?.simTotal ?? 0) +
-          (account?.throwOut?.wins ?? 0) +
-          (account?.zombies?.wins_zombies ?? 0);
+    (account?.blockingDead?.wins ?? 0) +
+    (account?.bountyHunters?.wins ?? 0) +
+    (account?.dragonWars?.wins ?? 0) +
+    (account?.enderSpleef?.wins ?? 0) +
+    (account?.farmhunt?.wins ?? 0) +
+    (account?.football?.wins ?? 0) +
+    (account?.galaxyWars?.wins ?? 0) +
+    (account?.hideAndSeek?.wins ?? 0) +
+    (account?.holeInTheWall?.wins ?? 0) +
+    (account?.hypixelSays?.wins ?? 0) +
+    (account?.miniWalls?.wins ?? 0) +
+    (account?.partyGames?.wins ?? 0) +
+    (account?.pixelPainters?.wins ?? 0) +
+    (account?.simTotal ?? 0) +
+    (account?.throwOut?.wins ?? 0) +
+    (account?.zombies?.wins_zombies ?? 0);
 
   account.unknownWins = Math.abs(account.arcadeWins - account.combinedArcadeWins);
   account.actionTime = GetLastActions(json?.player);
