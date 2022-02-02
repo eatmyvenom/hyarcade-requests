@@ -1,11 +1,11 @@
 /* eslint-disable unicorn/no-array-for-each */
 /* eslint-disable unicorn/no-array-callback-reference */
 /* eslint-disable unicorn/no-array-method-this-argument */
+const os = require("node:os");
 const Config = require("hyarcade-config");
 const Logger = require("hyarcade-logger");
 const Guild = require("hyarcade-structures/Guild");
 const { MongoClient, Collection } = require("mongodb");
-const os = require("node:os");
 const Account = require("./types/Account");
 
 class DiscordObject {
