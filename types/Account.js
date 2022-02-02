@@ -674,11 +674,7 @@ class Account {
   constructor(name, wins, uuid) {
     this.name = name;
 
-    if (uuid == undefined && wins.toString().length > 16) {
-      this.uuid = wins.toString();
-    } else {
-      this.uuid = uuid;
-    }
+    this.uuid = uuid == undefined && wins.toString().length > 16 ? wins.toString() : uuid;
 
     this.uuid = uuid.toLowerCase().replace(/-/g, "");
 
@@ -689,9 +685,9 @@ class Account {
       const varient = this.uuid?.slice(16, 20);
       const node = this.uuid?.slice(-12);
       this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
-    } catch (e) {
+    } catch (error) {
       Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
-      Logger.error(e);
+      Logger.error(error);
     }
   }
 
@@ -706,9 +702,9 @@ class Account {
       const varient = this.uuid?.slice(16, 20);
       const node = this.uuid?.slice(-12);
       this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
-    } catch (e) {
+    } catch (error) {
       Logger.error(`Error caused from the uuid of ${this.name} : ${this.uuid}`);
-      Logger.error(e);
+      Logger.error(error);
     }
   }
 

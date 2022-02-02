@@ -39,7 +39,7 @@ function getMonthlyStat(a, b) {
  * @returns {number}
  */
 function getWeeklyStat(a, b) {
-  const delta = new Date() - new Date(1417237200000);
+  const delta = Date.now() - new Date(1417237200000);
   const numberWeeks = Math.floor(delta / 604800000);
 
   return numberWeeks % 2 === 0 ? a ?? 0 : b ?? 0;
@@ -103,8 +103,7 @@ module.exports = function PopulateAccountData(json, account) {
   account.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
 
   account.xp = json.player?.networkExp ?? 0;
-  account.level =
-    1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * account.xp);
+  account.level = 1 + -8750 / 2500 + Math.sqrt(((-8750 / 2500) * -8750) / 2500 + (2 / 2500) * account.xp);
 
   account.karma = json?.player?.karma ?? 0;
   account.achievementPoints = json?.player?.achievementPoints ?? 0;
@@ -133,14 +132,8 @@ module.exports = function PopulateAccountData(json, account) {
   account.coinTransfers = json?.player?.stats?.Arcade?.stamp_level ?? 0;
 
   account.coinsEarned = json.player?.achievements?.arcade_arcade_banker ?? 0;
-  account.weeklyCoins = getWeeklyStat(
-    json?.player?.stats?.Arcade?.weekly_coins_a,
-    json?.player?.stats?.Arcade?.weekly_coins_b,
-  );
-  account.monthlyCoins = getMonthlyStat(
-    json?.player?.stats?.Arcade?.monthly_coins_a,
-    json?.player?.stats?.Arcade?.monthly_coins_b,
-  );
+  account.weeklyCoins = getWeeklyStat(json?.player?.stats?.Arcade?.weekly_coins_a, json?.player?.stats?.Arcade?.weekly_coins_b);
+  account.monthlyCoins = getMonthlyStat(json?.player?.stats?.Arcade?.monthly_coins_a, json?.player?.stats?.Arcade?.monthly_coins_b);
 
   account.combinedArcadeWins =
     (account?.blockingDead?.wins ?? 0) +

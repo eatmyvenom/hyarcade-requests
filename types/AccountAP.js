@@ -12,8 +12,8 @@ class Achievement {
 
 class OneTimeAP extends Achievement {
   points = 0;
-  gamePercentUnlocked = 0.0;
-  globalPercentUnlocked = 0.0;
+  gamePercentUnlocked = 0;
+  globalPercentUnlocked = 0;
 }
 
 class APTier {
@@ -98,16 +98,16 @@ class ArcadeTieredAP {
     this.amount = amnt;
     this.name = achievement.name;
 
-    const tierArr = Array.from(achievement.tiers);
+    const tierArr = [...achievement.tiers];
 
-    tierArr.forEach(tier => {
+    for (const tier of tierArr) {
       if (this.amount >= tier.amount) {
         this.currentTier = tier.tier;
         this.ap += tier.points;
       }
 
       this.availiableAP += tier.points;
-    }, this);
+    }
 
     this.topTier = tierArr[tierArr.length - 1].tier;
     this.toTop = tierArr[tierArr.length - 1].amount - this.amount;
@@ -131,11 +131,11 @@ class ArcadeGameAP {
    * @param {TeiredAchievementWrapper[]} tiered
    */
   constructor(accData, onetimes, tiered) {
-    const onetimeArr = Array.from(accData?.achievementsOneTime ?? []);
+    const onetimeArr = new Set(accData?.achievementsOneTime ?? []);
     const tieredKeys = Object.keys(accData?.achievements ?? []);
 
-    onetimes.forEach(onetime => {
-      if (onetimeArr.includes(onetime.stat)) {
+    for (const onetime of onetimes) {
+      if (onetimeArr.has(onetime.stat)) {
         this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points });
         this.apEarned += onetime.achievement.points;
       } else {
@@ -143,9 +143,9 @@ class ArcadeGameAP {
       }
 
       this.apAvailable += onetime.achievement.points;
-    }, this);
+    }
 
-    tiered.forEach(tierAP => {
+    for (const tierAP of tiered) {
       if (tieredKeys.includes(tierAP.stat)) {
         const gameTier = new ArcadeTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
         if (gameTier.currentTier == gameTier.topTier) {
@@ -165,7 +165,7 @@ class ArcadeGameAP {
 
         this.tieredAP.push(gameTier);
       }
-    });
+    }
   }
 }
 
@@ -296,10 +296,7 @@ class AccountAP {
     this.overall = new ArcadeGameAP(
       accData,
       [new OneTimeAchievementWrapper(arcadeOneTime.WORLD_ECONOMICS, "WORLD_ECONOMICS")],
-      [
-        new TeiredAchievementWrapper(arcadeTiered.ARCADE_BANKER, "ARCADE_BANKER"),
-        new TeiredAchievementWrapper(arcadeTiered.ARCADE_WINNER, "ARCADE_WINNER"),
-      ],
+      [new TeiredAchievementWrapper(arcadeTiered.ARCADE_BANKER, "ARCADE_BANKER"), new TeiredAchievementWrapper(arcadeTiered.ARCADE_WINNER, "ARCADE_WINNER")],
     );
 
     this.blockingDead = new ArcadeGameAP(
@@ -337,10 +334,7 @@ class AccountAP {
         new OneTimeAchievementWrapper(arcadeOneTime.CTW_COMEBACK, "CTW_COMEBACK"),
         new OneTimeAchievementWrapper(arcadeOneTime.CTW_NINJA, "CTW_NINJA"),
       ],
-      [
-        new TeiredAchievementWrapper(arcadeTiered.CTW_OH_SHEEP, "CTW_OH_SHEEP"),
-        new TeiredAchievementWrapper(arcadeTiered.CTW_SLAYER, "CTW_SLAYER"),
-      ],
+      [new TeiredAchievementWrapper(arcadeTiered.CTW_OH_SHEEP, "CTW_OH_SHEEP"), new TeiredAchievementWrapper(arcadeTiered.CTW_SLAYER, "CTW_SLAYER")],
     );
 
     this.creeperAttack = new ArcadeGameAP(
@@ -364,10 +358,7 @@ class AccountAP {
         new OneTimeAchievementWrapper(arcadeOneTime.DW_QUICK_WIN, "DW_QUICK_WIN"),
         new OneTimeAchievementWrapper(arcadeOneTime.DW_VOID, "DW_VOID"),
       ],
-      [
-        new TeiredAchievementWrapper(arcadeTiered.DW_SLAYER, "DW_SLAYER"),
-        new TeiredAchievementWrapper(arcadeTiered.DW_DRAGONBORN, "DW_DRAGONBORN"),
-      ],
+      [new TeiredAchievementWrapper(arcadeTiered.DW_SLAYER, "DW_SLAYER"), new TeiredAchievementWrapper(arcadeTiered.DW_DRAGONBORN, "DW_DRAGONBORN")],
     );
 
     this.enderSpleef = new ArcadeGameAP(
@@ -437,10 +428,7 @@ class AccountAP {
 
     this.holeInTheWall = new ArcadeGameAP(
       accData,
-      [
-        new OneTimeAchievementWrapper(arcadeOneTime.HOLE_SCORE, "HOLE_SCORE"),
-        new OneTimeAchievementWrapper(arcadeOneTime.HOLE_FINALS, "HOLE_FINALS"),
-      ],
+      [new OneTimeAchievementWrapper(arcadeOneTime.HOLE_SCORE, "HOLE_SCORE"), new OneTimeAchievementWrapper(arcadeOneTime.HOLE_FINALS, "HOLE_FINALS")],
       [new TeiredAchievementWrapper(arcadeTiered.HITW_PRACTICE_MAKES_PERFECT, "HITW_PRACTICE_MAKES_PERFECT")],
     );
 
@@ -492,11 +480,7 @@ class AccountAP {
       [new TeiredAchievementWrapper(arcadeTiered.PARTY_SUPER_STAR, "PARTY_SUPER_STAR")],
     );
 
-    this.pixelPainters = new ArcadeGameAP(
-      accData,
-      [new OneTimeAchievementWrapper(arcadeOneTime.PIXEL_PAINTERS_ONE, "PIXEL_PAINTERS_ONE")],
-      [],
-    );
+    this.pixelPainters = new ArcadeGameAP(accData, [new OneTimeAchievementWrapper(arcadeOneTime.PIXEL_PAINTERS_ONE, "PIXEL_PAINTERS_ONE")], []);
 
     this.throwOut = new ArcadeGameAP(
       accData,

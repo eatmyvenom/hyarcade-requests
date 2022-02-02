@@ -1,7 +1,11 @@
+/* eslint-disable unicorn/no-array-for-each */
+/* eslint-disable unicorn/no-array-callback-reference */
+/* eslint-disable unicorn/no-array-method-this-argument */
 const Config = require("hyarcade-config");
 const Logger = require("hyarcade-logger");
 const Guild = require("hyarcade-structures/Guild");
 const { MongoClient, Collection } = require("mongodb");
+const os = require("node:os");
 const Account = require("./types/Account");
 
 class DiscordObject {
@@ -105,7 +109,7 @@ class MongoConnector {
   async readCollection(collection) {
     if (this[collection] == undefined) {
       // Exit if query will throw an error
-      return undefined;
+      return;
     }
 
     return await this[collection].find().toArray();
@@ -119,7 +123,7 @@ class MongoConnector {
 
     if (this[`${realTime}Accounts`] == undefined) {
       // Exit if query will throw an error
-      return undefined;
+      return;
     }
 
     Logger.info(`Snapshotting to "${realTime}Accounts" collection`);
@@ -140,7 +144,8 @@ class MongoConnector {
     if (input.length == 32 || input.length == 36) {
       return await this.accounts.findOne({ uuid: input });
     } else if (input.length == 18) {
-      return await this.accounts.findOne({ uuid: (await this.discordList.findOne({ discordID: input })).uuid });
+      const resolvedDiscord = await this.discordList.findOne({ discordID: input });
+      return await this.accounts.findOne({ uuid: resolvedDiscord.uuid });
     } else {
       return await this.accounts.findOne({ name_lower: input.toLowerCase() });
     }
@@ -154,7 +159,7 @@ class MongoConnector {
 
     if (this[`${realTime}Accounts`] == undefined) {
       // Exit if query will throw an error
-      return undefined;
+      return;
     }
 
     return await this[`${realTime}Accounts`].findOne({ uuid });
@@ -318,9 +323,7 @@ class MongoConnector {
     pipeline.push({ $project: project });
 
     const sort = { lbProp: reverse ? 1 : -1 };
-    pipeline.push({ $sort: sort });
-
-    pipeline.push({ $limit: limit });
+    pipeline.push({ $sort: sort }, { $limit: limit });
 
     const historical = await this.accounts.aggregate(pipeline).toArray();
 
@@ -337,17 +340,11 @@ class MongoConnector {
         })
         .toArray();
     } else if (level == 1) {
-      return await this.accounts
-        .find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] })
-        .toArray();
+      return await this.accounts.find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] }).toArray();
     } else if (level == 2) {
       return await this.accounts
         .find({
-          $or: [
-            { importance: { $gte: cfg.hypixel.minImportance } },
-            { discordID: { $exists: true } },
-            { updateTime: { $gte: cfg.hypixel.loginLimit * 4 } },
-          ],
+          $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $gte: cfg.hypixel.loginLimit * 4 } }],
         })
         .toArray();
     } else {
@@ -360,7 +357,7 @@ class MongoConnector {
       accs: await this.accounts.estimatedDocumentCount(),
       guilds: await this.guilds.estimatedDocumentCount(),
       links: await this.discordList.estimatedDocumentCount(),
-      mem: (await this.database.admin().serverStatus()).tcmalloc.tcmalloc.formattedString,
+      mem: (os.totalmem() - os.freemem()) / 1024 / 1000,
     };
   }
 
@@ -379,11 +376,7 @@ class MongoConnector {
   }
 
   async unlinkDiscord(input) {
-    if (input.length == 18) {
-      await this.discordList.deleteOne({ discordID: input });
-    } else {
-      await this.discordList.deleteOne({ uuid: input });
-    }
+    await (input.length == 18 ? this.discordList.deleteOne({ discordID: input }) : this.discordList.deleteOne({ uuid: input }));
   }
 
   async addHacker(uuid) {

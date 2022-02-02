@@ -17,11 +17,7 @@ const cfg = Config.fromJSON();
  */
 function readJSONStream(url) {
   let reqModule;
-  if (url.protocol == "https:") {
-    reqModule = https;
-  } else {
-    reqModule = http;
-  }
+  reqModule = url.protocol == "https:" ? https : http;
 
   return new Promise((resolve, rejects) => {
     reqModule.get(url, { headers: { Authorization: cfg.dbPass } }, res => {
@@ -41,11 +37,7 @@ function readJSONStream(url) {
  */
 function writeJSONStream(url, obj) {
   let reqModule;
-  if (url.protocol == "https:") {
-    reqModule = https;
-  } else {
-    reqModule = http;
-  }
+  reqModule = url.protocol == "https:" ? https : http;
 
   return new Promise((resolve, reject) => {
     const req = reqModule.request(url, { headers: { Authorization: cfg.dbPass }, method: "POST" });
@@ -69,9 +61,9 @@ module.exports = class Database {
 
     try {
       fileData = await readJSONStream(url);
-    } catch (e) {
+    } catch (error) {
       Logger.err("Can't connect to database");
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       return {};
     }
     Logger.debug("Data fetched!");
@@ -104,10 +96,11 @@ module.exports = class Database {
     let acc;
     try {
       Logger.debug(`Fetching ${url.searchParams} from database!`);
-      acc = await JSON.parse((await webRequest(url.toString())).data);
-    } catch (e) {
+      const accReq = await webRequest(url.toString());
+      acc = await JSON.parse(accReq.data);
+    } catch (error) {
       Logger.err("Error fetching data from database");
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       Logger.err(acc);
       return {};
     }
@@ -137,10 +130,11 @@ module.exports = class Database {
     let acc;
     try {
       Logger.debug(`Fetching ${url.searchParams} from database!`);
-      acc = await JSON.parse((await webRequest(url.toString())).data);
-    } catch (e) {
+      const accReq = await webRequest(url.toString());
+      acc = await JSON.parse(accReq.data);
+    } catch (error) {
       Logger.err("Can't connect to database");
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       Logger.err(acc);
       return {};
     }
@@ -153,10 +147,11 @@ module.exports = class Database {
 
     let info;
     try {
-      info = await JSON.parse((await webRequest(url.toString())).data);
-    } catch (e) {
+      const accReq = await webRequest(url.toString());
+      info = await JSON.parse(accReq.data);
+    } catch (error) {
       Logger.err("Can't connect to database");
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       Logger.err(info);
       return {};
     }
@@ -178,9 +173,9 @@ module.exports = class Database {
           Authorization: cfg.dbPass,
         },
       });
-    } catch (e) {
+    } catch (error) {
       Logger.err("Can't connect to database");
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       return {};
     }
   }
@@ -215,10 +210,11 @@ module.exports = class Database {
 
     Logger.debug(`Fetching ${time ?? "lifetime"} ${category ?? ""} ${path} leaderboard`);
     try {
-      lb = await JSON.parse((await webRequest(url.toString())).data);
-    } catch (e) {
+      const lbReq = await webRequest(url.toString());
+      lb = await JSON.parse(lbReq.data);
+    } catch (error) {
       Logger.err("Can't connect to database");
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       Logger.err(lb);
       return {};
     }
@@ -239,10 +235,11 @@ module.exports = class Database {
     let lb;
 
     try {
-      lb = await JSON.parse((await webRequest(url.toString())).data);
-    } catch (e) {
+      const lbReq = await webRequest(url.toString());
+      lb = await JSON.parse(lbReq.data);
+    } catch (error) {
       Logger.err("Can't connect to database");
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       Logger.err(lb);
       return {};
     }

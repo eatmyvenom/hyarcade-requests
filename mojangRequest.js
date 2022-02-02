@@ -35,7 +35,7 @@ async function getPlayer(uuid) {
   }
   // log the missing username so i can change it
   logger.err(`"${uuid}" does not exist`);
-  return undefined;
+  return;
 }
 
 /**
@@ -53,7 +53,7 @@ async function getUUID(name) {
   }
   // log the missing username so i can change it
   logger.err(`"${name}" does not exist`);
-  return undefined;
+  return;
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
 const https = require("https");
 const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
-const keys = cfg.altkeys.concat([cfg.clusters[cfg.cluster].key]);
+const keys = [...cfg.altkeys, cfg.clusters[cfg.cluster].key];
 
 let currentKey = 0;
 
@@ -57,8 +57,8 @@ async function HyarcadeWorkerRequest(accs) {
 
           try {
             response = JSON.parse(reply);
-          } catch (e) {
-            reject(e);
+          } catch (error) {
+            reject(error);
           }
 
           resolve(response);
@@ -68,8 +68,8 @@ async function HyarcadeWorkerRequest(accs) {
 
       requester.on("timeout", reject);
       requester.on("error", reject);
-    } catch (e) {
-      reject(e);
+    } catch (error) {
+      reject(error);
     }
   });
 }

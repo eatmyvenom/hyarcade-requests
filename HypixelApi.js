@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/consistent-destructuring */
 const process = require("process");
 const url = require("url");
 const config = require("hyarcade-config").fromJSON();
@@ -13,12 +14,10 @@ const hypixelReq = require("./hypixelReq");
 function getKey() {
   let { key } = config;
   if (config.cluster) {
-    // eslint-disable-next-line prefer-destructuring
     key = config.clusters[config.cluster].key;
   }
 
   if (process.argv[2] == "bot" || process.argv[2] == "serveDB") {
-    // eslint-disable-next-line prefer-destructuring
     key = config.clusters.serverbot.key;
   }
 
@@ -61,7 +60,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.key();
@@ -80,7 +79,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.player(uuid);
@@ -94,7 +93,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.friends(uuid);
@@ -108,7 +107,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.recentgames(uuid);
@@ -122,7 +121,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.status(uuid);
@@ -147,7 +146,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.guild(something);
@@ -159,7 +158,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.achievements();
@@ -171,7 +170,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.challenges();
@@ -183,7 +182,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.boosters();
@@ -195,7 +194,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.counts();
@@ -207,7 +206,7 @@ module.exports = class HypixelApi {
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json data");
       logger.err(data);
       return await HypixelApi.leaderboards();
