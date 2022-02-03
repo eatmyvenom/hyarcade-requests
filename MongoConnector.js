@@ -356,7 +356,7 @@ class MongoConnector {
       return await this.accounts
         .find(
           {
-            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $gte: cfg.hypixel.loginLimit * 4 } }],
+            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit * 4 } }],
           },
           opts,
         )
