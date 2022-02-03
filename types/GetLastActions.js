@@ -81,5 +81,5 @@ module.exports = function GetLastActions(acc) {
     actions.push(Math.max(...starts));
   }
 
-  return { quest, pets: lastPetTime, dailyReward: acc?.lastAdsenseGenerateTime ?? 0, otherActions: actions };
+  return { quest, pets: lastPetTime, dailyReward: acc?.lastAdsenseGenerateTime ?? 0, otherActions: Math.max(...actions) };
 };
