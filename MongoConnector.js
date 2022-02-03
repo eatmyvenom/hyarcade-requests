@@ -371,7 +371,7 @@ class MongoConnector {
             $expr: { $eq: ["$uuid", "$$uuid"] },
           },
         },
-        { $project: { [stat]: 1, _id: 0, uuid: 1 } },
+        { $project: { miniWalls: 1, _id: 0, uuid: 1 } },
       ],
       as: "historicalData",
     };
