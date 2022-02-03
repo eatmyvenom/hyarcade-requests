@@ -332,8 +332,8 @@ class MongoConnector {
         hacker: 1,
         importance: 1,
         mvpColor: 1,
-        miniWalls: 1,
         [stat]: 1,
+        miniWalls: 1,
       },
       limit,
     };
@@ -394,8 +394,8 @@ class MongoConnector {
       plusColor: 1,
       mvpColor: 1,
       historicalData: 1,
-      miniWalls: 1,
       [stat]: 1,
+      miniWalls: 1,
       lbProp: {
         $subtract: [
           `$${stat}`,
