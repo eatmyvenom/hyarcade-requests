@@ -225,7 +225,7 @@ class MongoConnector {
     await this.accounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
   }
 
-  async getLeaderboard(stat, reverse = false, limit = 10) {
+  async getLeaderboard(stat, reverse = false, limit = 10, filter = false) {
     const options = {
       sort: {
         [stat]: reverse ? 1 : -1,
@@ -247,16 +247,16 @@ class MongoConnector {
 
     const query = {};
 
-    // if (filter && filter != "") {
-    //   for (const field of filter) {
-    //     query[field] = { $exists: false };
-    //   }
-    // }
+    if (filter && filter != "") {
+      for (const field of filter) {
+        query[field] = { $exists: false };
+      }
+    }
 
     return await this.accounts.find(query, options).toArray();
   }
 
-  async getHistoricalLeaderboard(stat, time, reverse = false, limit = 10) {
+  async getHistoricalLeaderboard(stat, time, reverse = false, limit = 10, filter = false) {
     let realTime = time;
     if (time == "day") {
       realTime = "daily";
@@ -284,16 +284,16 @@ class MongoConnector {
     };
     pipeline.push({ $lookup: lookup });
 
-    // if (filter && filter != "") {
-    //   const and = {};
+    if (filter && filter != "") {
+      const and = {};
 
-    //   for (const stat of filter) {
-    //     and.push({ $ne: [`$${stat}`, true] });
-    //   }
-    //   const match = { $and: and };
+      for (const stat of filter) {
+        and.push({ $ne: [`$${stat}`, true] });
+      }
+      const match = { $and: and };
 
-    //   pipeline.push({ $match: match });
-    // }
+      pipeline.push({ $match: match });
+    }
 
     const project = {
       _id: 0,
