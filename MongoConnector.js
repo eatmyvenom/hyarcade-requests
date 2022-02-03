@@ -345,6 +345,78 @@ class MongoConnector {
     return await this.accounts.find(query, options).toArray();
   }
 
+  async getHistoricalMiniWallsLeaderboard(stat, time, limit = 10) {
+    let realTime = time;
+    if (time == "day") {
+      realTime = "daily";
+    }
+
+    const hackerArr = await this.hackerList.find().toArray();
+    let hackers = hackerArr.map(h => h.uuid);
+
+    if (this[`${realTime}Accounts`] == undefined) {
+      // Exit if query will throw an error
+      return [];
+    }
+
+    const pipeline = [];
+
+    const lookup = {
+      from: this[`${realTime}Accounts`].collectionName,
+      let: { uuid: "$uuid" },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ["$uuid", "$$uuid"] },
+          },
+        },
+        { $project: { [stat]: 1, _id: 0, uuid: 1 } },
+      ],
+      as: "historicalData",
+    };
+    pipeline.push({ $lookup: lookup });
+
+    const match = {
+      $match: { historicalData: { $size: 1 }, uuid: { $nin: hackers } },
+    };
+
+    pipeline.push(match);
+
+    const project = {
+      _id: 0,
+      uuid: 1,
+      name: 1,
+      rank: 1,
+      banned: 1,
+      hacker: 1,
+      importance: 1,
+      plusColor: 1,
+      mvpColor: 1,
+      historicalData: 1,
+      [stat]: 1,
+      lbProp: {
+        $subtract: [
+          `$${stat}`,
+          {
+            $reduce: {
+              input: "$historicalData",
+              initialValue: 0,
+              in: { $max: ["$$value", `$$this.${stat}`] },
+            },
+          },
+        ],
+      },
+    };
+    pipeline.push({ $project: project });
+
+    const sort = { lbProp: -1 };
+    pipeline.push({ $sort: sort }, { $limit: limit });
+
+    const historical = await this.accounts.aggregate(pipeline).toArray();
+
+    return historical;
+  }
+
   async getImportantAccounts(level = 0) {
     const cfg = Config.fromJSON();
 
