@@ -53,11 +53,11 @@ module.exports = function GetLastActions(acc) {
   const swHeads = acc?.stats?.SkyWars?.head_collection ?? {};
 
   if (swHeads.recent) {
-    actions.push(swHeads.recent[swHeads.recent.length - 1].time);
+    actions.push(swHeads.recent?.[swHeads.recent.length - 1]?.time ?? 0);
   }
 
   if (swHeads.prestigious) {
-    actions.push(swHeads.prestigious[swHeads.prestigious.length - 1].time);
+    actions.push(swHeads.prestigious?.[swHeads.prestigious.length - 1]?.time ?? 0);
   }
 
   if (acc?.achievementRewardsNew) {
