@@ -225,7 +225,7 @@ class MongoConnector {
     await this.accounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
   }
 
-  async getLeaderboard(stat, reverse = false, limit = 10, filter = false) {
+  async getLeaderboard(stat, reverse = false, limit = 10) {
     const options = {
       sort: {
         [stat]: reverse ? 1 : -1,
@@ -245,18 +245,10 @@ class MongoConnector {
       limit,
     };
 
-    const query = {};
-
-    if (filter && filter != "") {
-      for (const field of filter) {
-        query[field] = { $exists: false };
-      }
-    }
-
-    return await this.accounts.find(query, options).toArray();
+    return await this.accounts.find({}, options).toArray();
   }
 
-  async getHistoricalLeaderboard(stat, time, reverse = false, limit = 10, filter = false) {
+  async getHistoricalLeaderboard(stat, time, reverse = false, limit = 10) {
     let realTime = time;
     if (time == "day") {
       realTime = "daily";
@@ -284,16 +276,11 @@ class MongoConnector {
     };
     pipeline.push({ $lookup: lookup });
 
-    if (filter && filter != "") {
-      const and = {};
+    const match = {
+      $match: { historicalData: { $size: 1 } },
+    };
 
-      for (const stat of filter) {
-        and.push({ $ne: [`$${stat}`, true] });
-      }
-      const match = { $and: and };
-
-      pipeline.push({ $match: match });
-    }
+    pipeline.push(match);
 
     const project = {
       _id: 0,
@@ -330,6 +317,34 @@ class MongoConnector {
     return historical;
   }
 
+  async getMiniWallsLeaderboard(stat, limit) {
+    const options = {
+      sort: {
+        [stat]: -1,
+      },
+      projection: {
+        _id: 0,
+        uuid: 1,
+        name: 1,
+        rank: 1,
+        plusColor: 1,
+        banned: 1,
+        hacker: 1,
+        importance: 1,
+        mvpColor: 1,
+        [stat]: 1,
+      },
+      limit,
+    };
+
+    const hackerArr = await this.hackerList.find().toArray();
+    let hackers = hackerArr.map(h => h.uuid);
+
+    const query = { uuid: { $nin: hackers } };
+
+    return await this.accounts.find(query, options).toArray();
+  }
+
   async getImportantAccounts(level = 0) {
     const cfg = Config.fromJSON();
 
@@ -356,7 +371,7 @@ class MongoConnector {
       return await this.accounts
         .find(
           {
-            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit * 4 } }],
+            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit * 8 } }],
           },
           opts,
         )
