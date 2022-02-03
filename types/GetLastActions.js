@@ -41,6 +41,7 @@ module.exports = function GetLastActions(acc) {
     acc?.stats?.SkyWars?.lucky_explained_last ?? 0,
     acc?.stats?.SkyWars?.tnt_madness_explained_last ?? 0,
     acc?.stats?.SkyWars?.slime_explained_last ?? 0,
+    acc?.stats?.SkyWars?.rush_explained_last ?? 0,
     acc?.stats?.Pit?.profile?.last_save ?? 0,
     acc?.stats?.Pit?.profile?.last_midfight_disconnect ?? 0,
     acc?.stats?.Pit?.profile?.last_contract ?? 0,
@@ -48,6 +49,7 @@ module.exports = function GetLastActions(acc) {
     acc?.stats?.SuperSmash?.ONE_V_JUAN_firstGame ?? 0,
     acc?.eugene?.dailyTwoKExp ?? 0,
     acc?.lastClaimedReward ?? 0,
+    acc?.petJourneyTimestamp ?? 0,
   );
 
   const swHeads = acc?.stats?.SkyWars?.head_collection ?? {};
