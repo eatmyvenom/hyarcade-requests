@@ -332,23 +332,37 @@ class MongoConnector {
 
   async getImportantAccounts(level = 0) {
     const cfg = Config.fromJSON();
+
+    const opts = {
+      projection: {
+        _id: 0,
+        uuid: 1,
+      },
+    };
+
     if (level == 0) {
       return await this.accounts
-        .find({
-          $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }],
-          lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit },
-        })
+        .find(
+          {
+            $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }],
+            lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit },
+          },
+          opts,
+        )
         .toArray();
     } else if (level == 1) {
-      return await this.accounts.find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] }).toArray();
+      return await this.accounts.find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] }, opts).toArray();
     } else if (level == 2) {
       return await this.accounts
-        .find({
-          $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $gte: cfg.hypixel.loginLimit * 4 } }],
-        })
+        .find(
+          {
+            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $gte: cfg.hypixel.loginLimit * 4 } }],
+          },
+          opts,
+        )
         .toArray();
     } else {
-      return await this.accounts.find().toArray();
+      return await this.accounts.find({}, opts).toArray();
     }
   }
 
