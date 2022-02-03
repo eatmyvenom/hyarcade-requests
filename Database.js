@@ -180,6 +180,60 @@ module.exports = class Database {
     }
   }
 
+  static async linkDiscord(id, uuid) {
+    const url = new URL("disc", cfg.dbUrl);
+
+    if (id != undefined && id != "") {
+      url.searchParams.set("id", id);
+    }
+
+    if (uuid != undefined) {
+      url.searchParams.set("uuid", uuid);
+    }
+
+    url.searchParams.set("action", "ln");
+
+    let disc;
+    try {
+      const accReq = await webRequest(url.toString());
+      disc = await JSON.parse(accReq.data);
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(disc);
+      return {};
+    }
+
+    return disc;
+  }
+
+  static async unlinkDiscord(id, uuid) {
+    const url = new URL("disc", cfg.dbUrl);
+
+    if (id != undefined && id != "") {
+      url.searchParams.set("id", id);
+    }
+
+    if (uuid != undefined) {
+      url.searchParams.set("uuid", uuid);
+    }
+
+    url.searchParams.set("action", "rm");
+
+    let disc;
+    try {
+      const accReq = await webRequest(url.toString());
+      disc = await JSON.parse(accReq.data);
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(disc);
+      return {};
+    }
+
+    return disc;
+  }
+
   static async getLeaderboard(path, category, time, min, reverse, max) {
     Logger.verbose("Reading database");
 
