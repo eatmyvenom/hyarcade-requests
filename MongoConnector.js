@@ -247,7 +247,7 @@ class MongoConnector {
 
     const query = {};
 
-    if (filter) {
+    if (filter && filter != "") {
       for (const field of filter) {
         query[field] = { $exists: false };
       }
@@ -284,7 +284,7 @@ class MongoConnector {
     };
     pipeline.push({ $lookup: lookup });
 
-    if (filter) {
+    if (filter && filter != "") {
       const and = {};
 
       for (const stat of filter) {
