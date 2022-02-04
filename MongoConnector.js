@@ -465,9 +465,9 @@ class MongoConnector {
 
   async getInfo() {
     return {
-      accs: await this.accounts.estimatedDocumentCount(),
-      guilds: await this.guilds.estimatedDocumentCount(),
-      links: await this.discordList.estimatedDocumentCount(),
+      accs: await this.accounts.countDocuments(),
+      guilds: await this.guilds.countDocuments(),
+      links: await this.discordList.countDocuments(),
       mem: (os.totalmem() - os.freemem()) / 1024 / 1000,
     };
   }
