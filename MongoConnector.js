@@ -172,7 +172,7 @@ class MongoConnector {
       delete guild._id;
     }
     const update = await this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
-    Logger.verbose(`Modified - ${update.modifiedCount} documents in guild collection.`);
+    Logger.verbose(`Modified ${update.modifiedCount} document(s) in guild collection.`);
   }
 
   async getGuild(guildID) {
@@ -180,7 +180,7 @@ class MongoConnector {
   }
 
   async getGuildByMember(memberUUID) {
-    return await this.guilds.findOne({ memberUUIDs: { $all: [memberUUID] } });
+    return await this.guilds.findOne({ memberUUIDs: memberUUID });
   }
 
   /**
