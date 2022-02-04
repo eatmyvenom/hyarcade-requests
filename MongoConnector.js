@@ -98,6 +98,7 @@ class MongoConnector {
     this.guilds = this.database.collection("guilds");
 
     if (index) {
+      await this.guilds.createIndex({ uuid: 1 });
       await this.accounts.createIndex({ uuid: 1 });
       await this.dailyAccounts.createIndex({ uuid: 1 });
       await this.weeklyAccounts.createIndex({ uuid: 1 });
@@ -167,6 +168,9 @@ class MongoConnector {
   }
 
   async updateGuild(guild) {
+    if (guild._id) {
+      delete guild._id;
+    }
     await this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
   }
 
