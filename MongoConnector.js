@@ -171,7 +171,8 @@ class MongoConnector {
     if (guild._id) {
       delete guild._id;
     }
-    await this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
+    const update = await this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
+    Logger.verbose(`Modified - ${update.modifiedCount} documents in guild collection.`);
   }
 
   async getGuild(guildID) {
