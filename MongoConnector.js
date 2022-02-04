@@ -134,6 +134,7 @@ class MongoConnector {
     const newCollection = this[`${realTime}Accounts`];
 
     await cursor.forEach(async account => {
+      delete account._id;
       await newCollection.replaceOne({ uuid: account.uuid }, account, { upsert: true });
     });
 
