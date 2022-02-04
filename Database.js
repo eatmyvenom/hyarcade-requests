@@ -242,8 +242,14 @@ module.exports = class Database {
 
     let disc;
     try {
-      const accReq = await webRequest(url.toString());
-      disc = await JSON.parse(accReq.data);
+      const accReq = await fetch(url.toString(), {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.dbPass,
+        },
+      });
+      disc = await accReq.json();
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
