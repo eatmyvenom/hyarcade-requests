@@ -206,6 +206,27 @@ module.exports = class Database {
     }
   }
 
+  static async addGuild(json) {
+    Logger.info(`Adding ${json.name} to accounts in database`);
+    const data = JSON.stringify(json);
+    const url = new URL("guild", cfg.dbUrl);
+
+    try {
+      await fetch(url.toString(), {
+        method: "post",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.dbPass,
+        },
+      });
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      return {};
+    }
+  }
+
   static async linkDiscord(id, uuid) {
     const url = new URL("disc", cfg.dbUrl);
 
