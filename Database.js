@@ -108,6 +108,32 @@ module.exports = class Database {
     return acc;
   }
 
+  static async guild(text) {
+    const url = new URL("guild", cfg.dbUrl);
+
+    if (text != undefined && text != "" && text != "!") {
+      if (text.length == 24) {
+        url.searchParams.set("uuid", text);
+      } else {
+        url.searchParams.set("member", text.replace(/-/g, ""));
+      }
+    }
+
+    let guild;
+    try {
+      Logger.debug(`Fetching ${url.searchParams} from database!`);
+      const guildReq = await webRequest(url.toString());
+      guild = await JSON.parse(guildReq.data);
+    } catch (error) {
+      Logger.err("Error fetching data from database");
+      Logger.err(error.stack);
+      Logger.err(guild);
+      return {};
+    }
+
+    return guild;
+  }
+
   static async timedAccount(text, discordID, time) {
     const url = new URL("timeacc", cfg.dbUrl);
 
