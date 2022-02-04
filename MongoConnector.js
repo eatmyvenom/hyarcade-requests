@@ -165,12 +165,16 @@ class MongoConnector {
     return await this[`${realTime}Accounts`].findOne({ uuid });
   }
 
+  async updateGuild(guild) {
+    await this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
+  }
+
   async getGuild(guildID) {
     return await this.guilds.findOne({ uuid: guildID });
   }
 
   async getGuildByMember(memberUUID) {
-    return await this.guilds.findOne({ memberUUIDs: { $elemMatch: memberUUID } });
+    return await this.guilds.findOne({ memberUUIDs: { $all: [memberUUID] } });
   }
 
   /**
@@ -461,16 +465,6 @@ class MongoConnector {
       links: await this.discordList.estimatedDocumentCount(),
       mem: (os.totalmem() - os.freemem()) / 1024 / 1000,
     };
-  }
-
-  /**
-   *
-   *
-   * @param {Guild} guild
-   * @memberof MongoConnector
-   */
-  async updateGuild(guild) {
-    this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
   }
 
   async linkDiscord(discordID, uuid) {
