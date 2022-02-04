@@ -186,9 +186,9 @@ module.exports = class Database {
   }
 
   static async addAccount(json) {
+    Logger.info(`Adding ${json.name} to accounts in database`);
     const data = JSON.stringify(json);
     const url = new URL("account", cfg.dbUrl);
-    Logger.info(`Adding ${data.name} to accounts in database`);
 
     try {
       await fetch(url.toString(), {
