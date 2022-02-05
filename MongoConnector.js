@@ -167,10 +167,17 @@ class MongoConnector {
     return await this[`${realTime}Accounts`].findOne({ uuid });
   }
 
+  /**
+   *
+   * @param {Guild} guild
+   */
   async updateGuild(guild) {
     if (guild._id) {
       delete guild._id;
     }
+
+    guild.uuid = guild.uuid.toLowerCase();
+
     const update = await this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
     Logger.verbose(`Modified ${update.modifiedCount} document(s) in guild collection.`);
   }
@@ -179,8 +186,13 @@ class MongoConnector {
     return await this.guilds.findOne({ uuid: guildID });
   }
 
+  /**
+   *
+   * @param {string} memberUUID
+   * @returns {Guild}
+   */
   async getGuildByMember(memberUUID) {
-    return await this.guilds.findOne({ memberUUIDs: memberUUID });
+    return await this.guilds.findOne({ memberUUIDs: memberUUID.toLowerCase() });
   }
 
   /**
