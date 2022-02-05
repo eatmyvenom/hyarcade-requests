@@ -287,6 +287,122 @@ module.exports = class Database {
     return disc;
   }
 
+  static async addHacker(uuid) {
+    const url = new URL("hacker", cfg.dbUrl);
+
+    if (uuid != undefined) {
+      url.searchParams.set("uuid", uuid);
+    }
+
+    url.searchParams.set("action", "add");
+
+    let hack;
+    try {
+      const accReq = await fetch(url.toString(), {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.dbPass,
+        },
+      });
+      hack = await accReq.json();
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(hack);
+      return {};
+    }
+
+    return hack;
+  }
+
+  static async delHacker(uuid) {
+    const url = new URL("hacker", cfg.dbUrl);
+
+    if (uuid != undefined) {
+      url.searchParams.set("uuid", uuid);
+    }
+
+    url.searchParams.set("action", "del");
+
+    let hack;
+    try {
+      const accReq = await fetch(url.toString(), {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.dbPass,
+        },
+      });
+      hack = await accReq.json();
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(hack);
+      return {};
+    }
+
+    return hack;
+  }
+
+  static async addBanned(uuid) {
+    const url = new URL("banned", cfg.dbUrl);
+
+    if (uuid != undefined) {
+      url.searchParams.set("uuid", uuid);
+    }
+
+    url.searchParams.set("action", "add");
+
+    let hack;
+    try {
+      const accReq = await fetch(url.toString(), {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.dbPass,
+        },
+      });
+      hack = await accReq.json();
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(hack);
+      return {};
+    }
+
+    return hack;
+  }
+
+  static async delBanned(uuid) {
+    const url = new URL("banned", cfg.dbUrl);
+
+    if (uuid != undefined) {
+      url.searchParams.set("uuid", uuid);
+    }
+
+    url.searchParams.set("action", "del");
+
+    let ban;
+    try {
+      const accReq = await fetch(url.toString(), {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.dbPass,
+        },
+      });
+      ban = await accReq.json();
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(ban);
+      return {};
+    }
+
+    return ban;
+  }
+
   static async getLeaderboard(path, category, time, min, reverse, max) {
     Logger.verbose("Reading database");
 
