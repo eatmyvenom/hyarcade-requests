@@ -33,7 +33,7 @@ class Response {
  */
 async function HyarcadeWorkerRequest(accs) {
   return new Promise((resolve, reject) => {
-    const url = `https://hyarcade-worker.vnmm.workers.dev?pass=${cfg.dbPass}`;
+    const url = `https://hyarcade-worker.vnmm.workers.dev?pass=${cfg.database.pass}`;
 
     const reqOptions = {
       family: 4,

@@ -20,7 +20,7 @@ function readJSONStream(url) {
   reqModule = url.protocol == "https:" ? https : http;
 
   return new Promise((resolve, rejects) => {
-    reqModule.get(url, { headers: { Authorization: cfg.dbPass } }, res => {
+    reqModule.get(url, { headers: { Authorization: cfg.database.pass } }, res => {
       parseChunked(res).then(resolve).catch(rejects);
     });
   });
@@ -40,7 +40,7 @@ function writeJSONStream(url, obj) {
   reqModule = url.protocol == "https:" ? https : http;
 
   return new Promise((resolve, reject) => {
-    const req = reqModule.request(url, { headers: { Authorization: cfg.dbPass }, method: "POST" });
+    const req = reqModule.request(url, { headers: { Authorization: cfg.database.pass }, method: "POST" });
 
     stringifyStream(obj).on("error", reject).pipe(req).on("error", reject).on("finish", resolve);
   });
@@ -49,7 +49,7 @@ function writeJSONStream(url, obj) {
 module.exports = class Database {
   static async readDB(file, fields) {
     let fileData;
-    const url = new URL("db", cfg.dbUrl);
+    const url = new URL("db", cfg.database.url);
     const path = `${file}`;
     url.searchParams.set("path", path);
 
@@ -71,7 +71,7 @@ module.exports = class Database {
   }
 
   static async writeDB(path, json) {
-    const url = new URL("db", cfg.dbUrl);
+    const url = new URL("db", cfg.database.url);
     url.searchParams.set("path", path);
     Logger.debug(`Writing to ${path} in database`);
 
@@ -79,7 +79,7 @@ module.exports = class Database {
   }
 
   static async account(text, discordID, cacheOnly = false) {
-    const url = new URL("account", cfg.dbUrl);
+    const url = new URL("account", cfg.database.url);
 
     if (text != undefined && text != "" && text != "!") {
       if (text.length < 17) {
@@ -113,7 +113,7 @@ module.exports = class Database {
   }
 
   static async guild(text) {
-    const url = new URL("guild", cfg.dbUrl);
+    const url = new URL("guild", cfg.database.url);
 
     if (text != undefined && text != "" && text != "!") {
       if (text.length == 24) {
@@ -139,7 +139,7 @@ module.exports = class Database {
   }
 
   static async timedAccount(text, discordID, time, cacheOnly = false) {
-    const url = new URL("timeacc", cfg.dbUrl);
+    const url = new URL("timeacc", cfg.database.url);
 
     if (text != undefined && text != "" && text != "!") {
       if (text.length < 17) {
@@ -177,7 +177,7 @@ module.exports = class Database {
   }
 
   static async info() {
-    const url = new URL("info", cfg.dbUrl);
+    const url = new URL("info", cfg.database.url);
 
     let info;
     try {
@@ -196,7 +196,7 @@ module.exports = class Database {
   static async addAccount(json) {
     Logger.info(`Adding ${json.name} to accounts in database`);
     const data = JSON.stringify(json);
-    const url = new URL("account", cfg.dbUrl);
+    const url = new URL("account", cfg.database.url);
 
     try {
       await fetch(url.toString(), {
@@ -204,7 +204,7 @@ module.exports = class Database {
         body: data,
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass,
+          Authorization: cfg.database.pass,
         },
       });
     } catch (error) {
@@ -217,7 +217,7 @@ module.exports = class Database {
   static async addGuild(json) {
     Logger.info(`Adding ${json.name} to accounts in database`);
     const data = JSON.stringify(json);
-    const url = new URL("guild", cfg.dbUrl);
+    const url = new URL("guild", cfg.database.url);
 
     try {
       await fetch(url.toString(), {
@@ -225,7 +225,7 @@ module.exports = class Database {
         body: data,
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass,
+          Authorization: cfg.database.pass,
         },
       });
     } catch (error) {
@@ -236,7 +236,7 @@ module.exports = class Database {
   }
 
   static async linkDiscord(id, uuid) {
-    const url = new URL("disc", cfg.dbUrl);
+    const url = new URL("disc", cfg.database.url);
 
     if (id != undefined && id != "") {
       url.searchParams.set("id", id);
@@ -254,7 +254,7 @@ module.exports = class Database {
         method: "get",
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass,
+          Authorization: cfg.database.pass,
         },
       });
       disc = await accReq.json();
@@ -269,7 +269,7 @@ module.exports = class Database {
   }
 
   static async unlinkDiscord(id, uuid) {
-    const url = new URL("disc", cfg.dbUrl);
+    const url = new URL("disc", cfg.database.url);
 
     if (id != undefined && id != "") {
       url.searchParams.set("id", id);
@@ -296,7 +296,7 @@ module.exports = class Database {
   }
 
   static async addHacker(uuid) {
-    const url = new URL("hacker", cfg.dbUrl);
+    const url = new URL("hacker", cfg.database.url);
 
     if (uuid != undefined) {
       url.searchParams.set("uuid", uuid);
@@ -310,7 +310,7 @@ module.exports = class Database {
         method: "get",
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass,
+          Authorization: cfg.database.pass,
         },
       });
       hack = await accReq.json();
@@ -325,7 +325,7 @@ module.exports = class Database {
   }
 
   static async delHacker(uuid) {
-    const url = new URL("hacker", cfg.dbUrl);
+    const url = new URL("hacker", cfg.database.url);
 
     if (uuid != undefined) {
       url.searchParams.set("uuid", uuid);
@@ -339,7 +339,7 @@ module.exports = class Database {
         method: "get",
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass,
+          Authorization: cfg.database.pass,
         },
       });
       hack = await accReq.json();
@@ -354,7 +354,7 @@ module.exports = class Database {
   }
 
   static async addBanned(uuid) {
-    const url = new URL("banned", cfg.dbUrl);
+    const url = new URL("banned", cfg.database.url);
 
     if (uuid != undefined) {
       url.searchParams.set("uuid", uuid);
@@ -368,7 +368,7 @@ module.exports = class Database {
         method: "get",
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass,
+          Authorization: cfg.database.pass,
         },
       });
       hack = await accReq.json();
@@ -383,7 +383,7 @@ module.exports = class Database {
   }
 
   static async delBanned(uuid) {
-    const url = new URL("banned", cfg.dbUrl);
+    const url = new URL("banned", cfg.database.url);
 
     if (uuid != undefined) {
       url.searchParams.set("uuid", uuid);
@@ -397,7 +397,7 @@ module.exports = class Database {
         method: "get",
         headers: {
           "Content-Type": "application/json",
-          Authorization: cfg.dbPass,
+          Authorization: cfg.database.pass,
         },
       });
       ban = await accReq.json();
@@ -414,7 +414,7 @@ module.exports = class Database {
   static async getLeaderboard(path, category, time, min, reverse, max) {
     Logger.verbose("Reading database");
 
-    const url = new URL("lb", cfg.dbUrl);
+    const url = new URL("lb", cfg.database.url);
     url.searchParams.set("path", path);
 
     if (category != undefined && category != "undefined") {
@@ -456,7 +456,7 @@ module.exports = class Database {
   static async getMWLeaderboard(stat, time) {
     Logger.info(`Fetching miniwalls ${stat} leaderboard from!`);
 
-    const url = new URL("mwlb", cfg.dbUrl);
+    const url = new URL("mwlb", cfg.database.url);
     url.searchParams.set("stat", stat);
 
     if (time != undefined) {
