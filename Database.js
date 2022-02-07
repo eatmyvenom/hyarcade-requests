@@ -94,7 +94,7 @@ module.exports = class Database {
     }
 
     if (cacheOnly) {
-      url.searchParams.set("cache");
+      url.searchParams.set("cache", "");
     }
 
     let acc;
@@ -158,7 +158,7 @@ module.exports = class Database {
     }
 
     if (cacheOnly) {
-      url.searchParams.set("cache");
+      url.searchParams.set("cache", "");
     }
 
     let acc;
