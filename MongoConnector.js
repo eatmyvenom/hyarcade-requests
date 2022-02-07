@@ -440,8 +440,37 @@ class MongoConnector {
     return historical;
   }
 
+  async getLeaderboarders(limit) {
+    const leaderboarders = [
+      ...(await this.getLeaderboard("importance", false, limit)),
+      ...(await this.getLeaderboard("blockingDead.wins", false, limit)),
+      ...(await this.getLeaderboard("bountyHunters.wins", false, limit)),
+      ...(await this.getLeaderboard("captureTheWool.kills", false, limit)),
+      ...(await this.getLeaderboard("captureTheWool.woolCaptures", false, limit)),
+      ...(await this.getLeaderboard("creeperAttack.maxWave", false, limit)),
+      ...(await this.getLeaderboard("dragonWars.wins", false, limit)),
+      ...(await this.getLeaderboard("enderSpleef.wins", false, limit)),
+      ...(await this.getLeaderboard("farmhunt.wins", false, limit)),
+      ...(await this.getLeaderboard("football.wins", false, limit)),
+      ...(await this.getLeaderboard("galaxyWars.wins", false, limit)),
+      ...(await this.getLeaderboard("hideAndSeek.wins", false, limit)),
+      ...(await this.getLeaderboard("holeInTheWall.wins", false, limit)),
+      ...(await this.getLeaderboard("hypixelSays.wins", false, limit)),
+      ...(await this.getLeaderboard("partyGames.wins", false, limit)),
+      ...(await this.getLeaderboard("pixelPainters.wins", false, limit)),
+      ...(await this.getLeaderboard("throwOut.wins", false, limit)),
+      ...(await this.getLeaderboard("zombies.wins_zombies", false, limit)),
+      ...(await this.getLeaderboard("miniWalls.wins", false, limit)),
+      ...(await this.getLeaderboard("arcadeWins", false, limit)),
+    ];
+
+    return leaderboarders;
+  }
+
   async getImportantAccounts(level = 0) {
     const cfg = Config.fromJSON();
+    let accs = [];
+    let leaderboarders = [];
 
     const opts = {
       projection: {
@@ -451,19 +480,17 @@ class MongoConnector {
     };
 
     if (level == 0) {
-      return await this.accounts
-        .find(
-          {
-            $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }],
-            lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit },
-          },
-          opts,
-        )
-        .toArray();
+      const basicQuery = [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }];
+
+      accs = await this.accounts.find({ $or: basicQuery, lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit } }, opts).toArray();
+
+      leaderboarders = await this.getLeaderboarders(cfg.hypixel.leaderboardLimit);
     } else if (level == 1) {
-      return await this.accounts.find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] }, opts).toArray();
+      accs = await this.accounts.find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] }, opts).toArray();
+
+      leaderboarders = await this.getLeaderboarders(cfg.hypixel.leaderboardLimit * 2);
     } else if (level == 2) {
-      return await this.accounts
+      accs = await this.accounts
         .find(
           {
             $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit * 8 } }],
@@ -471,9 +498,12 @@ class MongoConnector {
           opts,
         )
         .toArray();
+      leaderboarders = await this.getLeaderboarders(cfg.hypixel.leaderboardLimit * 2);
     } else {
-      return await this.accounts.find({}, opts).toArray();
+      accs = await this.accounts.find({}, opts).toArray();
     }
+
+    return [...accs, ...leaderboarders];
   }
 
   async getInfo() {
