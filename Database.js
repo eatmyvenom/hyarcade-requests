@@ -78,7 +78,7 @@ module.exports = class Database {
     await writeJSONStream(url, json);
   }
 
-  static async account(text, discordID) {
+  static async account(text, discordID, cacheOnly = false) {
     const url = new URL("account", cfg.dbUrl);
 
     if (text != undefined && text != "" && text != "!") {
@@ -91,6 +91,10 @@ module.exports = class Database {
 
     if (discordID != undefined && discordID != "") {
       url.searchParams.set("discid", discordID);
+    }
+
+    if (cacheOnly) {
+      url.searchParams.set("cache");
     }
 
     let acc;
@@ -134,7 +138,7 @@ module.exports = class Database {
     return guild;
   }
 
-  static async timedAccount(text, discordID, time) {
+  static async timedAccount(text, discordID, time, cacheOnly = false) {
     const url = new URL("timeacc", cfg.dbUrl);
 
     if (text != undefined && text != "" && text != "!") {
@@ -151,6 +155,10 @@ module.exports = class Database {
 
     if (time != undefined && time != "lifetime" && time != "life") {
       url.searchParams.set("time", time);
+    }
+
+    if (cacheOnly) {
+      url.searchParams.set("cache");
     }
 
     let acc;
