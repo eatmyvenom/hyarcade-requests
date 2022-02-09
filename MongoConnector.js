@@ -442,6 +442,7 @@ class MongoConnector {
 
   async getLeaderboarders(limit) {
     const leaderboarders = [
+      ...(await this.getLeaderboard("achievementPoints", false, limit)),
       ...(await this.getLeaderboard("importance", false, limit)),
       ...(await this.getLeaderboard("blockingDead.wins", false, limit)),
       ...(await this.getLeaderboard("bountyHunters.wins", false, limit)),
