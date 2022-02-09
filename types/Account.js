@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/valid-types */
+
 const Logger = require("hyarcade-logger");
 const AccountAP = require("./AccountAP");
 const PopulateAccountData = require("./PopulateAccountData");
@@ -18,6 +20,10 @@ class BlockingDeadStats extends ArcadeGameStats {
   headshots = 0;
   weapon = "";
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_dayone ?? 0;
@@ -35,6 +41,10 @@ class BountyHuntersStats extends ArcadeGameStats {
   bountyKills = 0;
   deaths = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_oneinthequiver ?? 0;
@@ -50,6 +60,10 @@ class CaptureTheWoolStats {
   kills = 0;
   woolCaptures = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IPlayer} player
+   */
   constructor(player) {
     this.woolCaptures = player?.achievements?.arcade_ctw_oh_sheep ?? 0;
     this.kills = player?.achievements?.arcade_ctw_slayer ?? 0;
@@ -59,6 +73,10 @@ class CaptureTheWoolStats {
 class CreeperAttackStats {
   maxWave = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     this.maxWave = arcade?.max_wave ?? 0;
   }
@@ -67,6 +85,10 @@ class CreeperAttackStats {
 class DragonWarsStats extends ArcadeGameStats {
   kills = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_dragonwars2 ?? 0;
@@ -80,6 +102,10 @@ class EnderSpleefStats extends ArcadeGameStats {
   bigshotPowerups = 0;
   tripleshotPowerups = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.blocksBroken = arcade?.blocks_destroyed_ender ?? 0;
@@ -95,6 +121,10 @@ class FootballStats extends ArcadeGameStats {
   powerkicks = 0;
   kicks = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_soccer ?? 0;
@@ -120,6 +150,10 @@ class FarmhuntStats extends ArcadeGameStats {
   dangerousTauntsUsed = 0;
   fireworksUsed = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_farm_hunt ?? 0;
@@ -147,6 +181,10 @@ class GalaxyWarsStats extends ArcadeGameStats {
   empireKills = 0;
   shotsFired = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.kills = arcade?.sw_kills ?? 0;
@@ -170,6 +208,10 @@ class HideAndSeekStats extends ArcadeGameStats {
   kills = 0;
   objectives = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IPlayer} player
+   */
   constructor(player) {
     super();
     this.propHuntHiderWins = player?.stats?.Arcade?.prop_hunt_hider_wins_hide_and_seek ?? 0;
@@ -195,6 +237,10 @@ class HoleInTheWallStats extends ArcadeGameStats {
   qualifiers = 0;
   finals = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.finals = arcade?.hitw_record_f ?? 0;
@@ -217,6 +263,10 @@ class HypixelSaysStats extends ArcadeGameStats {
   maxScoreSanta = 0;
   maxScore = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
 
@@ -320,6 +370,10 @@ class PartyGamesStats extends ArcadeGameStats {
 
   superSheepWins = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
 
@@ -407,6 +461,10 @@ class PartyGamesStats extends ArcadeGameStats {
 }
 
 class PixelPaintersStats extends ArcadeGameStats {
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_draw_their_thing ?? 0;
@@ -417,6 +475,10 @@ class ThrowOutStats extends ArcadeGameStats {
   kills = 0;
   deaths = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_throw_out ?? 0;
@@ -426,6 +488,10 @@ class ThrowOutStats extends ArcadeGameStats {
 }
 
 class SeasonalStats {
+  /**
+   *
+   * @param {import("./hypixel").IPlayer} player
+   */
   constructor(player) {
     this.pointsScuba = player?.stats?.Arcade?.total_points_scuba_simulator ?? 0;
     this.foundScuba = player?.stats?.Arcade?.items_found_scuba_simulator ?? 0;
@@ -438,7 +504,7 @@ class SeasonalStats {
     this.grinch = player?.stats?.Arcade?.wins_grinch_simulator_v2 ?? 0;
     this.halloween = player?.stats?.Arcade?.wins_halloween_simulator ?? 0;
     this.scuba = player?.stats?.Arcade?.wins_scuba_simulator ?? 0;
-    this.santaWins = player?.stats?.Arcade?.wins_santa_simulator ?? 0;
+    this.santaWins = (player?.stats?.Arcade?.wins_santa_simulator ?? 0) + (player?.stats?.Arcade?.wins_ss_SANTA_SIMULATOR ?? 0);
     this.total = this.easter + this.grinch + this.halloween + this.scuba + this.santaWins;
   }
 
@@ -465,6 +531,10 @@ class MiniWallsStats extends ArcadeGameStats {
   deaths = 0;
   witherDamage = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IArcade} arcade
+   */
   constructor(arcade) {
     super();
     this.wins = arcade?.wins_mini_walls ?? 0;
@@ -480,6 +550,10 @@ class MiniWallsStats extends ArcadeGameStats {
 }
 
 class ArcadeQuests {
+  /**
+   *
+   * @param {import("./hypixel").IPlayer} player
+   */
   constructor(player) {
     this.arcadeGamer = player?.quests?.arcade_gamer?.completions?.length ?? 0;
     this.arcadeSpecialist = player?.quests?.arcade_specialist?.completions?.length ?? 0;
@@ -510,6 +584,10 @@ class ArcadeChallenges {
   bountyHunters = 0;
   captureTheWool = 0;
 
+  /**
+   *
+   * @param {import("./hypixel").IPlayer} player
+   */
   constructor(player) {
     const challenges = player?.challenges?.all_time;
 
@@ -534,6 +612,10 @@ class ArcadeChallenges {
 }
 
 class ZombiesStats {
+  /**
+   *
+   * @param {import("./hypixel").IPlayer} player
+   */
   constructor(player) {
     if (player?.stats?.Arcade) {
       for (const stat in player?.stats?.Arcade) {
@@ -552,11 +634,6 @@ class Account {
   uuid = "";
   uuidPosix = "";
   internalId = "";
-
-  guildID = "";
-  guild = undefined;
-  guildTag = undefined;
-  guildTagColor = undefined;
 
   rank = "";
 
@@ -887,7 +964,7 @@ class Account {
    * populate the hypixel data
    *
    * @memberof account
-   * @param {object} json
+   * @param {import("./hypixel").HypixelPlayer} json
    */
   setHypixel(json) {
     const player = json?.player;
