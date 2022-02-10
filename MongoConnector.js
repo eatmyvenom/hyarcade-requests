@@ -468,6 +468,39 @@ class MongoConnector {
     return leaderboarders;
   }
 
+  async getDiscordAccounts() {
+    const discords = await this.discordList.find().toArray();
+
+    const uuids = discords.map(d => d.uuid);
+
+    const options = {
+      projection: {
+        _id: 0,
+        uuid: 1,
+        name: 1,
+        "blockingDead.wins": 1,
+        "bountyHunters.wins": 1,
+        "dragonWars.wins": 1,
+        "enderSpleef.wins": 1,
+        "farmhunt.wins": 1,
+        "football.wins": 1,
+        "galaxyWars.wins": 1,
+        "hideAndSeek.wins": 1,
+        "hideAndSeek.kills": 1,
+        "hideAndSeek.objectives": 1,
+        "holeInTheWall.wins": 1,
+        "hypixelSays.wins": 1,
+        "partyGames.wins": 1,
+        "pixelPainters.wins": 1,
+        "throwOut.wins": 1,
+        "miniWalls.wins": 1,
+        "zombies.wins_zombies": 1,
+      },
+    };
+
+    return await this.accounts.find({ uuid: { $in: uuids } }, options).toArray();
+  }
+
   async getImportantAccounts(level = 0) {
     const cfg = Config.fromJSON();
     let accs = [];
