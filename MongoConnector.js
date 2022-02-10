@@ -495,6 +495,7 @@ class MongoConnector {
         "throwOut.wins": 1,
         "miniWalls.wins": 1,
         "zombies.wins_zombies": 1,
+        seasonalWins: 1,
       },
     };
 

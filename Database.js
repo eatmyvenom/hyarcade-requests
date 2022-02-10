@@ -477,4 +477,23 @@ module.exports = class Database {
 
     return lb;
   }
+
+  static async getLinkedAccounts() {
+    const url = new URL("disc", cfg.database.url);
+
+    url.searchParams.set("action", "ls");
+
+    let discAccs;
+    try {
+      const accs = await webRequest(url.toString());
+      discAccs = await JSON.parse(accs.data);
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(discAccs);
+      return {};
+    }
+
+    return discAccs;
+  }
 };
