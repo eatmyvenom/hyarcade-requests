@@ -283,8 +283,14 @@ module.exports = class Database {
 
     let disc;
     try {
-      const accReq = await webRequest(url.toString());
-      disc = await JSON.parse(accReq.data);
+      const accReq = await fetch(url.toString(), {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.database.pass,
+        },
+      });
+      disc = await accReq.json();
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
@@ -485,8 +491,14 @@ module.exports = class Database {
 
     let discAccs;
     try {
-      const accs = await webRequest(url.toString());
-      discAccs = await JSON.parse(accs.data);
+      const accs = await fetch(url.toString(), {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cfg.database.pass,
+        },
+      });
+      discAccs = await accs.json();
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
