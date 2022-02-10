@@ -555,7 +555,10 @@ class MongoConnector {
   }
 
   async unlinkDiscord(input) {
-    await (input.length == 18 ? this.discordList.deleteOne({ discordID: input }) : this.discordList.deleteOne({ uuid: input }));
+    if (!input) {
+      return;
+    }
+    await (input.length == 18 ? this.discordList.deleteMany({ discordID: input }) : this.discordList.deleteMany({ uuid: input }));
   }
 
   async addHacker(uuid) {
