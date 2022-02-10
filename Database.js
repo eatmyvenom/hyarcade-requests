@@ -215,7 +215,7 @@ module.exports = class Database {
   }
 
   static async addGuild(json) {
-    Logger.info(`Adding ${json.name} to accounts in database`);
+    Logger.info(`Adding ${json.name} to guilds in database`);
     const data = JSON.stringify(json);
     const url = new URL("guild", cfg.database.url);
 
