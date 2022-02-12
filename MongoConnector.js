@@ -3,10 +3,12 @@
 /* eslint-disable unicorn/no-array-method-this-argument */
 const os = require("node:os");
 const Config = require("hyarcade-config");
-const Logger = require("hyarcade-logger");
+const LoggerInstance = require("hyarcade-logger/LoggerInstance");
 const Guild = require("hyarcade-structures/Guild");
 const { MongoClient, Collection } = require("mongodb");
 const Account = require("./types/Account");
+
+const Logger = new LoggerInstance("Mongo", "🗃️");
 
 class DiscordObject {
   uuid = "";
