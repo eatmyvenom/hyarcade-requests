@@ -257,6 +257,10 @@ class MongoConnector {
   }
 
   async getLeaderboard(stat, reverse = false, limit = 10) {
+    if (limit == 0) {
+      return [];
+    }
+
     const options = {
       sort: {
         [stat]: reverse ? 1 : -1,
@@ -280,6 +284,10 @@ class MongoConnector {
   }
 
   async getHistoricalLeaderboard(stat, time, reverse = false, limit = 10) {
+    if (limit == 0) {
+      return [];
+    }
+
     let realTime = time;
     if (time == "day") {
       realTime = "daily";
@@ -349,6 +357,10 @@ class MongoConnector {
   }
 
   async getMiniWallsLeaderboard(stat, limit) {
+    if (limit == 0) {
+      return [];
+    }
+
     const options = {
       sort: {
         [stat]: -1,
@@ -378,6 +390,10 @@ class MongoConnector {
   }
 
   async getHistoricalMiniWallsLeaderboard(stat, time, limit = 10) {
+    if (limit == 0) {
+      return [];
+    }
+
     let realTime = time;
     if (time == "day") {
       realTime = "daily";
