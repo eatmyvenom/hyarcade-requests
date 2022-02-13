@@ -102,6 +102,7 @@ class MongoConnector {
     if (index) {
       await this.guilds.createIndex({ uuid: 1 });
       await this.accounts.createIndex({ uuid: 1 });
+      await this.accounts.createIndex({ "miniWalls.wins": 1 });
       await this.dailyAccounts.createIndex({ uuid: 1 });
       await this.weeklyAccounts.createIndex({ uuid: 1 });
       await this.monthlyAccounts.createIndex({ uuid: 1 });
@@ -300,6 +301,12 @@ class MongoConnector {
 
     const pipeline = [];
 
+    const earlyFilter = {
+      $match: { [stat]: { $gt: 0 } },
+    };
+
+    pipeline.push(earlyFilter);
+
     const lookup = {
       from: this[`${realTime}Accounts`].collectionName,
       let: { uuid: "$uuid" },
@@ -318,7 +325,6 @@ class MongoConnector {
     const match = {
       $match: { historicalData: { $size: 1 } },
     };
-
     pipeline.push(match);
 
     const project = {
