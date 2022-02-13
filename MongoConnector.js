@@ -102,7 +102,6 @@ class MongoConnector {
     if (index) {
       await this.guilds.createIndex({ uuid: 1 });
       await this.accounts.createIndex({ uuid: 1 });
-      await this.accounts.createIndex({ "miniWalls.wins": 1 });
       await this.dailyAccounts.createIndex({ uuid: 1 });
       await this.weeklyAccounts.createIndex({ uuid: 1 });
       await this.monthlyAccounts.createIndex({ uuid: 1 });
