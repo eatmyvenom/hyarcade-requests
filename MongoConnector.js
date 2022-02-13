@@ -107,6 +107,8 @@ class MongoConnector {
       await this.monthlyAccounts.createIndex({ uuid: 1 });
       await this.discordList.createIndex({ discordID: 1 });
     }
+
+    Logger.log("MongoDB connector established...");
   }
 
   async readCollection(collection) {
@@ -149,7 +151,12 @@ class MongoConnector {
       return await this.accounts.findOne({ uuid: input });
     } else if (input.length == 18) {
       const resolvedDiscord = await this.discordList.findOne({ discordID: input });
-      return await this.accounts.findOne({ uuid: resolvedDiscord.uuid });
+      if (resolvedDiscord) {
+        return await this.accounts.findOne({ uuid: resolvedDiscord.uuid });
+      }
+
+      Logger.warn(`${input} was not able to be resolved to a discord account`);
+      return;
     } else {
       return await this.accounts.findOne({ name_lower: input.toLowerCase() });
     }
@@ -505,6 +512,7 @@ class MongoConnector {
   }
 
   async getImportantAccounts(level = 0) {
+    Logger.out(`Getting important accounts with level: ${level}`);
     const cfg = Config.fromJSON();
     let accs = [];
     let leaderboarders = [];
@@ -530,7 +538,7 @@ class MongoConnector {
       accs = await this.accounts
         .find(
           {
-            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit * 8 } }],
+            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit } }],
           },
           opts,
         )
@@ -580,6 +588,7 @@ class MongoConnector {
   }
 
   async destroy() {
+    Logger.out("Closing mongo connector, goodbye!");
     await this.client.close();
   }
 }

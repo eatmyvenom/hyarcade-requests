@@ -25,9 +25,11 @@ class webResponse {
  * Send a get request and return response as a promise
  *
  * @param {string} url The url to send the request to
+ * @param {string[]} headers
  * @returns {webResponse} The webresponse object
  */
-function sendRequest(url) {
+function sendRequest(url, headers) {
+  Logger.verbose(`Sending request to ${url}`);
   return new Promise((resolve, reject) => {
     let protocolObj = http;
     let method = "http:";
@@ -40,6 +42,7 @@ function sendRequest(url) {
       family: 4,
       port: method == "http:" ? 80 : 443,
       protocol: method,
+      headers,
     };
 
     try {

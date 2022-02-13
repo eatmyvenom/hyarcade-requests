@@ -5,6 +5,7 @@ const config = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
 const sleep = require("hyarcade-utils/Sleep");
 const hypixelReq = require("./hypixelReq");
+const Logger = require("hyarcade-logger");
 
 /**
  * Function to get the key to use
@@ -42,6 +43,7 @@ module.exports = class HypixelApi {
   }
 
   async makeRequest() {
+    Logger.verbose(`Querying Hypixel /${this.endpoint}`);
     const apiPoint = new hypixelReq(this.reqUrl.toString());
     let response = await apiPoint.makeRequest();
 
@@ -49,7 +51,7 @@ module.exports = class HypixelApi {
       if (config.logRateLimit) {
         logger.warn(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
       }
-      await sleep(apiPoint.headers["retry-after"] * 1000);
+      await sleep(apiPoint.headers["retry-after"] * 1001);
       response = await apiPoint.makeRequest();
     }
     return response;
