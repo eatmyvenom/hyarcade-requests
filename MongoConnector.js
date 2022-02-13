@@ -101,10 +101,28 @@ class MongoConnector {
 
     if (index) {
       await this.guilds.createIndex({ uuid: 1 });
+
       await this.accounts.createIndex({ uuid: 1 });
+      await this.accounts.createIndex({ importance: -1 });
+      await this.accounts.createIndex({ "miniWalls.wins": -1 });
+      await this.accounts.createIndex({ "partyGames.wins": -1 });
+      await this.accounts.createIndex({ name: 1 });
+
       await this.dailyAccounts.createIndex({ uuid: 1 });
+      await this.dailyAccounts.createIndex({ importance: -1 });
+      await this.dailyAccounts.createIndex({ "miniWalls.wins": -1 });
+      await this.dailyAccounts.createIndex({ "partyGames.wins": -1 });
+
       await this.weeklyAccounts.createIndex({ uuid: 1 });
+      await this.weeklyAccounts.createIndex({ importance: -1 });
+      await this.weeklyAccounts.createIndex({ "miniWalls.wins": -1 });
+      await this.weeklyAccounts.createIndex({ "partyGames.wins": -1 });
+
       await this.monthlyAccounts.createIndex({ uuid: 1 });
+      await this.monthlyAccounts.createIndex({ importance: -1 });
+      await this.monthlyAccounts.createIndex({ "miniWalls.wins": -1 });
+      await this.monthlyAccounts.createIndex({ "partyGames.wins": -1 });
+
       await this.discordList.createIndex({ discordID: 1 });
     }
 
@@ -303,7 +321,6 @@ class MongoConnector {
     const earlyFilter = {
       $match: { [stat]: { $gt: 0 } },
     };
-
     pipeline.push(earlyFilter);
 
     const lookup = {
